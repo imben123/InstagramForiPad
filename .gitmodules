@@ -1,0 +1,3 @@
+[submodule "Submodules/SwiftToolbox"]
+	path = Submodules/SwiftToolbox
+	url = git@github.com:imben123/SwiftToolbox.git

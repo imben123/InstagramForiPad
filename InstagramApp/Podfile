@@ -1,0 +1,17 @@
+workspace 'Instagram.xcworkspace'
+
+target 'Instagram' do
+  use_frameworks!
+  pod 'SDWebImage'
+end
+
+target 'InstagramData' do
+  use_frameworks!
+  pod 'SDWebImage'
+
+  target 'InstagramDataTests' do
+    inherit! :search_paths
+  end
+
+  project '../InstagramData/InstagramData.xcodeproj'
+end

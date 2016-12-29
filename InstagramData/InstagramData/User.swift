@@ -12,31 +12,31 @@ import SwiftToolbox
 
 public class User {
     
-    let id: String
+    public let id: String
     
-    let profilePictureURL: URL?
-    let fullName: String
-    let username: String
-    let biography: String?
-    let externalURL: URL?
-    let connectedFacebookPage: Any?
+    public let profilePictureURL: URL?
+    public let fullName: String
+    public let username: String
+    public let biography: String?
+    public let externalURL: URL?
+    public let connectedFacebookPage: Any?
 
-    let followedByCount: Int
-    let followsCount: Int
+    public let followedByCount: Int
+    public let followsCount: Int
 
-    let followsViewer: Bool
-    let followedByViewer: Bool
-    let requestedByViewer: Bool
-    let hasRequestedViewer: Bool
+    public let followsViewer: Bool
+    public let followedByViewer: Bool
+    public let requestedByViewer: Bool
+    public let hasRequestedViewer: Bool
     
-    let hasBlockedViewer: Bool
-    let blockedByViewer: Bool
-    let isPrivate: Bool
-    let isVerified: Bool
+    public let hasBlockedViewer: Bool
+    public let blockedByViewer: Bool
+    public let isPrivate: Bool
+    public let isVerified: Bool
 
-    let media: [MediaItem]
+    public let media: [MediaItem]
 
-    public init(jsonDictionary: [String: Any]) {
+    init(jsonDictionary: [String: Any]) {
         
         let json = JSON(jsonDictionary)
         

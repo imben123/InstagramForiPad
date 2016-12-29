@@ -8,9 +8,11 @@
 
 import Foundation
 
-class UserFetcher {
+public class UserFetcher {
     
-    func fetchUser(for username: String) -> User {
+    public init() {}
+    
+    public func fetchUser(for username: String) -> User {
         let url = self.webURL(for: username)
         let webContent = self.fetchContent(of: url)
         let jsonData = self.findJSONData(in: webContent)

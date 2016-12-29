@@ -17,6 +17,7 @@
 		B53693261E143F6C000246A7 /* SwiftToolbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B53693241E143F6C000246A7 /* SwiftToolbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932A1E148BC6000246A7 /* MediaGridView.swift */; };
 		B536932D1E148BCE000246A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932C1E148BCE000246A7 /* ViewController.swift */; };
+		B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		B53693241E143F6C000246A7 /* SwiftToolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftToolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B536932A1E148BC6000246A7 /* MediaGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridView.swift; sourceTree = "<group>"; };
 		B536932C1E148BCE000246A7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				B50AD9C71E119CBC00F46119 /* LaunchScreen.storyboard */,
 				B50AD9CA1E119CBC00F46119 /* Info.plist */,
 				B536932A1E148BC6000246A7 /* MediaGridView.swift */,
+				B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */,
 				B536932C1E148BCE000246A7 /* ViewController.swift */,
 			);
 			path = Instagram;
@@ -313,6 +316,7 @@
 				B536932D1E148BCE000246A7 /* ViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,
+				B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

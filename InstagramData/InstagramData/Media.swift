@@ -10,21 +10,21 @@ import SwiftyJSON
 
 public struct MediaItem {
     
-    let id: String
+    public let id: String
     
-    let date: Date
-    let dimensions: CGSize
-    let ownerId: String
-    let code: String?
-    let isVideo: Bool
+    public let date: Date
+    public let dimensions: CGSize
+    public let ownerId: String
+    public let code: String?
+    public let isVideo: Bool
     
-    let thumbnail: URL
-    let display: URL
+    public let thumbnail: URL
+    public let display: URL
     
-    let commentsDisabled: Bool
-    let commentsCount: Int
+    public let commentsDisabled: Bool
+    public let commentsCount: Int
 //    let comments: [Any]?
-    let likesCount: Int
+    public let likesCount: Int
     
     init(jsonDictionary: [String: Any]) {
         

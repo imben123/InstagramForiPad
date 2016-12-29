@@ -8,6 +8,9 @@
       location = "group:../InstagramData/InstagramData.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../Submodules/SwiftToolbox/SwiftToolbox.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

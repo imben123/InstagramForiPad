@@ -3,11 +3,13 @@ workspace 'Instagram.xcworkspace'
 target 'Instagram' do
   use_frameworks!
   pod 'SDWebImage'
+  pod 'SwiftyJSON'
 end
 
 target 'InstagramData' do
   use_frameworks!
   pod 'SDWebImage'
+  pod 'SwiftyJSON'
 
   target 'InstagramDataTests' do
     inherit! :search_paths

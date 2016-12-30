@@ -46,6 +46,8 @@
 		B5A9237F1E16BFBE00C36D9C /* FeedManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */; };
 		B5A923811E16C1EB00C36D9C /* Feed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A923801E16C1EB00C36D9C /* Feed.json */; };
 		B5A923831E16C27000C36D9C /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923821E16C27000C36D9C /* TestCase.swift */; };
+		B5A9238F1E1707A800C36D9C /* FeedPage2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A9238E1E1707A800C36D9C /* FeedPage2.json */; };
+		B5A923921E17094F00C36D9C /* FeedUpdateOverlapping.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A923911E17094F00C36D9C /* FeedUpdateOverlapping.json */; };
 		B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AC74CE1E14359E0042D21D /* MediaItem.json */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +128,8 @@
 		B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManagerTests.swift; sourceTree = "<group>"; };
 		B5A923801E16C1EB00C36D9C /* Feed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Feed.json; sourceTree = "<group>"; };
 		B5A923821E16C27000C36D9C /* TestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
+		B5A9238E1E1707A800C36D9C /* FeedPage2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FeedPage2.json; sourceTree = "<group>"; };
+		B5A923911E17094F00C36D9C /* FeedUpdateOverlapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FeedUpdateOverlapping.json; sourceTree = "<group>"; };
 		B5AC74CE1E14359E0042D21D /* MediaItem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MediaItem.json; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
 		E084B2E333B307E0B0489C2A /* Pods-InstagramDataTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -217,6 +221,8 @@
 				B506A08F1E14292600EEA147 /* Media.json */,
 				B5AC74CE1E14359E0042D21D /* MediaItem.json */,
 				B5A923801E16C1EB00C36D9C /* Feed.json */,
+				B5A9238E1E1707A800C36D9C /* FeedPage2.json */,
+				B5A923911E17094F00C36D9C /* FeedUpdateOverlapping.json */,
 				B50AD9AD1E119C9D00F46119 /* Info.plist */,
 			);
 			path = InstagramDataTests;
@@ -488,6 +494,8 @@
 			files = (
 				B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */,
 				B5A923811E16C1EB00C36D9C /* Feed.json in Resources */,
+				B5A923921E17094F00C36D9C /* FeedUpdateOverlapping.json in Resources */,
+				B5A9238F1E1707A800C36D9C /* FeedPage2.json in Resources */,
 				B506A0901E14292600EEA147 /* Media.json in Resources */,
 				B506A08C1E14254E00EEA147 /* User.json in Resources */,
 			);

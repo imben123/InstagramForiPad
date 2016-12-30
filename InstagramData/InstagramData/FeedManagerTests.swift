@@ -12,10 +12,22 @@ import XCTest
 class FeedManagerTestsExamples: ResourceLoader {
     
     static let rawFeedJson: [String:Any] = getObject(with: "Feed.json")
+    static let rawFeedPage2Json: [String:Any] = getObject(with: "FeedPage2.json")
+    static let rawFeedUpdateOverlapping: [String:Any] = getObject(with: "FeedUpdateOverlapping.json")
     
     static let exampleFetchMediaSuccessResponse = APIResponse(
         responseCode: 200,
         responseBody: rawFeedJson,
+        urlResponse: nil)
+    
+    static let exampleFetchMoreMediaSuccessResponse = APIResponse(
+        responseCode: 200,
+        responseBody: rawFeedPage2Json,
+        urlResponse: nil)
+    
+    static let exampleFetchNewMediaWithOverlapSuccessResponse = APIResponse(
+        responseCode: 200,
+        responseBody: rawFeedUpdateOverlapping,
         urlResponse: nil)
     
 }
@@ -110,6 +122,102 @@ class FeedManagerTests: XCTestCase {
         XCTAssertEqual(mediaItem.commentsDisabled, false)
         XCTAssertEqual(mediaItem.commentsCount, 4)
         XCTAssertEqual(mediaItem.likesCount, 271)
+    }
+    
+    func testCallingFetchManyTimesDoesntCauseDuplicates() {
+        
+        // Given
+        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        
+        let expectation1 = self.expectation(description: "Completion 1 called")
+        sut.fetchNewestMedia({
+            expectation1.fulfill()
+        })
+        
+        let expectation2 = self.expectation(description: "Completion 2 called")
+        sut.fetchMoreMedia({
+            expectation2.fulfill()
+        })
+        
+        let expectation3 = self.expectation(description: "Completion 3 called")
+        sut.fetchMoreMedia({
+            expectation3.fulfill()
+        })
+        
+        let expectation4 = self.expectation(description: "Completion 4 called")
+        sut.fetchMoreMedia({
+            expectation4.fulfill()
+        })
+        
+        self.waitForExpectations(timeout: 0.1)
+        
+
+        XCTAssertEqual(sut.media.count, 1)
+    }
+    
+    func testMoreMediaAddedToEndOfArray() {
+        
+        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        
+        // When
+        var originalMediaItem: MediaItem? = nil
+        let expectation = self.expectation(description: "Completion called")
+        sut.fetchNewestMedia({
+            XCTAssertEqual(self.sut.media.count, 1)
+            originalMediaItem = self.sut.media.first!
+            self.mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
+            self.sut.fetchMoreMedia({
+                expectation.fulfill()
+            })
+        })
+        self.waitForExpectations(timeout: 0.1)
+        
+        XCTAssertEqual(sut.media.count, 2)
+        XCTAssertNotEqual(sut.media.last, originalMediaItem)
+        XCTAssertEqual(sut.media.first, originalMediaItem)
+    }
+    
+    func testNewMediaAddedToBeginningOfArray() {
+        
+        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        
+        // When
+        var originalMediaItem: MediaItem? = nil
+        let expectation = self.expectation(description: "Completion called")
+        sut.fetchNewestMedia({
+            XCTAssertEqual(self.sut.media.count, 1)
+            originalMediaItem = self.sut.media.first!
+            self.mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchNewMediaWithOverlapSuccessResponse
+            self.sut.fetchNewestMedia({
+                expectation.fulfill()
+            })
+        })
+        self.waitForExpectations(timeout: 1000)
+        
+        XCTAssertEqual(sut.media.count, 2)
+        XCTAssertNotEqual(sut.media.first, originalMediaItem)
+        XCTAssertEqual(sut.media.last, originalMediaItem)
+    }
+    
+    func testOldMediaDroppedIfNewMediaDoesNotOverlapOldMedia() {
+        
+        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        
+        // When
+        var originalMediaItem: MediaItem? = nil
+        let expectation = self.expectation(description: "Completion called")
+        sut.fetchNewestMedia({
+            XCTAssertEqual(self.sut.media.count, 1)
+            originalMediaItem = self.sut.media.first!
+            self.mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
+            self.sut.fetchNewestMedia({
+                expectation.fulfill()
+            })
+        })
+        self.waitForExpectations(timeout: 1000)
+        
+        XCTAssertEqual(sut.media.count, 1)
+        XCTAssertNotEqual(sut.media.first, originalMediaItem)
     }
     
 }

@@ -12,7 +12,7 @@ import SDWebImage
 
 class ViewController: UIViewController {
     
-    let userFetcher = UserFetcher()
+    var fetchingMoreMedia = false
     var mediaGridView: MediaGridView {
         return view as! MediaGridView
     }
@@ -54,9 +54,14 @@ class ViewController: UIViewController {
     }
     
     func loadMoreMedia() {
+        guard fetchingMoreMedia == false else {
+            return
+        }
+        fetchingMoreMedia = true
         InstagramData.shared.feedManager.fetchMoreMedia({ [weak self] in
             let mediaItems = InstagramData.shared.feedManager.media
             self?.updateMediaGridView(with: mediaItems)
+            self?.fetchingMoreMedia = false
         })
     }
 }

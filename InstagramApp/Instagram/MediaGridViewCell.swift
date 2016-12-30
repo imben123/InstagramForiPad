@@ -14,7 +14,7 @@ class MediaGridViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.addSubview(imageView)
+        contentView.addSubview(imageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -23,7 +23,11 @@ class MediaGridViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.imageView.frame = self.contentView.bounds
+        imageView.frame = self.contentView.bounds
+    }
+    
+    override func prepareForReuse() {
+        imageView.image = nil
     }
     
 }

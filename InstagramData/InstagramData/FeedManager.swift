@@ -12,20 +12,55 @@ import SwiftyJSON
 public class FeedManager {
     
     let communicator: APICommunicator
-    var numberOfPostsToFetch = 10
+    var numberOfPostsToFetch = 20
     
-    public var media: [MediaItem] = []
-    private var endCursor: String? = nil
+    private let mediaList = MediaList()
+    public var media: [MediaItem]  {
+        return mediaList.media
+    }
+    
+    private var endCursor: String? {
+        return mediaList.endCursor
+    }
     
     init(communicator: APICommunicator) {
         self.communicator = communicator
     }
     
-    public func fetchMoreMedia(_ completion: (()->())?, failure: (()->())? = nil) {
+    public func fetchNewestMedia(_ completion: (()->())?, failure: (()->())? = nil) {
         DispatchQueue.global().async {
-            let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: self.endCursor)
+            let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: nil)
             if response.succeeded {
-                self.media.append(contentsOf: self.parseMedia(from: response))
+                
+                let newMedia = self.parseMedia(from: response)
+                let newEndCursor = self.parseEndCursor(from: response)
+                self.mediaList.addNewMedia(newMedia, with: newEndCursor)
+                
+                DispatchQueue.main.async {
+                    completion?()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    failure?()
+                }
+            }
+        }
+    }
+    
+    public func fetchMoreMedia(_ completion: (()->())?, failure: (()->())? = nil) {
+        guard let currentEndCursor = self.endCursor else {
+            fetchNewestMedia(completion, failure: failure)
+            return
+        }
+        
+        DispatchQueue.global().async {
+            let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: currentEndCursor)
+            if response.succeeded {
+
+                let newEndCursor = self.parseEndCursor(from: response)
+                let newMedia = self.parseMedia(from: response)
+                self.mediaList.appendMoreMedia(newMedia, from: currentEndCursor, to: newEndCursor)
+                
                 DispatchQueue.main.async {
                     completion?()
                 }
@@ -47,10 +82,66 @@ public class FeedManager {
             result.append(mediaItem)
         }
         
-        // For next request
-        endCursor = json["feed"]["media"]["page_info"]["end_cursor"].string
-        
         return result
     }
+    
+    
+    private func parseEndCursor(from response: APIResponse) -> String {
+        let json = JSON(response.responseBody!)
+        return json["feed"]["media"]["page_info"]["end_cursor"].stringValue
+    }
 
+}
+
+fileprivate class MediaList {
+    
+    private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
+    
+    private var privateEndCursor: String? = nil
+    var endCursor: String? {
+        return privateEndCursor
+    }
+
+    private var privateMedia: [MediaItem] = []
+    var media: [MediaItem] {
+        return privateMedia
+    }
+    
+    func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String) {
+        lockQueue.sync() {
+            if startCursor == endCursor {
+                privateMedia.append(contentsOf: newMedia)
+                privateEndCursor = newEndCursor
+            }
+        }
+    }
+    
+    func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String) {
+        lockQueue.sync() {
+            
+            guard let currentHead = media.first else {
+                privateMedia = newMedia
+                privateEndCursor = newEndCursor
+                return
+            }
+            
+            var foundMatch = false
+            var result: [MediaItem] = []
+            for mediaItem in newMedia {
+                if mediaItem.id == currentHead.id {
+                    foundMatch = true
+                    break
+                }
+                result.append(mediaItem)
+            }
+            
+            if foundMatch {
+                result.append(contentsOf: media)
+            } else {
+                privateEndCursor = newEndCursor
+            }
+            privateMedia = result
+        }
+    }
+    
 }

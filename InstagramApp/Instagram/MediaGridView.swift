@@ -35,7 +35,7 @@ class MediaGridView: UICollectionView {
     
     init() {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 150, height: 150)
+        layout.itemSize = CGSize(width: 300, height: 300)
         super.init(frame: .zero, collectionViewLayout: layout)
         self.register(MediaGridViewCell.self, forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
         self.dataSource = self

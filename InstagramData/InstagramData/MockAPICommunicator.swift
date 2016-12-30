@@ -22,7 +22,8 @@ class MockAPICommunicator: APICommunicator {
         return testResonse
     }
     
-    override func getFeed() -> APIResponse {
+    override func getFeed(numberOfPosts: Int, from previousIndex: String?) -> APIResponse {
         return testResonse
     }
+
 }

@@ -96,20 +96,20 @@ class FeedManagerTests: XCTestCase {
         self.waitForExpectations(timeout: 0.1)
         
         // Then
-        XCTAssertEqual(sut.media.count, 24)
+        XCTAssertEqual(sut.media.count, 1)
         
         let mediaItem = sut.media.first!
-        XCTAssertEqual(mediaItem.id, "1416714076692007483")
-        XCTAssertEqual(mediaItem.date, Date(timeIntervalSince1970: 1483105500))
-        XCTAssertEqual(mediaItem.dimensions, CGSize(width: 1080, height: 1080))
-        XCTAssertEqual(mediaItem.ownerId, "11905793")
-        XCTAssertEqual(mediaItem.code, "BOpLfJZhco7")
+        XCTAssertEqual(mediaItem.id, "1416818863685651136")
+        XCTAssertEqual(mediaItem.date, Date(timeIntervalSince1970: 1483117991))
+        XCTAssertEqual(mediaItem.dimensions, CGSize(width: 750, height: 750))
+        XCTAssertEqual(mediaItem.ownerId, "3053160285")
+        XCTAssertEqual(mediaItem.code, "BOpjT_5DkrA")
         XCTAssertEqual(mediaItem.isVideo, false)
-        XCTAssertNil(mediaItem.thumbnail)
-        XCTAssertEqual(mediaItem.display, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/e35/15802885_364809080541183_2337535770459373568_n.jpg?ig_cache_key=MTQxNjcxNDA3NjY5MjAwNzQ4Mw%3D%3D.2"))
+        XCTAssertEqual(mediaItem.thumbnail, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/15624418_1258813050862580_5354612363024662528_n.jpg?ig_cache_key=MTQxNjgxODg2MzY4NTY1MTEzNg%3D%3D.2"))
+        XCTAssertEqual(mediaItem.display, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/s750x750/sh0.08/e35/15624418_1258813050862580_5354612363024662528_n.jpg?ig_cache_key=MTQxNjgxODg2MzY4NTY1MTEzNg%3D%3D.2"))
         XCTAssertEqual(mediaItem.commentsDisabled, false)
-        XCTAssertEqual(mediaItem.commentsCount, 0)
-        XCTAssertEqual(mediaItem.likesCount, 5)
+        XCTAssertEqual(mediaItem.commentsCount, 4)
+        XCTAssertEqual(mediaItem.likesCount, 271)
     }
     
 }

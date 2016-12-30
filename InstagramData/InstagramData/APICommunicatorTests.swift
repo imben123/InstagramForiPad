@@ -43,10 +43,20 @@ class APICommunicatorTests: XCTestCase {
     }
     
     func testGetFeed() {
-        let response = sut.getFeed()
+        let response = sut.getFeed(numberOfPosts: 1)
         XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
-        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/?__a=1")
-        XCTAssertNil(mockConnection.makeRequestCalls.first!.payload)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains(".first(1)"))
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
+    func testGetMoreFeed() {
+        let response = sut.getFeed(numberOfPosts: 1, from: "foobar")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains(".after(foobar,1)"))
         XCTAssertEqual(response, expectedResponse)
     }
 }

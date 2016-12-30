@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     override func loadView() {
         view = MediaGridView()
         mediaGridView.mediaDelegate = self
+        mediaGridView.delegate = self
     }
     
     override func viewDidLoad() {
@@ -35,13 +36,10 @@ class ViewController: UIViewController {
         updateMediaGridView(with: mediaItems)
 
         if mediaItems.count == 0 {
-            InstagramData.shared.feedManager.fetchMoreMedia({ [weak self] in
-                let mediaItems = InstagramData.shared.feedManager.media
-                self?.updateMediaGridView(with: mediaItems)
-            })
+            loadMoreMedia()
         }
         
-        navigationItem.leftBarButtonItem = createLogoutButton()
+        navigationItem.rightBarButtonItem = createLogoutButton()
     }
     
     func updateMediaGridView(with mediaItems: [MediaItem]) {
@@ -53,6 +51,13 @@ class ViewController: UIViewController {
     @objc func logoutPressed() {
         InstagramData.shared.authManager.logout()
         self.navigationController?.setViewControllers([LoginViewController()], animated: true)
+    }
+    
+    func loadMoreMedia() {
+        InstagramData.shared.feedManager.fetchMoreMedia({ [weak self] in
+            let mediaItems = InstagramData.shared.feedManager.media
+            self?.updateMediaGridView(with: mediaItems)
+        })
     }
 }
 
@@ -72,4 +77,14 @@ extension ViewController: MediaGridViewDelegate {
         
         return nil
     }
+}
+
+extension ViewController: UICollectionViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.height {
+            loadMoreMedia()
+        }
+    }
+    
 }

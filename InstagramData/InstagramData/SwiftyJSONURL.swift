@@ -8,10 +8,10 @@
 
 import SwiftyJSON
 
-//MARK: - URL
+// MARK: - Adds escaped URL parsing support for SwiftyJSON
 extension JSON {
     
-    //Optional URL
+    // Optional URL
     public var URLWithoutEscaping: URL? {
         get {
             switch self.type {

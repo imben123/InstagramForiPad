@@ -8,14 +8,14 @@
 
 import SwiftyJSON
 
-// MARK: - Size
+// MARK: - Adds CGRect parsing support for SwiftyJSON
 extension JSON {
     
     // Optional date
     public var size: CGSize? {
         get {
-            if let width = self["width"].number, let height = self["height"].number {
-                return CGSize(width: width as Int, height: height as Int)
+            if let width = self["width"].int, let height = self["height"].int {
+                return CGSize(width: width, height: height)
             }
             return nil
         }
@@ -24,8 +24,9 @@ extension JSON {
                 let width = Int(newValue.width)
                 let height = Int(newValue.height)
                 self.dictionaryObject = ["width": width as NSNumber, "height": height as NSNumber]
+            } else {
+                self.object = NSNull()
             }
-            self.object = NSNull()
         }
     }
     

@@ -29,6 +29,16 @@
 		B51D7B401E15F04200DF5599 /* FeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B3F1E15F04200DF5599 /* FeedManager.swift */; };
 		B53693281E144637000246A7 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693271E144637000246A7 /* UserFetcher.swift */; };
 		B53693331E15502D000246A7 /* APICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693321E15502D000246A7 /* APICommunicator.swift */; };
+		B54EBEA81E167D4E001BB53C /* SwiftyJSONDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */; };
+		B54EBEAB1E168110001BB53C /* SwiftyJSONDimensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */; };
+		B54EBEAD1E168554001BB53C /* SwiftyJSONURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */; };
+		B54EBEAF1E1687D9001BB53C /* APIResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEAE1E1687D9001BB53C /* APIResponseTests.swift */; };
+		B54EBEB21E168B73001BB53C /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB01E168AEC001BB53C /* MockURLSession.swift */; };
+		B54EBEB41E168CA7001BB53C /* HTTPConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB31E168CA7001BB53C /* HTTPConnectionTests.swift */; };
+		B54EBEB61E16953B001BB53C /* APIConnectionRequestBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB51E16953B001BB53C /* APIConnectionRequestBuilderTests.swift */; };
+		B54EBEB81E1697CD001BB53C /* APIConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */; };
+		B54EBEBA1E16B63C001BB53C /* APICommunicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */; };
+		B54EBEBC1E16B660001BB53C /* MockAPIConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */; };
 		B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AC74CE1E14359E0042D21D /* MediaItem.json */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +102,16 @@
 		B53692F91E1438E0000246A7 /* SwiftToolbox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftToolbox.xcodeproj; path = "/Users/ben/PersonalDocuments/iPhone Dev/Instagram/InstagramApp/../Submodules/SwiftToolbox/SwiftToolbox.xcodeproj"; sourceTree = "<absolute>"; };
 		B53693271E144637000246A7 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFetcher.swift; sourceTree = "<group>"; };
 		B53693321E15502D000246A7 /* APICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICommunicator.swift; sourceTree = "<group>"; };
+		B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDateTests.swift; sourceTree = "<group>"; };
+		B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDimensionsTests.swift; sourceTree = "<group>"; };
+		B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONURLTests.swift; sourceTree = "<group>"; };
+		B54EBEAE1E1687D9001BB53C /* APIResponseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponseTests.swift; sourceTree = "<group>"; };
+		B54EBEB01E168AEC001BB53C /* MockURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		B54EBEB31E168CA7001BB53C /* HTTPConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPConnectionTests.swift; sourceTree = "<group>"; };
+		B54EBEB51E16953B001BB53C /* APIConnectionRequestBuilderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnectionRequestBuilderTests.swift; sourceTree = "<group>"; };
+		B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnectionTests.swift; sourceTree = "<group>"; };
+		B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICommunicatorTests.swift; sourceTree = "<group>"; };
+		B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIConnection.swift; sourceTree = "<group>"; };
 		B5AC74CE1E14359E0042D21D /* MediaItem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MediaItem.json; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
 		E084B2E333B307E0B0489C2A /* Pods-InstagramDataTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,10 +209,17 @@
 			isa = PBXGroup;
 			children = (
 				B53693321E15502D000246A7 /* APICommunicator.swift */,
-				B51D7B2C1E15E5B000DF5599 /* APIResponse.swift */,
-				B51D7B2F1E15E5D200DF5599 /* HTTPConnection.swift */,
-				B51D7B311E15E5F100DF5599 /* APIConnectionRequestBuilder.swift */,
+				B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */,
+				B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */,
 				B51D7B331E15E60E00DF5599 /* APIConnection.swift */,
+				B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */,
+				B51D7B311E15E5F100DF5599 /* APIConnectionRequestBuilder.swift */,
+				B54EBEB51E16953B001BB53C /* APIConnectionRequestBuilderTests.swift */,
+				B51D7B2F1E15E5D200DF5599 /* HTTPConnection.swift */,
+				B54EBEB31E168CA7001BB53C /* HTTPConnectionTests.swift */,
+				B54EBEB01E168AEC001BB53C /* MockURLSession.swift */,
+				B51D7B2C1E15E5B000DF5599 /* APIResponse.swift */,
+				B54EBEAE1E1687D9001BB53C /* APIResponseTests.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -215,8 +242,11 @@
 				B506A08D1E14291600EEA147 /* Media.swift */,
 				B506A0911E14294300EEA147 /* MediaTests.swift */,
 				B506A0931E142B1400EEA147 /* SwiftyJSONDate.swift */,
+				B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */,
 				B506A0951E142D6300EEA147 /* SwiftyJSONDimensions.swift */,
+				B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */,
 				B506A0971E14344600EEA147 /* SwiftyJSONURL.swift */,
+				B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -483,8 +513,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B54EBEAD1E168554001BB53C /* SwiftyJSONURLTests.swift in Sources */,
+				B54EBEA81E167D4E001BB53C /* SwiftyJSONDateTests.swift in Sources */,
+				B54EBEBC1E16B660001BB53C /* MockAPIConnection.swift in Sources */,
+				B54EBEBA1E16B63C001BB53C /* APICommunicatorTests.swift in Sources */,
 				B506A0921E14294300EEA147 /* MediaTests.swift in Sources */,
+				B54EBEAF1E1687D9001BB53C /* APIResponseTests.swift in Sources */,
+				B54EBEB81E1697CD001BB53C /* APIConnectionTests.swift in Sources */,
+				B54EBEB21E168B73001BB53C /* MockURLSession.swift in Sources */,
+				B54EBEAB1E168110001BB53C /* SwiftyJSONDimensionsTests.swift in Sources */,
 				B506A08A1E14252500EEA147 /* UserTests.swift in Sources */,
+				B54EBEB61E16953B001BB53C /* APIConnectionRequestBuilderTests.swift in Sources */,
+				B54EBEB41E168CA7001BB53C /* HTTPConnectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

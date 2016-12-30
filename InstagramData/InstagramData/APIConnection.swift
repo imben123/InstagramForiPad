@@ -16,7 +16,7 @@ class APIConnection {
     }
     private let baseURL: URL = URL(string:"https://www.instagram.com")!
     
-    private let connection = HTTPConnection()
+    private let connection: HTTPConnection
     
     var authenticated: Bool {
         for cookie in cookies {
@@ -27,7 +27,12 @@ class APIConnection {
         return false
     }
     
-    init() {
+    convenience init() {
+        self.init(connection: HTTPConnection(session: URLSession.shared))
+    }
+    
+    init(connection: HTTPConnection) {
+        self.connection = connection
         connection.delegate = self
     }
     

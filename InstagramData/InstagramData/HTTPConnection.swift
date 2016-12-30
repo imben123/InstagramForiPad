@@ -15,16 +15,20 @@ protocol HTTPConnectionDelegate: class {
 class HTTPConnection {
     
     weak var delegate: HTTPConnectionDelegate? = nil
+    private let session: URLSession
+    
+    init(session: URLSession) {
+        self.session = session
+    }
     
     func makeSynchronousRequest(_ request: URLRequest) -> APIResponse? {
-        let session = URLSession.shared
-        
         var result: APIResponse? = nil
         let semaphore = DispatchSemaphore(value: 0)
         let dataTask = session.dataTask(with: request) { (responseBody: Data?, response: URLResponse?, error: Error?) in
             
             guard error == nil else {
                 print(error!)
+                semaphore.signal()
                 return
             }
             

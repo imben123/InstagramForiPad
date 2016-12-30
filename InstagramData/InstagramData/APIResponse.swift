@@ -7,17 +7,29 @@
 //
 
 import Foundation
+import SwiftToolbox
 
-struct APIResponse {
+struct APIResponse: Equatable {
     
     let responseCode: Int
     let responseBody: [String: Any]?
     let urlResponse: URLResponse?
     var succeeded: Bool {
-        return responseCode == 200
+        return responseCode >= 200 && responseCode < 400
     }
     
     static let noInternetResponse = APIResponse(responseCode: 0, responseBody: nil, urlResponse: nil)
+    
+    public static func ==(lhs: APIResponse, rhs: APIResponse) -> Bool {
+        
+        let lhsResponseBody = lhs.responseBody as NSDictionary?
+        let rhsResponseBody = rhs.responseBody as NSDictionary?
+        
+        return ( lhs.responseCode == rhs.responseCode &&
+            optionalsAreEqual(firstVal: lhsResponseBody, secondVal: rhsResponseBody) &&
+            optionalsAreEqual(firstVal: lhs.urlResponse, secondVal: rhs.urlResponse) )
+        
+    }
     
 }
 

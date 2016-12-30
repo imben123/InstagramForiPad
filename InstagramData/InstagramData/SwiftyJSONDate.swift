@@ -24,7 +24,9 @@ fileprivate extension Date {
     
 }
 
-// MARK: - Date
+
+
+// MARK: - Adds timestamp parsing support for SwiftyJSON
 extension JSON {
     
     // Optional date
@@ -36,7 +38,7 @@ extension JSON {
             return nil
         }
         set {
-            self.object = (newValue != nil) ? newValue!.number as AnyObject : NSNull() as AnyObject
+            self.number = newValue?.number
         }
     }
     
@@ -46,7 +48,7 @@ extension JSON {
             return self.intValue.date
         }
         set {
-            self.object = newValue.number
+            self.numberValue = newValue.number
         }
     }
 }

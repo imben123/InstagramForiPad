@@ -10,7 +10,15 @@ import Foundation
 
 class APICommunicator {
     
-    private let connection = APIConnection()
+    private let connection: APIConnection
+    
+    convenience init() {
+        self.init(APIConnection())
+    }
+    
+    init(_ connection: APIConnection) {
+        self.connection = connection
+    }
     
     var authenticated: Bool {
         return connection.authenticated

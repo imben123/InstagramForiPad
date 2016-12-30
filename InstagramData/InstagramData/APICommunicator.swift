@@ -12,6 +12,10 @@ class APICommunicator {
     
     private let connection = APIConnection()
     
+    var authenticated: Bool {
+        return connection.authenticated
+    }
+    
     func login(username: String, password: String) -> APIResponse {
         
         let payload = [

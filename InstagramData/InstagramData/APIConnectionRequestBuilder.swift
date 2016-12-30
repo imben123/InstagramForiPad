@@ -10,14 +10,22 @@ import Foundation
 
 class APIConnectionRequestBuilder {
     
-    let csrftoken: String?
-    let sessionid: String?
     let baseURL: URL
+
+    private var cookies: [HTTPCookie] = []
     
-    init(baseURL: URL, csrftoken: String?, sessionid: String?) {
+    private var csrftoken: String? {
+        for cookie in cookies {
+            if cookie.name == "csrftoken" {
+                return cookie.value
+            }
+        }
+        return nil
+    }
+    
+    init(baseURL: URL, cookies: [HTTPCookie]) {
         self.baseURL = baseURL
-        self.csrftoken = csrftoken
-        self.sessionid = sessionid
+        self.cookies = cookies
     }
     
     func makeURLRequest(path: String, payload: [String: String]?) -> URLRequest {
@@ -36,24 +44,10 @@ class APIConnectionRequestBuilder {
         if let csrftoken = csrftoken {
             request.addValue(csrftoken, forHTTPHeaderField: "x-csrftoken")
         }
-        
-        request.addValue(createCookie(), forHTTPHeaderField: "cookie")
+
+        request.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: cookies)
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
         request.addValue("https://www.instagram.com/", forHTTPHeaderField: "referer")
-    }
-    
-    private func createCookie() -> String {
-        var result = ""
-        
-        if let csrftoken = csrftoken {
-            result += "csrftoken=\(csrftoken)"
-        }
-        
-        if let sessionid = sessionid {
-            result += "; sessionid=\(sessionid)"
-        }
-        
-        return result
     }
     
     func addHTTPMethodAndBody(to request: inout URLRequest, payload: [String: String]?) {

@@ -22,9 +22,6 @@ class LoginViewController: UIViewController {
     let kFieldHeight: CGFloat = 44
     static let kFieldInnerPadding: CGFloat = 8
     
-    static let kButtonColor: UIColor = .blue
-    static let kSelectedButtonColor: UIColor = UIColor.blue.withAlphaComponent(0.6)
-    
     init() {
         super.init(nibName: nil, bundle: nil)
         self.loginButton.addTarget(self, action: #selector(loginPressed), for: .touchUpInside)
@@ -64,15 +61,17 @@ class LoginViewController: UIViewController {
         let result = UIButton()
         result.setTitle("Log in", for: .normal)
         result.setTitle("Logging in...", for: .selected)
-        result.setTitleColor(kButtonColor, for: .normal)
-        result.setTitleColor(kSelectedButtonColor, for: .selected)
-        result.layer.borderColor = kButtonColor.cgColor
+        result.setTitleColor(Styles.tintColor, for: .normal)
+        result.setTitleColor(Styles.pressedButtonColor, for: .highlighted)
+        result.setTitleColor(Styles.pressedButtonColor, for: .selected)
+        result.layer.borderColor = Styles.tintColor.cgColor
         result.layer.borderWidth = 1.0
         return result
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(usernameField)
         view.addSubview(passwordField)
         view.addSubview(loginButton)
@@ -117,9 +116,9 @@ class LoginViewController: UIViewController {
         loginButton.isUserInteractionEnabled = interactionEnabled
         loginButton.isSelected = !interactionEnabled
         if interactionEnabled {
-            loginButton.layer.borderColor = LoginViewController.kButtonColor.cgColor
+            loginButton.layer.borderColor = Styles.tintColor.cgColor
         } else {
-            loginButton.layer.borderColor = LoginViewController.kSelectedButtonColor.cgColor
+            loginButton.layer.borderColor = Styles.pressedButtonColor.cgColor
         }
     }
     

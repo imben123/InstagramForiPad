@@ -13,6 +13,10 @@ public class AuthManager {
     
     let communicator: APICommunicator
     
+    public var authenticated: Bool {
+        return communicator.authenticated
+    }
+    
     init(communicator: APICommunicator) {
         self.communicator = communicator
     }
@@ -33,15 +37,22 @@ public class AuthManager {
     }
     
     private func responseMeansLoginSucceeded(_ response: APIResponse?) -> Bool {
-        guard let response = response else {
+        guard let responseBody = response?.responseBody else {
             return false
         }
         
-        let json = JSON(response.responseBody!)
-        guard let result = json["authenticated"].bool else {
-            return false
-        }
+        let json = JSON(responseBody)
+        let result = json["authenticated"].bool
         
-        return result
+        return result ?? false
+    }
+    
+    public func logout() {
+        let cookieStore = HTTPCookieStorage.shared
+        if let cookies = cookieStore.cookies {
+            for cookie in cookies {
+                cookieStore.deleteCookie(cookie)
+            }
+        }
     }
 }

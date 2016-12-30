@@ -14,12 +14,18 @@ class ViewController: UIViewController {
     
     let userFetcher = UserFetcher()
     var mediaGridView: MediaGridView {
-        return self.view as! MediaGridView
+        return view as! MediaGridView
+    }
+    
+    func createLogoutButton() -> UIBarButtonItem {
+        let result = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutPressed))
+        result.tintColor = Styles.tintColor
+        return result
     }
     
     override func loadView() {
-        self.view = MediaGridView()
-        self.mediaGridView.mediaDelegate = self
+        view = MediaGridView()
+        mediaGridView.mediaDelegate = self
     }
     
     override func viewDidLoad() {
@@ -34,12 +40,19 @@ class ViewController: UIViewController {
                 self?.updateMediaGridView(with: mediaItems)
             })
         }
+        
+        navigationItem.leftBarButtonItem = createLogoutButton()
     }
     
     func updateMediaGridView(with mediaItems: [MediaItem]) {
         self.mediaGridView.items = mediaItems.map({ (mediaItem) -> MediaGridViewItem in
             return MediaGridViewItem(url: mediaItem.display)
         })
+    }
+    
+    @objc func logoutPressed() {
+        InstagramData.shared.authManager.logout()
+        self.navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
 }
 

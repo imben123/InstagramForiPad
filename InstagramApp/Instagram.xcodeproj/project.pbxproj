@@ -19,6 +19,7 @@
 		B536932D1E148BCE000246A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932C1E148BCE000246A7 /* ViewController.swift */; };
 		B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */; };
 		B53693381E155645000246A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693371E155645000246A7 /* LoginViewController.swift */; };
+		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewCell.swift; sourceTree = "<group>"; };
 		B53693351E15548A000246A7 /* InstagramAPI.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = InstagramAPI.playground; sourceTree = "<group>"; };
 		B53693371E155645000246A7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				B536932C1E148BCE000246A7 /* ViewController.swift */,
 				B536932A1E148BC6000246A7 /* MediaGridView.swift */,
 				B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */,
+				B54EBEA41E16711C001BB53C /* Styles.swift */,
 				B53693351E15548A000246A7 /* InstagramAPI.playground */,
 			);
 			path = Instagram;
@@ -321,6 +324,7 @@
 				B536932D1E148BCE000246A7 /* ViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,
+				B54EBEA51E16711C001BB53C /* Styles.swift in Sources */,
 				B53693381E155645000246A7 /* LoginViewController.swift in Sources */,
 				B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */,
 			);

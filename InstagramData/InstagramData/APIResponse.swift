@@ -26,8 +26,8 @@ struct APIResponse: Equatable {
         let rhsResponseBody = rhs.responseBody as NSDictionary?
         
         return ( lhs.responseCode == rhs.responseCode &&
-            optionalsAreEqual(firstVal: lhsResponseBody, secondVal: rhsResponseBody) &&
-            optionalsAreEqual(firstVal: lhs.urlResponse, secondVal: rhs.urlResponse) )
+            lhsResponseBody == rhsResponseBody &&
+            lhs.urlResponse == rhs.urlResponse)
         
     }
     

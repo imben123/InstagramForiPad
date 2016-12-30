@@ -14,13 +14,6 @@ class MediaTests: XCTestCase {
     
     let rawMediaItemJson: [String:Any] = MediaTests.getObject(with: "MediaItem.json")
     
-    private class func getObject(with fileName: String) -> [String:Any] {
-        let bundle = Bundle(for: self)
-        let filePath = bundle.bundlePath + "/" + fileName
-        let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
-        return try! JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
-    }
-    
     func testParsingMediaItem() {
         let mediaItem = MediaItem(jsonDictionary: rawMediaItemJson)
         

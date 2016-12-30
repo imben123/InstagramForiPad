@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 
-public struct MediaItem {
+public struct MediaItem: Equatable {
     
     public let id: String
     
@@ -46,4 +46,21 @@ public struct MediaItem {
         likesCount = json["likes"]["count"].intValue
 
     }
+    
+    public static func ==(lhs: MediaItem, rhs: MediaItem) -> Bool {
+        return (
+            lhs.id == rhs.id &&
+            lhs.date == rhs.date &&
+            lhs.dimensions == rhs.dimensions &&
+            lhs.ownerId == rhs.ownerId &&
+            lhs.code == rhs.code &&
+            lhs.isVideo == rhs.isVideo &&
+            lhs.thumbnail == rhs.thumbnail &&
+            lhs.display == rhs.display &&
+            lhs.commentsDisabled == rhs.commentsDisabled &&
+            lhs.commentsCount == rhs.commentsCount &&
+            lhs.likesCount == rhs.likesCount
+        )
+    }
+
 }

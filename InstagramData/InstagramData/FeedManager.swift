@@ -20,15 +20,17 @@ public class FeedManager {
     }
     
     public func fetchMoreMedia(_ completion: (()->())?, failure: (()->())? = nil) {
-        let response = self.communicator.getFeed()
-        if response.succeeded {
-            media.append(contentsOf: parseMedia(from: response))
-            DispatchQueue.main.async {
-                completion?()
-            }
-        } else {
-            DispatchQueue.main.async {
-                failure?()
+        DispatchQueue.global().async {
+            let response = self.communicator.getFeed()
+            if response.succeeded {
+                self.media.append(contentsOf: self.parseMedia(from: response))
+                DispatchQueue.main.async {
+                    completion?()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    failure?()
+                }
             }
         }
     }

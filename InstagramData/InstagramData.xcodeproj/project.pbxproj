@@ -39,6 +39,13 @@
 		B54EBEB81E1697CD001BB53C /* APIConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */; };
 		B54EBEBA1E16B63C001BB53C /* APICommunicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */; };
 		B54EBEBC1E16B660001BB53C /* MockAPIConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */; };
+		B54EBEC01E16BBBD001BB53C /* AuthManagerLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEBF1E16BBBD001BB53C /* AuthManagerLoginTests.swift */; };
+		B54EBEC31E16BC02001BB53C /* MockAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */; };
+		B54EBEC61E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */; };
+		B54EBEC81E16BEDE001BB53C /* AuthManagerLogoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */; };
+		B5A9237F1E16BFBE00C36D9C /* FeedManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */; };
+		B5A923811E16C1EB00C36D9C /* Feed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A923801E16C1EB00C36D9C /* Feed.json */; };
+		B5A923831E16C27000C36D9C /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923821E16C27000C36D9C /* TestCase.swift */; };
 		B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AC74CE1E14359E0042D21D /* MediaItem.json */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +119,13 @@
 		B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnectionTests.swift; sourceTree = "<group>"; };
 		B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICommunicatorTests.swift; sourceTree = "<group>"; };
 		B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIConnection.swift; sourceTree = "<group>"; };
+		B54EBEBF1E16BBBD001BB53C /* AuthManagerLoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerLoginTests.swift; sourceTree = "<group>"; };
+		B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPICommunicator.swift; sourceTree = "<group>"; };
+		B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerAuthenticatedTests.swift; sourceTree = "<group>"; };
+		B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerLogoutTests.swift; sourceTree = "<group>"; };
+		B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManagerTests.swift; sourceTree = "<group>"; };
+		B5A923801E16C1EB00C36D9C /* Feed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Feed.json; sourceTree = "<group>"; };
+		B5A923821E16C27000C36D9C /* TestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		B5AC74CE1E14359E0042D21D /* MediaItem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MediaItem.json; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
 		E084B2E333B307E0B0489C2A /* Pods-InstagramDataTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +203,7 @@
 				B51D7B3B1E15E6B200DF5599 /* Models */,
 				B51D7B361E15E63C00DF5599 /* Managers */,
 				B51D7B351E15E61900DF5599 /* Networking */,
+				B5A923891E16C7B000C36D9C /* SwiftyJSON extensions */,
 			);
 			path = InstagramData;
 			sourceTree = "<group>";
@@ -197,9 +212,11 @@
 			isa = PBXGroup;
 			children = (
 				B506A0881E14252500EEA147 /* InstagramDataTests-Bridging-Header.h */,
+				B5A923821E16C27000C36D9C /* TestCase.swift */,
 				B506A08B1E14254E00EEA147 /* User.json */,
 				B506A08F1E14292600EEA147 /* Media.json */,
 				B5AC74CE1E14359E0042D21D /* MediaItem.json */,
+				B5A923801E16C1EB00C36D9C /* Feed.json */,
 				B50AD9AD1E119C9D00F46119 /* Info.plist */,
 			);
 			path = InstagramDataTests;
@@ -208,18 +225,11 @@
 		B51D7B351E15E61900DF5599 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				B53693321E15502D000246A7 /* APICommunicator.swift */,
-				B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */,
-				B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */,
-				B51D7B331E15E60E00DF5599 /* APIConnection.swift */,
-				B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */,
-				B51D7B311E15E5F100DF5599 /* APIConnectionRequestBuilder.swift */,
-				B54EBEB51E16953B001BB53C /* APIConnectionRequestBuilderTests.swift */,
-				B51D7B2F1E15E5D200DF5599 /* HTTPConnection.swift */,
-				B54EBEB31E168CA7001BB53C /* HTTPConnectionTests.swift */,
-				B54EBEB01E168AEC001BB53C /* MockURLSession.swift */,
-				B51D7B2C1E15E5B000DF5599 /* APIResponse.swift */,
-				B54EBEAE1E1687D9001BB53C /* APIResponseTests.swift */,
+				B5A923841E16C78400C36D9C /* APICommunicator */,
+				B5A923851E16C78B00C36D9C /* APIConnection */,
+				B5A923861E16C79200C36D9C /* APIConnectionRequestBuilder */,
+				B5A923871E16C79B00C36D9C /* HTTPConnection */,
+				B5A923881E16C7A500C36D9C /* APIResponse */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -227,8 +237,9 @@
 		B51D7B361E15E63C00DF5599 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				B51D7B371E15E66E00DF5599 /* AuthManager.swift */,
-				B51D7B3F1E15F04200DF5599 /* FeedManager.swift */,
+				B54EBEC41E16BE7A001BB53C /* AuthManager */,
+				B5A9237C1E16BFB100C36D9C /* FeedManager */,
+				B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -241,12 +252,6 @@
 				B506A0891E14252500EEA147 /* UserTests.swift */,
 				B506A08D1E14291600EEA147 /* Media.swift */,
 				B506A0911E14294300EEA147 /* MediaTests.swift */,
-				B506A0931E142B1400EEA147 /* SwiftyJSONDate.swift */,
-				B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */,
-				B506A0951E142D6300EEA147 /* SwiftyJSONDimensions.swift */,
-				B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */,
-				B506A0971E14344600EEA147 /* SwiftyJSONURL.swift */,
-				B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -266,6 +271,86 @@
 				B53693011E1438E0000246A7 /* SwiftToolboxTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B54EBEC41E16BE7A001BB53C /* AuthManager */ = {
+			isa = PBXGroup;
+			children = (
+				B51D7B371E15E66E00DF5599 /* AuthManager.swift */,
+				B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */,
+				B54EBEBF1E16BBBD001BB53C /* AuthManagerLoginTests.swift */,
+				B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */,
+			);
+			name = AuthManager;
+			sourceTree = "<group>";
+		};
+		B5A9237C1E16BFB100C36D9C /* FeedManager */ = {
+			isa = PBXGroup;
+			children = (
+				B51D7B3F1E15F04200DF5599 /* FeedManager.swift */,
+				B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */,
+			);
+			name = FeedManager;
+			sourceTree = "<group>";
+		};
+		B5A923841E16C78400C36D9C /* APICommunicator */ = {
+			isa = PBXGroup;
+			children = (
+				B53693321E15502D000246A7 /* APICommunicator.swift */,
+				B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */,
+				B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */,
+			);
+			name = APICommunicator;
+			sourceTree = "<group>";
+		};
+		B5A923851E16C78B00C36D9C /* APIConnection */ = {
+			isa = PBXGroup;
+			children = (
+				B51D7B331E15E60E00DF5599 /* APIConnection.swift */,
+				B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */,
+			);
+			name = APIConnection;
+			sourceTree = "<group>";
+		};
+		B5A923861E16C79200C36D9C /* APIConnectionRequestBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				B51D7B311E15E5F100DF5599 /* APIConnectionRequestBuilder.swift */,
+				B54EBEB51E16953B001BB53C /* APIConnectionRequestBuilderTests.swift */,
+			);
+			name = APIConnectionRequestBuilder;
+			sourceTree = "<group>";
+		};
+		B5A923871E16C79B00C36D9C /* HTTPConnection */ = {
+			isa = PBXGroup;
+			children = (
+				B51D7B2F1E15E5D200DF5599 /* HTTPConnection.swift */,
+				B54EBEB31E168CA7001BB53C /* HTTPConnectionTests.swift */,
+				B54EBEB01E168AEC001BB53C /* MockURLSession.swift */,
+			);
+			name = HTTPConnection;
+			sourceTree = "<group>";
+		};
+		B5A923881E16C7A500C36D9C /* APIResponse */ = {
+			isa = PBXGroup;
+			children = (
+				B51D7B2C1E15E5B000DF5599 /* APIResponse.swift */,
+				B54EBEAE1E1687D9001BB53C /* APIResponseTests.swift */,
+			);
+			name = APIResponse;
+			sourceTree = "<group>";
+		};
+		B5A923891E16C7B000C36D9C /* SwiftyJSON extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B506A0931E142B1400EEA147 /* SwiftyJSONDate.swift */,
+				B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */,
+				B506A0951E142D6300EEA147 /* SwiftyJSONDimensions.swift */,
+				B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */,
+				B506A0971E14344600EEA147 /* SwiftyJSONURL.swift */,
+				B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */,
+			);
+			name = "SwiftyJSON extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */,
+				B5A923811E16C1EB00C36D9C /* Feed.json in Resources */,
 				B506A0901E14292600EEA147 /* Media.json in Resources */,
 				B506A08C1E14254E00EEA147 /* User.json in Resources */,
 			);
@@ -514,16 +600,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				B54EBEAD1E168554001BB53C /* SwiftyJSONURLTests.swift in Sources */,
+				B54EBEC81E16BEDE001BB53C /* AuthManagerLogoutTests.swift in Sources */,
 				B54EBEA81E167D4E001BB53C /* SwiftyJSONDateTests.swift in Sources */,
+				B54EBEC31E16BC02001BB53C /* MockAPICommunicator.swift in Sources */,
 				B54EBEBC1E16B660001BB53C /* MockAPIConnection.swift in Sources */,
+				B5A923831E16C27000C36D9C /* TestCase.swift in Sources */,
 				B54EBEBA1E16B63C001BB53C /* APICommunicatorTests.swift in Sources */,
 				B506A0921E14294300EEA147 /* MediaTests.swift in Sources */,
 				B54EBEAF1E1687D9001BB53C /* APIResponseTests.swift in Sources */,
+				B5A9237F1E16BFBE00C36D9C /* FeedManagerTests.swift in Sources */,
 				B54EBEB81E1697CD001BB53C /* APIConnectionTests.swift in Sources */,
 				B54EBEB21E168B73001BB53C /* MockURLSession.swift in Sources */,
 				B54EBEAB1E168110001BB53C /* SwiftyJSONDimensionsTests.swift in Sources */,
 				B506A08A1E14252500EEA147 /* UserTests.swift in Sources */,
 				B54EBEB61E16953B001BB53C /* APIConnectionRequestBuilderTests.swift in Sources */,
+				B54EBEC01E16BBBD001BB53C /* AuthManagerLoginTests.swift in Sources */,
+				B54EBEC61E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift in Sources */,
 				B54EBEB41E168CA7001BB53C /* HTTPConnectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

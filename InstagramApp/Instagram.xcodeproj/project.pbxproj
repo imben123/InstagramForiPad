@@ -82,7 +82,6 @@
 		B536932A1E148BC6000246A7 /* MediaGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridView.swift; sourceTree = "<group>"; };
 		B536932C1E148BCE000246A7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewCell.swift; sourceTree = "<group>"; };
-		B53693351E15548A000246A7 /* InstagramAPI.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = InstagramAPI.playground; sourceTree = "<group>"; };
 		B53693371E155645000246A7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,7 +139,6 @@
 				B536932A1E148BC6000246A7 /* MediaGridView.swift */,
 				B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */,
 				B54EBEA41E16711C001BB53C /* Styles.swift */,
-				B53693351E15548A000246A7 /* InstagramAPI.playground */,
 			);
 			path = Instagram;
 			sourceTree = "<group>";

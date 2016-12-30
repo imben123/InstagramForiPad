@@ -22,7 +22,7 @@ class APIConnectionRequestBuilderTests: XCTestCase {
     
     let csrftokenCookie = HTTPCookie(properties: [
         .name: "csrftoken",
-        .value: "aHIpdkAvWOm2YPZRCkFxghsFMXOAp790",
+        .value: "bar",
         .path: "/",
         .originURL: "http://www.api.com",
         .expires: Date(timeIntervalSinceNow: 60)
@@ -66,7 +66,7 @@ class APIConnectionRequestBuilderTests: XCTestCase {
         expectedResult.httpBody = nil
         expectedResult.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
         expectedResult.addValue("https://www.instagram.com/", forHTTPHeaderField: "referer")
-        expectedResult.addValue("aHIpdkAvWOm2YPZRCkFxghsFMXOAp790", forHTTPHeaderField: "x-csrftoken")
+        expectedResult.addValue("bar", forHTTPHeaderField: "x-csrftoken")
         expectedResult.allHTTPHeaderFields = HTTPCookie.requestHeaderFields(with: [cookie, csrftokenCookie])
         
         XCTAssertEqual(result, expectedResult)

@@ -18,6 +18,7 @@
 		B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932A1E148BC6000246A7 /* MediaGridView.swift */; };
 		B536932D1E148BCE000246A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932C1E148BCE000246A7 /* ViewController.swift */; };
 		B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */; };
+		B53693381E155645000246A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693371E155645000246A7 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		B536932A1E148BC6000246A7 /* MediaGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridView.swift; sourceTree = "<group>"; };
 		B536932C1E148BCE000246A7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewCell.swift; sourceTree = "<group>"; };
+		B53693351E15548A000246A7 /* InstagramAPI.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = InstagramAPI.playground; sourceTree = "<group>"; };
+		B53693371E155645000246A7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,12 +130,14 @@
 			isa = PBXGroup;
 			children = (
 				B50AD9C31E119CBC00F46119 /* AppDelegate.swift */,
+				B53693371E155645000246A7 /* LoginViewController.swift */,
 				B50AD9C51E119CBC00F46119 /* Assets.xcassets */,
 				B50AD9C71E119CBC00F46119 /* LaunchScreen.storyboard */,
 				B50AD9CA1E119CBC00F46119 /* Info.plist */,
+				B536932C1E148BCE000246A7 /* ViewController.swift */,
 				B536932A1E148BC6000246A7 /* MediaGridView.swift */,
 				B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */,
-				B536932C1E148BCE000246A7 /* ViewController.swift */,
+				B53693351E15548A000246A7 /* InstagramAPI.playground */,
 			);
 			path = Instagram;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 				B536932D1E148BCE000246A7 /* ViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,
+				B53693381E155645000246A7 /* LoginViewController.swift in Sources */,
 				B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

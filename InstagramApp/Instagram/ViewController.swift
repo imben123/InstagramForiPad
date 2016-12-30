@@ -25,14 +25,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global().async {
-            let user = self.userFetcher.fetchUser(for: "imben123")
-            DispatchQueue.main.async {
-                self.mediaGridView.items = user.media.map({ (mediaItem) -> MediaGridViewItem in
-                    return MediaGridViewItem(url: mediaItem.thumbnail)
-                })
-            }
+        let mediaItems = InstagramData.shared.feedManager.media
+        updateMediaGridView(with: mediaItems)
+
+        if mediaItems.count == 0 {
+            InstagramData.shared.feedManager.fetchMoreMedia({ [weak self] in
+                let mediaItems = InstagramData.shared.feedManager.media
+                self?.updateMediaGridView(with: mediaItems)
+            })
         }
+    }
+    
+    func updateMediaGridView(with mediaItems: [MediaItem]) {
+        self.mediaGridView.items = mediaItems.map({ (mediaItem) -> MediaGridViewItem in
+            return MediaGridViewItem(url: mediaItem.display)
+        })
     }
 }
 

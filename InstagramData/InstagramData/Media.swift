@@ -18,7 +18,7 @@ public struct MediaItem {
     public let code: String?
     public let isVideo: Bool
     
-    public let thumbnail: URL
+    public let thumbnail: URL?
     public let display: URL
     
     public let commentsDisabled: Bool
@@ -38,7 +38,7 @@ public struct MediaItem {
         code = json["code"].string
         isVideo = json["is_video"].boolValue
             
-        thumbnail = json["thumbnail_src"].URLWithoutEscaping!
+        thumbnail = json["thumbnail_src"].URLWithoutEscaping
         display = json["display_src"].URLWithoutEscaping!
             
         commentsDisabled = json["comments_disabled"].boolValue

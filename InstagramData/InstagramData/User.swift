@@ -35,6 +35,7 @@ public class User {
     public let isVerified: Bool
 
     public let media: [MediaItem]
+    public let totalNumberOfMediaItems: Int
 
     init(jsonDictionary: [String: Any]) {
         
@@ -63,6 +64,7 @@ public class User {
         isVerified = json["is_verified"].boolValue
         
         media = User.parseMediaItems(json)
+        totalNumberOfMediaItems = json["media"]["count"].intValue
     }
     
     private class func parseMediaItems(_ json: JSON) -> [MediaItem] {

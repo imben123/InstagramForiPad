@@ -1,5 +1,5 @@
 //
-//  MockMediaListDataStore.swift
+//  MockMediaDataStore.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 31/12/2016.
@@ -9,7 +9,7 @@
 import Foundation
 @testable import InstagramData
 
-class MockMediaListDataStore: MediaListDataStore {
+class MockMediaDataStore: MediaDataStore {
     
     var archivedMediaList: (media: [MediaItem], endCursor: String)? = nil
     var testUnarchiveMediaList: (media: [MediaItem], endCursor: String)? = nil
@@ -23,11 +23,11 @@ class MockMediaListDataStore: MediaListDataStore {
         }
     }
     
-    override func archiveCurrentMediaList(_ media: [MediaItem], newEndCursor: String) {
+    override func archiveCurrentMedia(_ media: [MediaItem], newEndCursor: String) {
         archivedMediaList = (media, newEndCursor)
     }
     
-    override func unarchiveCurrentMediaList(_ completion: @escaping ((media: [MediaItem], endCursor: String)?) -> Void) {
+    override func unarchiveCurrentMedia(_ completion: @escaping ((media: [MediaItem], endCursor: String)?) -> Void) {
         completion((testUnarchiveMediaList != nil) ? testUnarchiveMediaList : archivedMediaList)
     }
 }

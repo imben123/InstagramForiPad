@@ -27,7 +27,7 @@ extension MediaItem {
 
 class MediaListTests: XCTestCase {
     
-    var mockDataStore: MockMediaListDataStore!
+    var mockDataStore: MockMediaDataStore!
     var sut: MediaList!
     
     let exampleMedia1 = [ MediaItem(id: "4"),  MediaItem(id: "5"),  MediaItem(id: "6")]
@@ -38,7 +38,7 @@ class MediaListTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        mockDataStore = MockMediaListDataStore(mediaOrigin: "mediaOrigin")
+        mockDataStore = MockMediaDataStore(mediaOrigin: "mediaOrigin")
         sut = MediaList(dataStore: mockDataStore)
     }
     

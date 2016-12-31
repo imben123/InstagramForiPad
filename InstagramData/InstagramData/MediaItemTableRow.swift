@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class MediaListDataStoreEndCursor: Object {
+class MediaDataStoreEndCursor: Object {
     dynamic var value: String = ""
     dynamic var mediaOrigin: String = ""
 }

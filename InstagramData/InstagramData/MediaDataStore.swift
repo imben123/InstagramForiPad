@@ -1,5 +1,5 @@
 //
-//  MediaListDataStore.swift
+//  MediaDataStore.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 31/12/2016.
@@ -9,18 +9,20 @@
 import Foundation
 import RealmSwift
 
-class MediaListDataStore {
+// TODO: Needs tests
+
+class MediaDataStore {
     
     private let mediaOrigin: String
     var maximumNumberOfStoredRows: Int = Int.max // Currently no limit
     
-    private let backgroundQueue = DispatchQueue(label: "uk.co.bendavisapps.MediaListDataStore", qos: .background)
+    private let backgroundQueue = DispatchQueue(label: "uk.co.bendavisapps.MediaDataStore", qos: .background)
     
     init(mediaOrigin: String) {
         self.mediaOrigin = mediaOrigin
     }
     
-    func archiveCurrentMediaList(_ media: [MediaItem], newEndCursor: String) {
+    func archiveCurrentMedia(_ media: [MediaItem], newEndCursor: String) {
         
         backgroundQueue.async {
             
@@ -47,22 +49,22 @@ class MediaListDataStore {
             }
             
             // Update end cursor
-            realm.delete(realm.objects(MediaListDataStoreEndCursor.self).filter("mediaOrigin = '\(mediaOrigin)'"))
-            realm.add(MediaListDataStoreEndCursor(value: ["value": newEndCursor, "mediaOrigin": mediaOrigin]))
+            realm.delete(realm.objects(MediaDataStoreEndCursor.self).filter("mediaOrigin = '\(mediaOrigin)'"))
+            realm.add(MediaDataStoreEndCursor(value: ["value": newEndCursor, "mediaOrigin": mediaOrigin]))
             
             try? realm.commitWrite()
         }
         
     }
     
-    func unarchiveCurrentMediaList(_ completion: @escaping ((media: [MediaItem], endCursor: String)?) -> Void) {
+    func unarchiveCurrentMedia(_ completion: @escaping ((media: [MediaItem], endCursor: String)?) -> Void) {
         
         backgroundQueue.async {
             
             let mediaOrigin = self.mediaOrigin
             let realm = try! Realm()
             
-            guard let endCursor = realm.objects(MediaListDataStoreEndCursor.self)
+            guard let endCursor = realm.objects(MediaDataStoreEndCursor.self)
                 .filter("mediaOrigin = '\(mediaOrigin)'").first
                 else {
                     return completion(nil)

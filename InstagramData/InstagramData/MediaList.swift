@@ -12,7 +12,7 @@ import Foundation
 class MediaList {
     
     private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
-    private let dataStore: MediaListDataStore
+    private let dataStore: MediaDataStore
     
     private var privateEndCursor: String? = nil
     var endCursor: String? {
@@ -24,13 +24,13 @@ class MediaList {
         return privateMedia
     }
     
-    init(dataStore: MediaListDataStore) {
+    init(dataStore: MediaDataStore) {
         self.dataStore = dataStore
         unarchive()
     }
     
     func unarchive() {
-        dataStore.unarchiveCurrentMediaList() { [weak self] in
+        dataStore.unarchiveCurrentMedia() { [weak self] in
             if let archive = $0 {
                 self?.privateMedia = archive.media
                 self?.privateEndCursor = archive.endCursor
@@ -43,7 +43,7 @@ class MediaList {
             if startCursor == endCursor {
                 privateMedia.append(contentsOf: newMedia)
                 privateEndCursor = newEndCursor
-                dataStore.archiveCurrentMediaList(media, newEndCursor: newEndCursor)
+                dataStore.archiveCurrentMedia(media, newEndCursor: newEndCursor)
             }
         }
     }
@@ -54,7 +54,7 @@ class MediaList {
             guard let currentHead = media.first else {
                 privateMedia = newMedia
                 privateEndCursor = newEndCursor
-                dataStore.archiveCurrentMediaList(media, newEndCursor: newEndCursor)
+                dataStore.archiveCurrentMedia(media, newEndCursor: newEndCursor)
                 return
             }
             
@@ -75,7 +75,7 @@ class MediaList {
             }
             privateMedia = result
             
-            dataStore.archiveCurrentMediaList(media, newEndCursor: newEndCursor)
+            dataStore.archiveCurrentMedia(media, newEndCursor: newEndCursor)
         }
     }
 }

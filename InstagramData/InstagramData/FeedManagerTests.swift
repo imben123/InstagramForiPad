@@ -40,7 +40,7 @@ class FeedManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockCommunicator = MockAPICommunicator()
-        let mediaList = MediaList(dataStore: MockMediaListDataStore(mediaOrigin: "mediaOrigin"))
+        let mediaList = MediaList(dataStore: MockMediaDataStore(mediaOrigin: "mediaOrigin"))
         sut = FeedManager(communicator: mockCommunicator, mediaList: mediaList)
     }
     

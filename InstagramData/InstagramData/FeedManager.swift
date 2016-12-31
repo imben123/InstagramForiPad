@@ -11,25 +11,23 @@ import SwiftyJSON
 
 public class FeedManager {
     
-    let feedWebStore: FeedWebStore
-    
+    private let feedWebStore: FeedWebStore
     private let mediaList: MediaList
-    public var media: [MediaItem] {
-        return mediaList.media
-    }
-    
     private var endCursor: String? {
         return mediaList.endCursor
     }
     
     init(communicator: APICommunicator) {
-        self.mediaList = MediaList(dataStore: MediaListDataStore(mediaOrigin: "feed"))
+        self.mediaList = MediaList(dataStore: MediaDataStore(mediaOrigin: "feed"))
         self.feedWebStore = FeedWebStore(communicator: communicator)
     }
     
     init(communicator: APICommunicator, mediaList: MediaList) {
         self.mediaList = mediaList
         self.feedWebStore = FeedWebStore(communicator: communicator)
+    }
+    public var media: [MediaItem] {
+        return mediaList.media
     }
     
     public func fetchNewestMedia(_ completion: (()->())?, failure: (()->())? = nil) {

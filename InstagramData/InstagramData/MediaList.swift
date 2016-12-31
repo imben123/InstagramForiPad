@@ -8,74 +8,144 @@
 
 import Foundation
 
+struct MediaListItem: Equatable {
+    let id: String?
+    let isGap: Bool
+    let gapCursor: String?
+    
+    static func ==(_ lhs: MediaListItem, rhs: MediaListItem) -> Bool {
+        return (lhs.id == rhs.id && lhs.isGap == rhs.isGap && lhs.gapCursor == rhs.gapCursor)
+    }
+    
+    init(id: String) {
+        self.id = id
+        self.isGap = false
+        self.gapCursor = nil
+    }
+    
+    init(gapCursor: String) {
+        self.id = nil
+        self.isGap = true
+        self.gapCursor = gapCursor
+    }
+}
 
 class MediaList {
     
+    private let name: String
     private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
-    private let dataStore: MediaDataStore
+    private let mediaDataStore: MediaDataStore
+    private let listDataStore: MediaListDataStore
     
-    private var privateEndCursor: String? = nil
-    var endCursor: String? {
-        return privateEndCursor
+    private var privateListItems: [MediaListItem] = []
+    var listItems: [MediaListItem] {
+        return privateListItems
+    }
+
+    var firstGapCursor: String? {
+        return listItems.filter({ $0.isGap }).first?.gapCursor
     }
     
     private var privateMedia: [MediaItem] = []
     var media: [MediaItem] {
-        return privateMedia
+        guard let firstGap = listItems.filter({ $0.isGap }).first else {
+            return []
+        }
+        let gapIndex = privateListItems.index(of: firstGap)!
+        return privateListItems[0..<gapIndex].map({ mediaItem(for: $0.id!)! })
     }
     
-    init(dataStore: MediaDataStore) {
-        self.dataStore = dataStore
-        unarchive()
+    private func mediaItem(for id: String) -> MediaItem? {
+        for mediaItem in privateMedia {
+            if mediaItem.id == id {
+                return mediaItem
+            }
+        }
+        return nil
     }
     
-    func unarchive() {
-        dataStore.unarchiveCurrentMedia() { [weak self] in
-            if let archive = $0 {
-                self?.privateMedia = archive.media
-                self?.privateEndCursor = archive.endCursor
+    init(name: String, mediaDataStore: MediaDataStore, listDataStore: MediaListDataStore) {
+        self.name = name
+        self.mediaDataStore = mediaDataStore
+        self.listDataStore = listDataStore
+        unarchiveMedia()
+    }
+    
+    func unarchiveMedia() {
+        mediaDataStore.unarchiveMedia { [weak self] media in
+            if let media = media {
+                self?.privateMedia = media
+            }
+        }
+        listDataStore.getMediaList(with: name) { [weak self] listItems in
+            if let listItems = listItems {
+                self?.privateListItems = listItems
             }
         }
     }
     
     func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String) {
         lockQueue.sync() {
-            if startCursor == endCursor {
-                privateMedia.append(contentsOf: newMedia)
-                privateEndCursor = newEndCursor
-                dataStore.archiveCurrentMedia(media, newEndCursor: newEndCursor)
+            
+            privateMedia.append(contentsOf: newMedia)
+
+            guard let gapIndex = privateListItems.index(where: { $0.isGap && $0.gapCursor == startCursor }) else {
+                return
             }
+            
+            let newerItems = privateListItems[0..<gapIndex]
+            let olderItems = privateListItems[gapIndex+1..<privateListItems.count]
+
+            let listItemsToAdd: [MediaListItem]
+            if let firstOlderItem = olderItems.first,
+                let indexOfOverlap = newMedia.index(where: { $0.id == firstOlderItem.id }) {
+                listItemsToAdd = newMedia[0..<indexOfOverlap].map(createMediaListItem)
+            } else {
+                listItemsToAdd = newMedia.map(createMediaListItem) + [MediaListItem(gapCursor: newEndCursor)]
+            }
+
+            privateListItems = newerItems + listItemsToAdd + olderItems
+            
+            mediaDataStore.archiveMedia(privateMedia)
+            listDataStore.saveMediaList(privateListItems, with: name)
         }
+    }
+    
+    func createMediaListItem(from mediaItem: MediaItem) -> MediaListItem {
+        return MediaListItem(id: mediaItem.id)
     }
     
     func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String) {
         lockQueue.sync() {
             
+            privateMedia.append(contentsOf: newMedia)
+            
             guard let currentHead = media.first else {
-                privateMedia = newMedia
-                privateEndCursor = newEndCursor
-                dataStore.archiveCurrentMedia(media, newEndCursor: newEndCursor)
+                privateListItems = newMedia.map(createMediaListItem) + [ MediaListItem(gapCursor: newEndCursor) ]
+                mediaDataStore.archiveMedia(privateMedia)
+                listDataStore.saveMediaList(privateListItems, with: name)
                 return
             }
             
             var foundMatch = false
-            var result: [MediaItem] = []
+            var result: [MediaListItem] = []
             for mediaItem in newMedia {
                 if mediaItem.id == currentHead.id {
                     foundMatch = true
                     break
                 }
-                result.append(mediaItem)
+                result.append(createMediaListItem(from: mediaItem))
             }
             
-            if foundMatch {
-                result.append(contentsOf: media)
-            } else {
-                privateEndCursor = newEndCursor
+            if !foundMatch {
+                result.append(MediaListItem(gapCursor: newEndCursor))
             }
-            privateMedia = result
+            result.append(contentsOf: listItems)
+
+            privateListItems = result
             
-            dataStore.archiveCurrentMedia(media, newEndCursor: newEndCursor)
+            mediaDataStore.archiveMedia(privateMedia)
+            listDataStore.saveMediaList(privateListItems, with: name)
         }
     }
 }

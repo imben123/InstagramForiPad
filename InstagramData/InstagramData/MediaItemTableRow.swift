@@ -34,13 +34,12 @@ class MediaItemTableRow: Object {
     
     // Used to distinguish between feed media and user profile media
     dynamic var mediaOrigin: String = ""
-    dynamic var ordering: Int = -1
     
 }
 
 extension MediaItemTableRow {
     
-    convenience init(_ mediaItem: MediaItem, mediaOrigin: String, ordering: Int = -1) {
+    convenience init(_ mediaItem: MediaItem, mediaOrigin: String) {
         self.init()
         
         self.id = mediaItem.id
@@ -60,7 +59,6 @@ extension MediaItemTableRow {
         self.likesCount = mediaItem.likesCount
         
         self.mediaOrigin = mediaOrigin
-        self.ordering = ordering
     }
 }
 

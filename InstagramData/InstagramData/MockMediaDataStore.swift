@@ -11,23 +11,13 @@ import Foundation
 
 class MockMediaDataStore: MediaDataStore {
     
-    var archivedMediaList: (media: [MediaItem], endCursor: String)? = nil
-    var testUnarchiveMediaList: (media: [MediaItem], endCursor: String)? = nil
+    var archivedMediaList: [MediaItem]? = nil
     
-    override var maximumNumberOfStoredRows: Int {
-        get {
-            return 0
-        }
-        set {
-            
-        }
+    override func archiveMedia(_ media: [MediaItem]) {
+        archivedMediaList = media
     }
     
-    override func archiveCurrentMedia(_ media: [MediaItem], newEndCursor: String) {
-        archivedMediaList = (media, newEndCursor)
-    }
-    
-    override func unarchiveCurrentMedia(_ completion: @escaping ((media: [MediaItem], endCursor: String)?) -> Void) {
-        completion((testUnarchiveMediaList != nil) ? testUnarchiveMediaList : archivedMediaList)
+    override func unarchiveMedia(_ completion: @escaping (_ media: [MediaItem]?) -> Void) {
+        completion(archivedMediaList)
     }
 }

@@ -14,11 +14,13 @@ public class FeedManager {
     private let feedWebStore: FeedWebStore
     private let mediaList: MediaList
     private var endCursor: String? {
-        return mediaList.endCursor
+        return mediaList.firstGapCursor
     }
     
     init(communicator: APICommunicator) {
-        self.mediaList = MediaList(dataStore: MediaDataStore(mediaOrigin: "feed"))
+        self.mediaList = MediaList(name: "feed",
+                                   mediaDataStore: MediaDataStore(mediaOrigin: "feed"),
+                                   listDataStore: MediaListDataStore())
         self.feedWebStore = FeedWebStore(communicator: communicator)
     }
     

@@ -50,12 +50,15 @@
 		B5A923921E17094F00C36D9C /* FeedUpdateOverlapping.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A923911E17094F00C36D9C /* FeedUpdateOverlapping.json */; };
 		B5A9239C1E170FCE00C36D9C /* MediaItemTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A9239B1E170FCE00C36D9C /* MediaItemTableRow.swift */; };
 		B5A923A51E17352A00C36D9C /* MediaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923A41E17352A00C36D9C /* MediaList.swift */; };
-		B5A923A71E17354000C36D9C /* MediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923A61E17354000C36D9C /* MediaListDataStore.swift */; };
+		B5A923A71E17354000C36D9C /* MediaDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923A61E17354000C36D9C /* MediaDataStore.swift */; };
 		B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AC74CE1E14359E0042D21D /* MediaItem.json */; };
 		B5BEC8FC1E17CEA4000C3870 /* MediaListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */; };
-		B5BEC8FF1E17CF63000C3870 /* MockMediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FD1E17CF5F000C3870 /* MockMediaListDataStore.swift */; };
+		B5BEC8FF1E17CF63000C3870 /* MockMediaDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */; };
 		B5BEC9031E17DF80000C3870 /* MediaListWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */; };
 		B5BEC9051E17DFFD000C3870 /* FeedWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9041E17DFFD000C3870 /* FeedWebStore.swift */; };
+		B5BEC90A1E18169B000C3870 /* MediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9091E18169B000C3870 /* MediaListDataStore.swift */; };
+		B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */; };
+		B5BEC9111E181B82000C3870 /* MockMediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,12 +142,15 @@
 		B5A923911E17094F00C36D9C /* FeedUpdateOverlapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FeedUpdateOverlapping.json; sourceTree = "<group>"; };
 		B5A9239B1E170FCE00C36D9C /* MediaItemTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemTableRow.swift; sourceTree = "<group>"; };
 		B5A923A41E17352A00C36D9C /* MediaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaList.swift; sourceTree = "<group>"; };
-		B5A923A61E17354000C36D9C /* MediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListDataStore.swift; sourceTree = "<group>"; };
+		B5A923A61E17354000C36D9C /* MediaDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDataStore.swift; sourceTree = "<group>"; };
 		B5AC74CE1E14359E0042D21D /* MediaItem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MediaItem.json; sourceTree = "<group>"; };
 		B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListTests.swift; sourceTree = "<group>"; };
-		B5BEC8FD1E17CF5F000C3870 /* MockMediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaListDataStore.swift; sourceTree = "<group>"; };
+		B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaDataStore.swift; sourceTree = "<group>"; };
 		B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListWebStore.swift; sourceTree = "<group>"; };
 		B5BEC9041E17DFFD000C3870 /* FeedWebStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedWebStore.swift; sourceTree = "<group>"; };
+		B5BEC9091E18169B000C3870 /* MediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListDataStore.swift; sourceTree = "<group>"; };
+		B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListTableRow.swift; sourceTree = "<group>"; };
+		B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaListDataStore.swift; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
 		E084B2E333B307E0B0489C2A /* Pods-InstagramDataTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F9C15D4746385A879DC34375 /* Pods-InstagramDataTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.release.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -222,7 +228,6 @@
 				B51D7B361E15E63C00DF5599 /* Managers */,
 				B51D7B351E15E61900DF5599 /* Networking */,
 				B5A923891E16C7B000C36D9C /* SwiftyJSON extensions */,
-				B5A923991E170F9700C36D9C /* Persistence */,
 			);
 			path = InstagramData;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 				B5A9237C1E16BFB100C36D9C /* FeedManager */,
 				B5BEC9001E17D666000C3870 /* MediaList */,
 				B5BEC9011E17D672000C3870 /* MediaListDataStore */,
+				B5BEC90E1E181B4B000C3870 /* MediaDataStore */,
 				B5BEC9061E17E210000C3870 /* MediaListWebStore */,
 			);
 			name = Managers;
@@ -378,14 +384,6 @@
 			name = "SwiftyJSON extensions";
 			sourceTree = "<group>";
 		};
-		B5A923991E170F9700C36D9C /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-				B5A9239B1E170FCE00C36D9C /* MediaItemTableRow.swift */,
-			);
-			name = Persistence;
-			sourceTree = "<group>";
-		};
 		B5BEC9001E17D666000C3870 /* MediaList */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,8 +396,9 @@
 		B5BEC9011E17D672000C3870 /* MediaListDataStore */ = {
 			isa = PBXGroup;
 			children = (
-				B5A923A61E17354000C36D9C /* MediaListDataStore.swift */,
-				B5BEC8FD1E17CF5F000C3870 /* MockMediaListDataStore.swift */,
+				B5BEC9091E18169B000C3870 /* MediaListDataStore.swift */,
+				B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */,
+				B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */,
 			);
 			name = MediaListDataStore;
 			sourceTree = "<group>";
@@ -410,6 +409,16 @@
 				B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */,
 			);
 			name = MediaListWebStore;
+			sourceTree = "<group>";
+		};
+		B5BEC90E1E181B4B000C3870 /* MediaDataStore */ = {
+			isa = PBXGroup;
+			children = (
+				B5A923A61E17354000C36D9C /* MediaDataStore.swift */,
+				B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */,
+				B5A9239B1E170FCE00C36D9C /* MediaItemTableRow.swift */,
+			);
+			name = MediaDataStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -643,12 +652,14 @@
 				B506A0941E142B1400EEA147 /* SwiftyJSONDate.swift in Sources */,
 				B51D7B381E15E66E00DF5599 /* AuthManager.swift in Sources */,
 				B53693331E15502D000246A7 /* APICommunicator.swift in Sources */,
+				B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */,
 				B506A08E1E14291600EEA147 /* Media.swift in Sources */,
 				B506A0961E142D6300EEA147 /* SwiftyJSONDimensions.swift in Sources */,
 				B50AD9E51E14123A00F46119 /* User.swift in Sources */,
 				B5A923A51E17352A00C36D9C /* MediaList.swift in Sources */,
 				B51D7B341E15E60E00DF5599 /* APIConnection.swift in Sources */,
-				B5A923A71E17354000C36D9C /* MediaListDataStore.swift in Sources */,
+				B5A923A71E17354000C36D9C /* MediaDataStore.swift in Sources */,
+				B5BEC90A1E18169B000C3870 /* MediaListDataStore.swift in Sources */,
 				B51D7B2D1E15E5B000DF5599 /* APIResponse.swift in Sources */,
 				B51D7B321E15E5F100DF5599 /* APIConnectionRequestBuilder.swift in Sources */,
 				B53693281E144637000246A7 /* UserFetcher.swift in Sources */,
@@ -674,6 +685,7 @@
 				B5A923831E16C27000C36D9C /* TestCase.swift in Sources */,
 				B54EBEBA1E16B63C001BB53C /* APICommunicatorTests.swift in Sources */,
 				B506A0921E14294300EEA147 /* MediaTests.swift in Sources */,
+				B5BEC9111E181B82000C3870 /* MockMediaListDataStore.swift in Sources */,
 				B54EBEAF1E1687D9001BB53C /* APIResponseTests.swift in Sources */,
 				B5A9237F1E16BFBE00C36D9C /* FeedManagerTests.swift in Sources */,
 				B54EBEB81E1697CD001BB53C /* APIConnectionTests.swift in Sources */,
@@ -682,7 +694,7 @@
 				B506A08A1E14252500EEA147 /* UserTests.swift in Sources */,
 				B54EBEB61E16953B001BB53C /* APIConnectionRequestBuilderTests.swift in Sources */,
 				B54EBEC01E16BBBD001BB53C /* AuthManagerLoginTests.swift in Sources */,
-				B5BEC8FF1E17CF63000C3870 /* MockMediaListDataStore.swift in Sources */,
+				B5BEC8FF1E17CF63000C3870 /* MockMediaDataStore.swift in Sources */,
 				B54EBEC61E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift in Sources */,
 				B54EBEB41E168CA7001BB53C /* HTTPConnectionTests.swift in Sources */,
 			);

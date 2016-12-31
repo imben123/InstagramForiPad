@@ -31,7 +31,7 @@ public struct MediaItem: Equatable {
         let json = JSON(jsonDictionary)
         
         id = json["id"].stringValue
-            
+        
         date = json["date"].dateValue
         dimensions = json["dimensions"].sizeValue
         ownerId = json["owner"]["id"].stringValue
@@ -44,7 +44,6 @@ public struct MediaItem: Equatable {
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
         likesCount = json["likes"]["count"].intValue
-
     }
     
     public static func ==(lhs: MediaItem, rhs: MediaItem) -> Bool {

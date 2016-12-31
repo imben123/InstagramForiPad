@@ -14,8 +14,8 @@ public class FeedManager {
     let communicator: APICommunicator
     var numberOfPostsToFetch = 20
     
-    private let mediaList = MediaList()
-    public var media: [MediaItem]  {
+    private let mediaList: MediaList
+    public var media: [MediaItem] {
         return mediaList.media
     }
     
@@ -24,6 +24,12 @@ public class FeedManager {
     }
     
     init(communicator: APICommunicator) {
+        self.mediaList = MediaList(dataStore: MediaListDataStore(mediaOrigin: "feed"))
+        self.communicator = communicator
+    }
+    
+    init(communicator: APICommunicator, mediaList: MediaList) {
+        self.mediaList = mediaList
         self.communicator = communicator
     }
     
@@ -91,57 +97,4 @@ public class FeedManager {
         return json["feed"]["media"]["page_info"]["end_cursor"].stringValue
     }
 
-}
-
-fileprivate class MediaList {
-    
-    private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
-    
-    private var privateEndCursor: String? = nil
-    var endCursor: String? {
-        return privateEndCursor
-    }
-
-    private var privateMedia: [MediaItem] = []
-    var media: [MediaItem] {
-        return privateMedia
-    }
-    
-    func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String) {
-        lockQueue.sync() {
-            if startCursor == endCursor {
-                privateMedia.append(contentsOf: newMedia)
-                privateEndCursor = newEndCursor
-            }
-        }
-    }
-    
-    func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String) {
-        lockQueue.sync() {
-            
-            guard let currentHead = media.first else {
-                privateMedia = newMedia
-                privateEndCursor = newEndCursor
-                return
-            }
-            
-            var foundMatch = false
-            var result: [MediaItem] = []
-            for mediaItem in newMedia {
-                if mediaItem.id == currentHead.id {
-                    foundMatch = true
-                    break
-                }
-                result.append(mediaItem)
-            }
-            
-            if foundMatch {
-                result.append(contentsOf: media)
-            } else {
-                privateEndCursor = newEndCursor
-            }
-            privateMedia = result
-        }
-    }
-    
 }

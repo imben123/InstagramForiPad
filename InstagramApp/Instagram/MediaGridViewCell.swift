@@ -11,9 +11,11 @@ import UIKit
 class MediaGridViewCell: UICollectionViewCell {
     
     let imageView = UIImageView()
+    var currentItem: MediaGridViewItem? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        imageView.contentMode = .scaleAspectFit
         contentView.addSubview(imageView)
     }
     
@@ -27,6 +29,8 @@ class MediaGridViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        currentItem = nil
         imageView.image = nil
     }
     

@@ -25,27 +25,23 @@ class ViewController: UIViewController {
     
     override func loadView() {
         view = MediaGridView()
-        mediaGridView.mediaDelegate = self
         mediaGridView.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let mediaItems = InstagramData.shared.feedManager.media
-        updateMediaGridView(with: mediaItems)
+        updateMediaGridView()
 
-        if mediaItems.count == 0 {
+        if InstagramData.shared.feedManager.media.count == 0 {
             loadMoreMedia()
         }
         
         navigationItem.rightBarButtonItem = createLogoutButton()
     }
     
-    func updateMediaGridView(with mediaItems: [MediaItem]) {
-        self.mediaGridView.items = mediaItems.map({ (mediaItem) -> MediaGridViewItem in
-            return MediaGridViewItem(url: mediaItem.display)
-        })
+    func updateMediaGridView() {
+        self.mediaGridView.reloadData()
     }
     
     @objc func logoutPressed() {
@@ -59,28 +55,11 @@ class ViewController: UIViewController {
         }
         fetchingMoreMedia = true
         InstagramData.shared.feedManager.fetchMoreMedia({ [weak self] in
-            let mediaItems = InstagramData.shared.feedManager.media
-            self?.updateMediaGridView(with: mediaItems)
+            self?.updateMediaGridView()
+            self?.fetchingMoreMedia = false
+        }, failure: { [weak self] in
             self?.fetchingMoreMedia = false
         })
-    }
-}
-
-extension ViewController: MediaGridViewDelegate {
-   
-    func mediaGridView(_ sender: MediaGridView, imageForItem item: MediaGridViewItem) -> UIImage? {
-        let image = SDImageCache.shared().imageFromMemoryCache(forKey: item.url.absoluteString)
-        if let image = image {
-            return image
-        }
-        
-        SDWebImageManager.shared().downloadImage(with: item.url, options: [], progress: { (receivedSize, expectedSize) in
-            // Nothing
-        }, completed: { (image, error, cacheType, finished, url) in
-            self.mediaGridView.reloadData()
-        })
-        
-        return nil
     }
 }
 

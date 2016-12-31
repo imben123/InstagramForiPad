@@ -8,29 +8,20 @@
 
 import UIKit
 
-struct MediaGridViewItem {
+struct MediaGridViewItem: Equatable {
     let url: URL
-}
-
-protocol MediaGridViewDelegate: class {
-    func mediaGridView(_ sender: MediaGridView, imageForItem item: MediaGridViewItem) -> UIImage?
+    
+    public static func ==(lhs: MediaGridViewItem, rhs: MediaGridViewItem) -> Bool {
+        return lhs.url == rhs.url
+    }
 }
 
 class MediaGridView: UICollectionView {
 
-    fileprivate static let reuseIdentifier = "cell"
+    static let reuseIdentifier = "cell"
 
-    weak var mediaDelegate: MediaGridViewDelegate?
-    
-    fileprivate var currentItems: [MediaGridViewItem] = []
-    var items: [MediaGridViewItem] {
-        get {
-            return currentItems
-        }
-        set {
-            currentItems = newValue
-            self.reloadData()
-        }
+    fileprivate var flowLayout: UICollectionViewFlowLayout {
+        return self.collectionViewLayout as! UICollectionViewFlowLayout
     }
     
     init() {
@@ -39,28 +30,56 @@ class MediaGridView: UICollectionView {
         super.init(frame: .zero, collectionViewLayout: layout)
         self.register(MediaGridViewCell.self, forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
         self.dataSource = self
+        self.prefetchDataSource = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func reloadCell(for item: MediaGridViewItem) {
+        guard let index = index(of: item) else {
+            return
+        }
+        let indexPath = IndexPath(item: index, section: 0)
+        self.reloadItems(at: [indexPath])
+    }
+    
+    override var frame: CGRect {
+        get {
+            return super.frame
+        }
+        set {
+            super.frame = newValue
+            preserveCurrentScrollPosition()
+        }
+    }
 }
 
-extension MediaGridView: UICollectionViewDataSource {
+extension MediaGridView {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.currentItems.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: MediaGridViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaGridView.reuseIdentifier,
-                                                                         for: indexPath) as! MediaGridViewCell
-        cell.backgroundColor = .red
-        if let mediaDelegate = mediaDelegate {
-            cell.imageView.image = mediaDelegate.mediaGridView(self, imageForItem: currentItems[indexPath.row])
+    func preserveCurrentScrollPosition() {
+        let indexPath = firstVisibleIndexPath()
+        if width > height {
+            flowLayout.scrollDirection = .horizontal
+            if let indexPath = indexPath {
+                self.scrollToItem(at: indexPath, at: .left, animated: false)
+            }
+        } else {
+            flowLayout.scrollDirection = .vertical
+            if let indexPath = indexPath {
+                self.scrollToItem(at: indexPath, at: .top, animated: false)
+            }
         }
-        return cell
     }
     
+    func firstVisibleIndexPath() -> IndexPath? {
+        var firstIndexPath = indexPathsForVisibleItems.first
+        for indexPath in indexPathsForVisibleItems {
+            if indexPath.row < firstIndexPath!.row {
+                firstIndexPath = indexPath
+            }
+        }
+        return firstIndexPath
+    }
 }

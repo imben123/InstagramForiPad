@@ -27,7 +27,7 @@ class MockMediaListDataStore: MediaListDataStore {
         archivedMediaList = (media, newEndCursor)
     }
     
-    override func unarchiveCurrentMediaList() -> (media: [MediaItem], endCursor: String)? {
-        return (testUnarchiveMediaList != nil) ? testUnarchiveMediaList : archivedMediaList
+    override func unarchiveCurrentMediaList(_ completion: @escaping ((media: [MediaItem], endCursor: String)?) -> Void) {
+        completion((testUnarchiveMediaList != nil) ? testUnarchiveMediaList : archivedMediaList)
     }
 }

@@ -32,10 +32,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         updateMediaGridView()
-
-        if InstagramData.shared.feedManager.media.count == 0 {
-            loadMoreMedia()
-        }
+        loadMoreMedia()
         
         navigationItem.rightBarButtonItem = createLogoutButton()
     }

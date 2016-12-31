@@ -11,8 +11,7 @@ import SwiftyJSON
 
 public class FeedManager {
     
-    let communicator: APICommunicator
-    var numberOfPostsToFetch = 20
+    let feedWebStore: FeedWebStore
     
     private let mediaList: MediaList
     public var media: [MediaItem] {
@@ -25,32 +24,22 @@ public class FeedManager {
     
     init(communicator: APICommunicator) {
         self.mediaList = MediaList(dataStore: MediaListDataStore(mediaOrigin: "feed"))
-        self.communicator = communicator
+        self.feedWebStore = FeedWebStore(communicator: communicator)
     }
     
     init(communicator: APICommunicator, mediaList: MediaList) {
         self.mediaList = mediaList
-        self.communicator = communicator
+        self.feedWebStore = FeedWebStore(communicator: communicator)
     }
     
     public func fetchNewestMedia(_ completion: (()->())?, failure: (()->())? = nil) {
-        DispatchQueue.global().async {
-            let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: nil)
-            if response.succeeded {
-                
-                let newMedia = self.parseMedia(from: response)
-                let newEndCursor = self.parseEndCursor(from: response)
-                self.mediaList.addNewMedia(newMedia, with: newEndCursor)
-                
-                DispatchQueue.main.async {
-                    completion?()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    failure?()
-                }
-            }
-        }
+        
+        feedWebStore.fetchNewestMedia({ (newMedia, newEndCursor) in
+            
+            self.mediaList.addNewMedia(newMedia, with: newEndCursor)
+            completion?()
+
+        }, failure: failure)
     }
     
     public func fetchMoreMedia(_ completion: (()->())?, failure: (()->())? = nil) {
@@ -59,42 +48,12 @@ public class FeedManager {
             return
         }
         
-        DispatchQueue.global().async {
-            let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: currentEndCursor)
-            if response.succeeded {
-
-                let newEndCursor = self.parseEndCursor(from: response)
-                let newMedia = self.parseMedia(from: response)
-                self.mediaList.appendMoreMedia(newMedia, from: currentEndCursor, to: newEndCursor)
-                
-                DispatchQueue.main.async {
-                    completion?()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    failure?()
-                }
-            }
-        }
-    }
-    
-    private func parseMedia(from response: APIResponse) -> [MediaItem] {
-        
-        var result: [MediaItem] = []
-        let json = JSON(response.responseBody!)
-        let mediaItemDictionaries = json["feed"]["media"]["nodes"].arrayValue
-        for mediaDictionary in mediaItemDictionaries {
-            let mediaItem = MediaItem(jsonDictionary: mediaDictionary.dictionaryObject!)
-            result.append(mediaItem)
-        }
-        
-        return result
-    }
-    
-    
-    private func parseEndCursor(from response: APIResponse) -> String {
-        let json = JSON(response.responseBody!)
-        return json["feed"]["media"]["page_info"]["end_cursor"].stringValue
+        feedWebStore.fetchMedia(after: currentEndCursor, completion: { (newMedia, newEndCursor) in
+            
+            self.mediaList.appendMoreMedia(newMedia, from: currentEndCursor, to: newEndCursor)
+            completion?()
+            
+        }, failure: failure)
     }
 
 }

@@ -26,9 +26,15 @@ class MediaList {
     
     init(dataStore: MediaListDataStore) {
         self.dataStore = dataStore
-        if let archive = dataStore.unarchiveCurrentMediaList() {
-            privateMedia = archive.media
-            privateEndCursor = archive.endCursor
+        unarchive()
+    }
+    
+    func unarchive() {
+        dataStore.unarchiveCurrentMediaList() { [weak self] in
+            if let archive = $0 {
+                self?.privateMedia = archive.media
+                self?.privateEndCursor = archive.endCursor
+            }
         }
     }
     

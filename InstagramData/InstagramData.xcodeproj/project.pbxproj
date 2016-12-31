@@ -54,6 +54,8 @@
 		B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AC74CE1E14359E0042D21D /* MediaItem.json */; };
 		B5BEC8FC1E17CEA4000C3870 /* MediaListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */; };
 		B5BEC8FF1E17CF63000C3870 /* MockMediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FD1E17CF5F000C3870 /* MockMediaListDataStore.swift */; };
+		B5BEC9031E17DF80000C3870 /* MediaListWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */; };
+		B5BEC9051E17DFFD000C3870 /* FeedWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9041E17DFFD000C3870 /* FeedWebStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,8 @@
 		B5AC74CE1E14359E0042D21D /* MediaItem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MediaItem.json; sourceTree = "<group>"; };
 		B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListTests.swift; sourceTree = "<group>"; };
 		B5BEC8FD1E17CF5F000C3870 /* MockMediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaListDataStore.swift; sourceTree = "<group>"; };
+		B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListWebStore.swift; sourceTree = "<group>"; };
+		B5BEC9041E17DFFD000C3870 /* FeedWebStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedWebStore.swift; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
 		E084B2E333B307E0B0489C2A /* Pods-InstagramDataTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F9C15D4746385A879DC34375 /* Pods-InstagramDataTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.release.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -256,7 +260,9 @@
 			children = (
 				B54EBEC41E16BE7A001BB53C /* AuthManager */,
 				B5A9237C1E16BFB100C36D9C /* FeedManager */,
-				B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */,
+				B5BEC9001E17D666000C3870 /* MediaList */,
+				B5BEC9011E17D672000C3870 /* MediaListDataStore */,
+				B5BEC9061E17E210000C3870 /* MediaListWebStore */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -305,9 +311,8 @@
 			isa = PBXGroup;
 			children = (
 				B51D7B3F1E15F04200DF5599 /* FeedManager.swift */,
+				B5BEC9041E17DFFD000C3870 /* FeedWebStore.swift */,
 				B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */,
-				B5BEC9001E17D666000C3870 /* MediaList */,
-				B5BEC9011E17D672000C3870 /* MediaListDataStore */,
 			);
 			name = FeedManager;
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 				B53693321E15502D000246A7 /* APICommunicator.swift */,
 				B54EBEB91E16B63C001BB53C /* APICommunicatorTests.swift */,
 				B54EBEBB1E16B660001BB53C /* MockAPIConnection.swift */,
+				B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */,
 			);
 			name = APICommunicator;
 			sourceTree = "<group>";
@@ -396,6 +402,14 @@
 				B5BEC8FD1E17CF5F000C3870 /* MockMediaListDataStore.swift */,
 			);
 			name = MediaListDataStore;
+			sourceTree = "<group>";
+		};
+		B5BEC9061E17E210000C3870 /* MediaListWebStore */ = {
+			isa = PBXGroup;
+			children = (
+				B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */,
+			);
+			name = MediaListWebStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -625,6 +639,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5BEC9051E17DFFD000C3870 /* FeedWebStore.swift in Sources */,
 				B506A0941E142B1400EEA147 /* SwiftyJSONDate.swift in Sources */,
 				B51D7B381E15E66E00DF5599 /* AuthManager.swift in Sources */,
 				B53693331E15502D000246A7 /* APICommunicator.swift in Sources */,
@@ -640,6 +655,7 @@
 				B51D7B3A1E15E6A800DF5599 /* InstagramData.swift in Sources */,
 				B5A9239C1E170FCE00C36D9C /* MediaItemTableRow.swift in Sources */,
 				B51D7B401E15F04200DF5599 /* FeedManager.swift in Sources */,
+				B5BEC9031E17DF80000C3870 /* MediaListWebStore.swift in Sources */,
 				B51D7B301E15E5D200DF5599 /* HTTPConnection.swift in Sources */,
 				B506A0981E14344600EEA147 /* SwiftyJSONURL.swift in Sources */,
 			);

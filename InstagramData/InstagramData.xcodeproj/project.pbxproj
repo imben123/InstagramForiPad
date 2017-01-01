@@ -59,6 +59,7 @@
 		B5BEC90A1E18169B000C3870 /* MediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9091E18169B000C3870 /* MediaListDataStore.swift */; };
 		B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */; };
 		B5BEC9111E181B82000C3870 /* MockMediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */; };
+		B5BEC9131E184DF7000C3870 /* ScrollingMediaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9121E184DF7000C3870 /* ScrollingMediaList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		B5BEC9091E18169B000C3870 /* MediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListDataStore.swift; sourceTree = "<group>"; };
 		B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListTableRow.swift; sourceTree = "<group>"; };
 		B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaListDataStore.swift; sourceTree = "<group>"; };
+		B5BEC9121E184DF7000C3870 /* ScrollingMediaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingMediaList.swift; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
 		E084B2E333B307E0B0489C2A /* Pods-InstagramDataTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F9C15D4746385A879DC34375 /* Pods-InstagramDataTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramDataTests.release.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramDataTests/Pods-InstagramDataTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 		B5BEC9001E17D666000C3870 /* MediaList */ = {
 			isa = PBXGroup;
 			children = (
+				B5BEC9121E184DF7000C3870 /* ScrollingMediaList.swift */,
 				B5A923A41E17352A00C36D9C /* MediaList.swift */,
 				B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */,
 			);
@@ -658,6 +661,7 @@
 				B50AD9E51E14123A00F46119 /* User.swift in Sources */,
 				B5A923A51E17352A00C36D9C /* MediaList.swift in Sources */,
 				B51D7B341E15E60E00DF5599 /* APIConnection.swift in Sources */,
+				B5BEC9131E184DF7000C3870 /* ScrollingMediaList.swift in Sources */,
 				B5A923A71E17354000C36D9C /* MediaDataStore.swift in Sources */,
 				B5BEC90A1E18169B000C3870 /* MediaListDataStore.swift in Sources */,
 				B51D7B2D1E15E5B000DF5599 /* APIResponse.swift in Sources */,

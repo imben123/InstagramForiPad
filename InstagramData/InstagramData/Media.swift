@@ -18,8 +18,8 @@ public struct MediaItem: Equatable {
     public let code: String?
     public let isVideo: Bool
     
-    public let thumbnail: URL?
     public let display: URL
+    public let thumbnail: URL
     
     public let commentsDisabled: Bool
     public let commentsCount: Int
@@ -38,9 +38,9 @@ public struct MediaItem: Equatable {
         code = json["code"].string
         isVideo = json["is_video"].boolValue
             
-        thumbnail = json["thumbnail_src"].URLWithoutEscaping
         display = json["display_src"].URLWithoutEscaping!
-            
+        thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : display
+        
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
         likesCount = json["likes"]["count"].intValue

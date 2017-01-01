@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import InstagramData
 
 struct MediaGridViewItem: Equatable {
+    let id: String
     let url: URL
     
     public static func ==(lhs: MediaGridViewItem, rhs: MediaGridViewItem) -> Bool {
@@ -30,7 +32,7 @@ class MediaGridView: UICollectionView {
         super.init(frame: .zero, collectionViewLayout: layout)
         self.register(MediaGridViewCell.self, forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
         self.dataSource = self
-        self.prefetchDataSource = self
+        InstagramData.shared.feedManager.prefetchingDelegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {

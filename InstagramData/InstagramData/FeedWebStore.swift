@@ -12,7 +12,7 @@ import SwiftyJSON
 class FeedWebStore: MediaListWebStore {
     
     let communicator: APICommunicator
-    var numberOfPostsToFetch = 20
+    var numberOfPostsToFetch = 100
     
     init(communicator: APICommunicator) {
         self.communicator = communicator

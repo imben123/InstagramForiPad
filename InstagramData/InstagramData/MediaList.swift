@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct MediaListItem: Equatable {
-    let id: String?
-    let isGap: Bool
-    let gapCursor: String?
+public struct MediaListItem: Equatable {
+    public let id: String?
+    public let isGap: Bool
+    public let gapCursor: String?
     
-    static func ==(_ lhs: MediaListItem, rhs: MediaListItem) -> Bool {
+    public static func ==(_ lhs: MediaListItem, rhs: MediaListItem) -> Bool {
         return (lhs.id == rhs.id && lhs.isGap == rhs.isGap && lhs.gapCursor == rhs.gapCursor)
     }
     
@@ -37,31 +37,55 @@ class MediaList {
     private let mediaDataStore: MediaDataStore
     private let listDataStore: MediaListDataStore
     
-    private var privateListItems: [MediaListItem] = []
     var listItems: [MediaListItem] {
         return privateListItems
     }
-
+    
     var firstGapCursor: String? {
         return listItems.filter({ $0.isGap }).first?.gapCursor
     }
     
-    private var privateMedia: [MediaItem] = []
-    var media: [MediaItem] {
+    private var privateListItemsBeforeFirstGap: [MediaListItem] = []
+    var listItemsBeforeFirstGap: [MediaListItem] {
+        return privateListItemsBeforeFirstGap
+    }
+    
+    private var privateMediaIDsBeforeFirstGap: [String] = []
+    var mediaIDsBeforeFirstGap: [String] {
+        return privateMediaIDsBeforeFirstGap
+    }
+    
+    private var privateMediaCount: Int = 0
+    var mediaCount: Int {
+        return privateMediaCount
+    }
+    
+    private var privateListItemsValue: [MediaListItem] = []
+    private var privateListItems: [MediaListItem] {
+        set {
+            privateListItemsValue = newValue
+            privateListItemsBeforeFirstGap = calculatelistItemsBeforeFirstGap()
+            privateMediaIDsBeforeFirstGap = privateListItemsBeforeFirstGap.map({ $0.id! })
+            privateMediaCount = calculateMediaCount()
+        }
+        get {
+            return privateListItemsValue
+        }
+    }
+    
+    private func calculatelistItemsBeforeFirstGap() -> [MediaListItem] {
         guard let firstGap = listItems.filter({ $0.isGap }).first else {
             return []
         }
-        let gapIndex = privateListItems.index(of: firstGap)!
-        return privateListItems[0..<gapIndex].map({ mediaItem(for: $0.id!)! })
+        let gapIndex = listItems.index(of: firstGap)!
+        return Array(listItems[0..<gapIndex])
     }
     
-    private func mediaItem(for id: String) -> MediaItem? {
-        for mediaItem in privateMedia {
-            if mediaItem.id == id {
-                return mediaItem
-            }
+    private func calculateMediaCount() -> Int {
+        guard let firstGap = listItems.filter({ $0.isGap }).first else {
+            return 0
         }
-        return nil
+        return privateListItems.index(of: firstGap)!
     }
     
     init(name: String, mediaDataStore: MediaDataStore, listDataStore: MediaListDataStore) {
@@ -71,12 +95,7 @@ class MediaList {
         unarchiveMedia()
     }
     
-    func unarchiveMedia() {
-        mediaDataStore.unarchiveMedia { [weak self] media in
-            if let media = media {
-                self?.privateMedia = media
-            }
-        }
+    private func unarchiveMedia() {
         listDataStore.getMediaList(with: name) { [weak self] listItems in
             if let listItems = listItems {
                 self?.privateListItems = listItems
@@ -84,11 +103,17 @@ class MediaList {
         }
     }
     
+    func mediaItem(for id: String, completion: @escaping (MediaItem?)->Void) {
+        mediaDataStore.loadMediaItem(with: id, completion: completion)
+    }
+    
+    func mediaItems(with ids: [String], completion: @escaping ([MediaItem])->Void) {
+        mediaDataStore.loadMediaItems(with: ids, completion: completion)
+    }
+    
     func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String) {
         lockQueue.sync() {
             
-            privateMedia.append(contentsOf: newMedia)
-
             guard let gapIndex = privateListItems.index(where: { $0.isGap && $0.gapCursor == startCursor }) else {
                 return
             }
@@ -106,23 +131,21 @@ class MediaList {
 
             privateListItems = newerItems + listItemsToAdd + olderItems
             
-            mediaDataStore.archiveMedia(privateMedia)
+            mediaDataStore.archiveMedia(newMedia)
             listDataStore.saveMediaList(privateListItems, with: name)
         }
     }
     
-    func createMediaListItem(from mediaItem: MediaItem) -> MediaListItem {
+    private func createMediaListItem(from mediaItem: MediaItem) -> MediaListItem {
         return MediaListItem(id: mediaItem.id)
     }
     
     func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String) {
         lockQueue.sync() {
             
-            privateMedia.append(contentsOf: newMedia)
-            
-            guard let currentHead = media.first else {
+            guard let currentHead = privateListItems.first else {
                 privateListItems = newMedia.map(createMediaListItem) + [ MediaListItem(gapCursor: newEndCursor) ]
-                mediaDataStore.archiveMedia(privateMedia)
+                mediaDataStore.archiveMedia(newMedia)
                 listDataStore.saveMediaList(privateListItems, with: name)
                 return
             }
@@ -144,7 +167,7 @@ class MediaList {
 
             privateListItems = result
             
-            mediaDataStore.archiveMedia(privateMedia)
+            mediaDataStore.archiveMedia(newMedia)
             listDataStore.saveMediaList(privateListItems, with: name)
         }
     }

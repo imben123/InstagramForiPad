@@ -10,6 +10,7 @@ import UIKit
 import InstagramData
 import SwiftToolbox
 import SDWebImage
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-                
+        
+//        try! Realm().write { try! Realm().deleteAll() }
+        
         let rootViewController: UIViewController
         if InstagramData.shared.authManager.authenticated {
             rootViewController = ViewController()

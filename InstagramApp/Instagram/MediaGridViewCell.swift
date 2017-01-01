@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol MediaGridViewCellDelegate: class {
+    func mediaGridViewCellWillPrepareForReuse(_ mediaGridViewCell: MediaGridViewCell)
+}
+
 class MediaGridViewCell: UICollectionViewCell {
     
     let imageView = UIImageView()
     var currentItem: MediaGridViewItem? = nil
+    weak var delegate: MediaGridViewCellDelegate? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,9 +34,11 @@ class MediaGridViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        delegate?.mediaGridViewCellWillPrepareForReuse(self)
         super.prepareForReuse()
         currentItem = nil
         imageView.image = nil
+        delegate = nil
     }
     
 }

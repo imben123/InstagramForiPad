@@ -25,21 +25,21 @@ class MediaItemTableRow: Object {
     dynamic var code: String? = nil
     dynamic var isVideo: Bool = false
     
-    dynamic var thumbnailURL: String? = nil
     dynamic var displayURL: String = ""
+    dynamic var thumbnailURL: String = ""
     
     dynamic var commentsDisabled: Bool = false
     dynamic var commentsCount: Int = 0
     dynamic var likesCount: Int = 0
     
-    // Used to distinguish between feed media and user profile media
-    dynamic var mediaOrigin: String = ""
-    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 extension MediaItemTableRow {
     
-    convenience init(_ mediaItem: MediaItem, mediaOrigin: String) {
+    convenience init(_ mediaItem: MediaItem) {
         self.init()
         
         self.id = mediaItem.id
@@ -51,14 +51,12 @@ extension MediaItemTableRow {
         self.code = mediaItem.code
         self.isVideo = mediaItem.isVideo
         
-        self.thumbnailURL = mediaItem.thumbnail?.absoluteString
+        self.thumbnailURL = mediaItem.thumbnail.absoluteString
         self.displayURL = mediaItem.display.absoluteString
         
         self.commentsDisabled = mediaItem.commentsDisabled
         self.commentsCount = mediaItem.commentsCount
         self.likesCount = mediaItem.likesCount
-        
-        self.mediaOrigin = mediaOrigin
     }
 }
 
@@ -74,8 +72,8 @@ extension MediaItem {
         code = mediaItemTableRow.code
         isVideo = mediaItemTableRow.isVideo
         
-        thumbnail = mediaItemTableRow.thumbnailURL != nil ? URL(string: mediaItemTableRow.thumbnailURL!)! : nil
         display = URL(string: mediaItemTableRow.displayURL)!
+        thumbnail = URL(string: mediaItemTableRow.thumbnailURL)!
         
         commentsDisabled = mediaItemTableRow.commentsDisabled
         commentsCount = mediaItemTableRow.commentsCount

@@ -96,11 +96,14 @@ class MediaList {
     }
     
     private func unarchiveMedia() {
+        let semaphore = DispatchSemaphore(value: 0)
         listDataStore.getMediaList(with: name) { [weak self] listItems in
             if let listItems = listItems {
                 self?.privateListItems = listItems
             }
+            semaphore.signal()
         }
+        semaphore.wait()
     }
     
     func mediaItem(for id: String, completion: @escaping (MediaItem?)->Void) {

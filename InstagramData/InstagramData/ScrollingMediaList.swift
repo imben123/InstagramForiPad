@@ -8,7 +8,7 @@
 
 import Foundation
 
-// TODO: Test this
+// Should possibly test this independantly... It's currently tested through FeedManagerTests
 
 protocol ScrollingMediaListPrefetchingDelegate: class {
     func scrollingMediaList(_ scrollingMediaList: ScrollingMediaList, prefetchDataFor mediaItems: [MediaItem])

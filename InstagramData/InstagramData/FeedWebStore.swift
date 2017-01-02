@@ -43,6 +43,13 @@ class FeedWebStore: MediaListWebStore {
             let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: endCursor)
             if response.succeeded {
                 
+                let startCursor = self.parseStartCursor(from: response)
+                guard startCursor == endCursor else {
+                    print("End cursor rejected by Instagram API... Probably returned new media instead")
+                    failure?()
+                    return
+                }
+                
                 let newEndCursor = self.parseEndCursor(from: response)
                 let newMedia = self.parseMedia(from: response)
                 
@@ -68,6 +75,11 @@ class FeedWebStore: MediaListWebStore {
         }
         
         return result
+    }
+    
+    private func parseStartCursor(from response: APIResponse) -> String {
+        let json = JSON(response.responseBody!)
+        return json["feed"]["media"]["page_info"]["start_cursor"].stringValue
     }
     
     private func parseEndCursor(from response: APIResponse) -> String {

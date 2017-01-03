@@ -11,6 +11,7 @@ import SwiftyJSON
 
 public protocol FeedManagerPrefetchingDelegate: class {
     func feedManager(_ feedManager: FeedManager, prefetchDataFor mediaItems: [MediaItem])
+    func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem])
 }
 
 public class FeedManager {
@@ -79,5 +80,9 @@ extension FeedManager: ScrollingMediaListPrefetchingDelegate {
     
     func scrollingMediaList(_ scrollingMediaList: ScrollingMediaList, prefetchDataFor mediaItems: [MediaItem]) {
         prefetchingDelegate?.feedManager(self, prefetchDataFor: mediaItems)
+    }
+    
+    func scrollingMediaList(_ scrollingMediaList: ScrollingMediaList, removeCachedDataFor mediaItems: [MediaItem]) {
+        prefetchingDelegate?.feedManager(self, removeCachedDataFor: mediaItems)
     }
 }

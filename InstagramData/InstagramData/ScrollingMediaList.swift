@@ -12,6 +12,7 @@ import Foundation
 
 protocol ScrollingMediaListPrefetchingDelegate: class {
     func scrollingMediaList(_ scrollingMediaList: ScrollingMediaList, prefetchDataFor mediaItems: [MediaItem])
+    func scrollingMediaList(_ scrollingMediaList: ScrollingMediaList, removeCachedDataFor mediaItems: [MediaItem])
 }
 
 class ScrollingMediaList {
@@ -132,6 +133,10 @@ class ScrollingMediaList {
     }
     
     private func moveBufferUp() {
+
+        let cacheToRemove = firstPage + secondPage
+        prefetchingDelegate?.scrollingMediaList(self, removeCachedDataFor: cacheToRemove)
+
         firstPage = middlePage
         secondPage = fourthPage
         middlePage = lastPage
@@ -149,6 +154,10 @@ class ScrollingMediaList {
     }
     
     private func moveBufferDown() {
+        
+        let cacheToRemove = fourthPage + lastPage
+        prefetchingDelegate?.scrollingMediaList(self, removeCachedDataFor: cacheToRemove)
+
         lastPage = middlePage
         fourthPage = secondPage
         middlePage = firstPage
@@ -166,13 +175,18 @@ class ScrollingMediaList {
     }
     
     private func reloadAllBuffers(around index: Int) {
+        
+        let cacheToRemove = firstPage + secondPage + middlePage + fourthPage + lastPage
+        prefetchingDelegate?.scrollingMediaList(self, removeCachedDataFor: cacheToRemove)
+
         firstPage = loadListItemsForPage(before: index - pageSize)
         secondPage = loadListItemsForPage(before: index)
         middlePage = loadListItemsForPage(startingFrom: index)
         fourthPage = loadListItemsForPage(startingFrom: index + pageSize)
         lastPage = loadListItemsForPage(startingFrom: index + 2*pageSize)
         
-        prefetchingDelegate?.scrollingMediaList(self, prefetchDataFor: firstPage + secondPage + middlePage + fourthPage + lastPage)
+        let mediaToPreload = firstPage + secondPage + middlePage + fourthPage + lastPage
+        prefetchingDelegate?.scrollingMediaList(self, prefetchDataFor: mediaToPreload)
     }
     
     private func loadListItemsForPage(startingFrom index: Int) -> [MediaItem] {

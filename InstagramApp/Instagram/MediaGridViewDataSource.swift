@@ -33,6 +33,13 @@ extension MediaGridView: FeedManagerPrefetchingDelegate {
         SDWebImagePrefetcher.shared().prefetchURLs(urls)
     }
     
+    func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem]) {
+        for media in mediaItems {
+            let cacheKey = SDWebImageManager.shared().cacheKey(for: media.thumbnail)
+            SDWebImageManager.shared().imageCache.removeImage(forKey: cacheKey, fromDisk: false)
+        }
+    }
+    
 }
 
 class MediaGridViewCellOperationDelegate: MediaGridViewCellDelegate {

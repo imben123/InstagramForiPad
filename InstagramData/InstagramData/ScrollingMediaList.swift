@@ -20,7 +20,9 @@ class ScrollingMediaList {
     private let pageSize: Int
     
     private var firstPage: [MediaItem] = []
+    private var secondPage: [MediaItem] = []
     private var middlePage: [MediaItem] = []
+    private var fourthPage: [MediaItem] = []
     private var lastPage: [MediaItem] = []
     private var populatingMedia = false
     
@@ -49,20 +51,12 @@ class ScrollingMediaList {
     init(name: String, pageSize: Int, mediaDataStore: MediaDataStore, listDataStore: MediaListDataStore) {
         self.mediaList = MediaList(name: name, mediaDataStore: mediaDataStore, listDataStore: listDataStore)
         self.pageSize = pageSize
-        
-        if let id = self.mediaList.listItemsBeforeFirstGap.first?.id {
-            DispatchQueue.global().async {
-                self.populateBuffer(around: id)
-            }
-        }
     }
     
     func mediaItem(for id: String, completion: @escaping (MediaItem?) -> Void) {
         if let cachedMediaItem = mediaItemFromCache(for: id) {
-            print("Got media from cache")
             completion(cachedMediaItem)
         } else {
-            print("Media not in cache")
             mediaList.mediaItem(for: id, completion: completion)
         }
         
@@ -73,9 +67,17 @@ class ScrollingMediaList {
     
     private func mediaItemFromCache(for id: String) -> MediaItem? {
         
-        if let index = middlePage.index(where: { $0.id == id }) { // Media most likly to be in middle page
+        if let index = middlePage.index(where: { $0.id == id }) { // Media most likly to be in middle pages
             
             return middlePage[index]
+            
+        } else if let index = fourthPage.index(where: { $0.id == id }) {
+            
+            return fourthPage[index]
+            
+        } else if let index = secondPage.index(where: { $0.id == id }) {
+            
+            return secondPage[index]
             
         } else if let index = lastPage.index(where: { $0.id == id }) {
             
@@ -101,7 +103,7 @@ class ScrollingMediaList {
     // TODO: need to synchronise reading and writing to the ivars
     private func populateBuffer(around id: String) {
         
-        if middlePage.contains(where: { $0.id == id }) {
+        if middlePagesContainsMedia(with: id) {
             // Buffer already good 👍
             return
         }
@@ -111,37 +113,36 @@ class ScrollingMediaList {
         }
         populatingMedia = true
         
-        print("---- Need to update media cache buffer")
-        
         if lastPage.contains(where: { $0.id == id }) {
-            
             moveBufferUp()
-            
         } else if firstPage.contains(where: { $0.id == id }) {
-            
             moveBufferDown()
-            
         } else {
-            
             let index = listItemsBeforeFirstGap.index(where: { $0.id == id })!
-            firstPage = loadListItemsForPage(before: index)
-            middlePage = loadListItemsForPage(startingFrom: index)
-            lastPage = loadListItemsForPage(startingFrom: index + pageSize)
-            
-            print("====== Reset buffer to... \(index-pageSize)-\(index+pageSize*2)")
+            reloadAllBuffers(around: index)
         }
         
         populatingMedia = false
     }
     
+    func middlePagesContainsMedia(with id: String) -> Bool {
+        return (secondPage.contains(where: { $0.id == id }) ||
+            middlePage.contains(where: { $0.id == id }) ||
+            fourthPage.contains(where: { $0.id == id }))
+    }
+    
     private func moveBufferUp() {
         firstPage = middlePage
+        secondPage = fourthPage
         middlePage = lastPage
         
         if let id = middlePage.last?.id {
             let index = listItemsBeforeFirstGap.index(where: { $0.id == id })!
-            lastPage = loadListItemsForPage(startingFrom: index + 1)
-            print("====== Reset buffer to... \(index-pageSize)-\(index+pageSize*2)")
+            fourthPage = loadListItemsForPage(startingFrom: index + 1)
+            lastPage = loadListItemsForPage(startingFrom: index + 1 + pageSize)
+            
+            prefetchingDelegate?.scrollingMediaList(self, prefetchDataFor: fourthPage + lastPage)
+            
             return
         }
         print("**** FAILED TO MOVE BUFFER UP ****")
@@ -149,21 +150,35 @@ class ScrollingMediaList {
     
     private func moveBufferDown() {
         lastPage = middlePage
+        fourthPage = secondPage
         middlePage = firstPage
         
         if let id = middlePage.first?.id {
             let index = listItemsBeforeFirstGap.index(where: { $0.id == id })!
-            firstPage = loadListItemsForPage(startingFrom: index)
-            print("====== Reset buffer to... \(index-pageSize)-\(index+pageSize*2)")
+            secondPage = loadListItemsForPage(startingFrom: index)
+            firstPage = loadListItemsForPage(startingFrom: index - pageSize)
+            
+            prefetchingDelegate?.scrollingMediaList(self, prefetchDataFor: secondPage + firstPage)
+            
             return
         }
         print("**** FAILED TO MOVE BUFFER DOWN ****")
     }
     
+    private func reloadAllBuffers(around index: Int) {
+        firstPage = loadListItemsForPage(before: index - pageSize)
+        secondPage = loadListItemsForPage(before: index)
+        middlePage = loadListItemsForPage(startingFrom: index)
+        fourthPage = loadListItemsForPage(startingFrom: index + pageSize)
+        lastPage = loadListItemsForPage(startingFrom: index + 2*pageSize)
+        
+        prefetchingDelegate?.scrollingMediaList(self, prefetchDataFor: firstPage + secondPage + middlePage + fourthPage + lastPage)
+    }
+    
     private func loadListItemsForPage(startingFrom index: Int) -> [MediaItem] {
         
         let totalNumberOfItems = listItemsBeforeFirstGap.count
-        guard index < totalNumberOfItems else {
+        guard index < totalNumberOfItems && index >= 0 else {
             return []
         }
         
@@ -178,7 +193,8 @@ class ScrollingMediaList {
     
     private func loadListItemsForPage(before index: Int) -> [MediaItem] {
         
-        guard index >= 0 else {
+        let totalNumberOfItems = listItemsBeforeFirstGap.count
+        guard index < totalNumberOfItems && index >= 0 else {
             return []
         }
         
@@ -202,7 +218,6 @@ class ScrollingMediaList {
         }
         semaphore.wait()
         
-        prefetchingDelegate?.scrollingMediaList(self, prefetchDataFor: result)
         return result
     }
     

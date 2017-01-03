@@ -83,7 +83,9 @@ extension MediaGridView {
 
         cellDelegate.operation = SDWebImageManager.shared().downloadImage(with: item.url, options: [], progress: nil)
         { [cellDelegate] (image, error, cacheType, finished, url) in
-            self.reloadCell(for: item)
+            if image != nil {
+                self.reloadCell(for: item)
+            }
             cellDelegate.operation = nil
         }
         cell.delegate = cellDelegate

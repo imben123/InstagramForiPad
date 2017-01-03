@@ -112,7 +112,7 @@ extension MediaGridView {
         let shortestEdge: CGFloat = min(contentSize.width - navigationBarHeight, contentSize.height)
         let numberOfItems: CGFloat = (shortestEdge / MediaGridView.minItemSize).rounded(.down)
         if numberOfItems == 0 {
-            return shortestEdge
+            return MediaGridView.minItemSize
         }
         let spacing = self.flowLayout.minimumInteritemSpacing*(numberOfItems-1)
         return (shortestEdge-spacing) / numberOfItems

@@ -21,6 +21,10 @@ struct MediaGridViewItem: Equatable {
 class MediaGridView: UICollectionView {
 
     static let reuseIdentifier = "cell"
+    static let minItemSize: CGFloat = 300
+    
+    var resizesWithNavigationBar: Bool = true
+    var navigationBarHeightForSizeCalculations: CGFloat = 64
 
     fileprivate var flowLayout: UICollectionViewFlowLayout {
         return self.collectionViewLayout as! UICollectionViewFlowLayout
@@ -28,7 +32,7 @@ class MediaGridView: UICollectionView {
     
     init() {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 300, height: 300)
+        layout.itemSize = CGSize(width: MediaGridView.minItemSize, height: MediaGridView.minItemSize)
         super.init(frame: .zero, collectionViewLayout: layout)
         self.register(MediaGridViewCell.self, forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
         self.dataSource = self
@@ -54,6 +58,16 @@ class MediaGridView: UICollectionView {
         set {
             super.frame = newValue
             preserveCurrentScrollPosition()
+        }
+    }
+    
+    override var contentSize: CGSize {
+        get {
+            return super.contentSize
+        }
+        set {
+            super.contentSize = newValue
+            updateImageSize()
         }
     }
 }
@@ -83,5 +97,24 @@ extension MediaGridView {
             }
         }
         return firstIndexPath
+    }
+}
+
+extension MediaGridView {
+    
+    func updateImageSize() {
+        let newItemSize = calculateBestItemSize()
+        flowLayout.itemSize = CGSize(width: newItemSize, height: newItemSize)
+    }
+    
+    func calculateBestItemSize() -> CGFloat {
+        let navigationBarHeight = resizesWithNavigationBar ? navigationBarHeightForSizeCalculations : 0
+        let shortestEdge: CGFloat = min(contentSize.width - navigationBarHeight, contentSize.height)
+        let numberOfItems: CGFloat = (shortestEdge / MediaGridView.minItemSize).rounded(.down)
+        if numberOfItems == 0 {
+            return shortestEdge
+        }
+        let spacing = self.flowLayout.minimumInteritemSpacing*(numberOfItems-1)
+        return (shortestEdge-spacing) / numberOfItems
     }
 }

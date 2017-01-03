@@ -12,7 +12,9 @@ import SDWebImage
 
 class ViewController: UIViewController {
     
+    // TODO: more this logic to managers
     var fetchingMoreMedia = false
+    
     var mediaGridView: MediaGridView {
         return view as! MediaGridView
     }

@@ -9,6 +9,6 @@
 import Foundation
 
 protocol MediaListWebStore {
-    func fetchNewestMedia(_ completion: ((_ newMedia: [MediaItem], _ endCursor: String)->())?, failure: (()->())?)
-    func fetchMedia(after endCursor: String, completion: ((_ newMedia: [MediaItem], _ endCursor: String)->())?, failure: (()->())?)
+    func fetchNewestMedia(_ completion: ((_ newMedia: [MediaItem], _ endCursor: String?)->())?, failure: (()->())?)
+    func fetchMedia(after endCursor: String, completion: ((_ newMedia: [MediaItem], _ endCursor: String?)->())?, failure: (()->())?)
 }

@@ -23,7 +23,7 @@ public struct MediaListItem: Equatable {
         self.gapCursor = nil
     }
     
-    init(gapCursor: String) {
+    init(gapCursor: String?) {
         self.id = nil
         self.isGap = true
         self.gapCursor = gapCursor
@@ -42,7 +42,7 @@ class MediaList {
     }
     
     var firstGapCursor: String? {
-        return listItems.filter({ $0.isGap }).first?.gapCursor
+        return listItems.filter({ $0.isGap && $0.gapCursor != nil }).first?.gapCursor
     }
     
     private var privateListItemsBeforeFirstGap: [MediaListItem] = []
@@ -114,7 +114,7 @@ class MediaList {
         mediaDataStore.loadMediaItems(with: ids, completion: completion)
     }
     
-    func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String) {
+    func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String?) {
         lockQueue.sync() {
             
             guard let gapIndex = privateListItems.index(where: { $0.isGap && $0.gapCursor == startCursor }) else {
@@ -143,8 +143,14 @@ class MediaList {
         return MediaListItem(id: mediaItem.id)
     }
     
-    func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String) {
+    func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String?) {
         lockQueue.sync() {
+            
+            if newEndCursor == nil {
+                privateListItems = []
+                mediaDataStore.deleteAllMedia()
+                print("Latest media had no end cursor. Cannot link up with previous cached media so deleting all.")
+            }
             
             guard let currentHead = privateListItems.first else {
                 privateListItems = newMedia.map(createMediaListItem) + [ MediaListItem(gapCursor: newEndCursor) ]

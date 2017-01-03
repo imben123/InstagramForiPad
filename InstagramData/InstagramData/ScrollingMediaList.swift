@@ -93,11 +93,11 @@ class ScrollingMediaList {
         return nil
     }
     
-    func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String) {
+    func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String?) {
         mediaList.appendMoreMedia(newMedia, from: startCursor, to: newEndCursor)
     }
     
-    func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String) {
+    func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String?) {
         mediaList.addNewMedia(newMedia, with: newEndCursor)
     }
     

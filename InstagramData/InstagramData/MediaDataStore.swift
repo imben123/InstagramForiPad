@@ -81,4 +81,13 @@ class MediaDataStore {
         }
     }
     
+    func deleteAllMedia() {
+        backgroundQueue.sync {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.delete(realm.objects(MediaItemTableRow.self))
+            }
+        }
+    }
+    
 }

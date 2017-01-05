@@ -11,10 +11,13 @@ import InstagramData
 
 struct MediaGridViewItem: Equatable {
     let id: String
+    
     let url: URL
+    let profilePicture: URL
+    let username: String
     
     public static func ==(lhs: MediaGridViewItem, rhs: MediaGridViewItem) -> Bool {
-        return lhs.url == rhs.url
+        return lhs.id == rhs.id
     }
 }
 
@@ -34,7 +37,7 @@ class MediaGridView: UICollectionView {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: MediaGridView.minItemSize, height: MediaGridView.minItemSize)
         super.init(frame: .zero, collectionViewLayout: layout)
-        self.register(MediaGridViewCell.self, forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
+        self.register(UINib(nibName: "MediaGridViewCell", bundle: nil), forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
         self.dataSource = self
         InstagramData.shared.feedManager.prefetchingDelegate = self
     }

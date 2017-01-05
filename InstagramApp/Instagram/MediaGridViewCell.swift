@@ -12,25 +12,51 @@ protocol MediaGridViewCellDelegate: class {
     func mediaGridViewCellWillPrepareForReuse(_ mediaGridViewCell: MediaGridViewCell)
 }
 
-class MediaGridViewCell: UICollectionViewCell {
+@IBDesignable class GradientView: UIView {
     
-    let imageView = UIImageView()
-    var currentItem: MediaGridViewItem? = nil
-    weak var delegate: MediaGridViewCellDelegate? = nil
-    
+    var gradientLayer = CAGradientLayer()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        imageView.contentMode = .scaleAspectFit
-        contentView.addSubview(imageView)
+        self.setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    func setup() {
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.6).cgColor]
+        layer.insertSublayer(gradientLayer, at: 0)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageView.frame = self.contentView.bounds
+        gradientLayer.frame = self.bounds
+    }
+}
+
+class MediaGridViewCell: UICollectionViewCell {
+    
+    var currentItem: MediaGridViewItem? = nil
+    
+    weak var delegate: MediaGridViewCellDelegate? = nil
+    
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var profilePicture: UIImageView!
+    @IBOutlet var username: UILabel!
+    @IBOutlet var likeImage: UIImageView!
+    @IBOutlet var likeButton: UIButton!
+    @IBOutlet var gradientView: GradientView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profilePicture.layer.cornerRadius = profilePicture.width*0.5
     }
     
     override func prepareForReuse() {
@@ -38,7 +64,14 @@ class MediaGridViewCell: UICollectionViewCell {
         super.prepareForReuse()
         currentItem = nil
         imageView.image = nil
+        profilePicture.image = nil
+        likeImage.image = UIImage(named: "heart-outline-white.png")
+        username.text = ""
         delegate = nil
+    }
+    
+    @IBAction func likePressed(_ sender: UIButton) {
+        likeImage.image = UIImage(named: "heart-red.png")
     }
     
 }

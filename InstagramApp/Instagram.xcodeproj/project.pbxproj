@@ -19,7 +19,13 @@
 		B536932D1E148BCE000246A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932C1E148BCE000246A7 /* ViewController.swift */; };
 		B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */; };
 		B53693381E155645000246A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693371E155645000246A7 /* LoginViewController.swift */; };
+		B546DE061E1DC078002F889D /* heart-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE011E1DC078002F889D /* heart-white.png */; };
+		B546DE071E1DC078002F889D /* heart-red.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE021E1DC078002F889D /* heart-red.png */; };
+		B546DE081E1DC078002F889D /* heart-outline-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE031E1DC078002F889D /* heart-outline-white.png */; };
+		B546DE091E1DC078002F889D /* heart-outline-black.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE041E1DC078002F889D /* heart-outline-black.png */; };
+		B546DE0A1E1DC078002F889D /* heart-black.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE051E1DC078002F889D /* heart-black.png */; };
 		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
+		B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */; };
 		B5BEC8F91E17CC51000C3870 /* MediaGridViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8F81E17CC51000C3870 /* MediaGridViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,7 +90,13 @@
 		B536932C1E148BCE000246A7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewCell.swift; sourceTree = "<group>"; };
 		B53693371E155645000246A7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B546DE011E1DC078002F889D /* heart-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-white.png"; sourceTree = "<group>"; };
+		B546DE021E1DC078002F889D /* heart-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-red.png"; sourceTree = "<group>"; };
+		B546DE031E1DC078002F889D /* heart-outline-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-outline-white.png"; sourceTree = "<group>"; };
+		B546DE041E1DC078002F889D /* heart-outline-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-outline-black.png"; sourceTree = "<group>"; };
+		B546DE051E1DC078002F889D /* heart-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-black.png"; sourceTree = "<group>"; };
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaGridViewCell.xib; sourceTree = "<group>"; };
 		B5BEC8F81E17CC51000C3870 /* MediaGridViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +126,11 @@
 		B50AD9B71E119CBC00F46119 = {
 			isa = PBXGroup;
 			children = (
+				B546DE011E1DC078002F889D /* heart-white.png */,
+				B546DE021E1DC078002F889D /* heart-red.png */,
+				B546DE031E1DC078002F889D /* heart-outline-white.png */,
+				B546DE041E1DC078002F889D /* heart-outline-black.png */,
+				B546DE051E1DC078002F889D /* heart-black.png */,
 				B50AD9C21E119CBC00F46119 /* Instagram */,
 				B50AD9C11E119CBC00F46119 /* Products */,
 				2EF674FF0A0E3DD2BF4E84C4 /* Pods */,
@@ -141,6 +158,7 @@
 				B536932A1E148BC6000246A7 /* MediaGridView.swift */,
 				B5BEC8F81E17CC51000C3870 /* MediaGridViewDataSource.swift */,
 				B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */,
+				B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */,
 				B54EBEA41E16711C001BB53C /* Styles.swift */,
 			);
 			path = Instagram;
@@ -262,8 +280,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B546DE0A1E1DC078002F889D /* heart-black.png in Resources */,
+				B546DE061E1DC078002F889D /* heart-white.png in Resources */,
+				B546DE091E1DC078002F889D /* heart-outline-black.png in Resources */,
+				B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */,
 				B50AD9C61E119CBC00F46119 /* Assets.xcassets in Resources */,
+				B546DE081E1DC078002F889D /* heart-outline-white.png in Resources */,
 				B50AD9C91E119CBC00F46119 /* LaunchScreen.storyboard in Resources */,
+				B546DE071E1DC078002F889D /* heart-red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

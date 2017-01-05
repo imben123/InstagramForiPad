@@ -10,32 +10,26 @@ import Foundation
 import SwiftyJSON
 import SwiftToolbox
 
-public class User {
+extension URL {
+    func bySettingScheme(to scheme: String) -> URL {
+        var components = URLComponents(url: self, resolvingAgainstBaseURL: false)!
+        components.scheme = scheme
+        return components.url!
+    }
+}
+
+public struct User: Equatable {
     
     public let id: String
     
-    public let profilePictureURL: URL?
+    public let profilePictureURL: URL
     public let fullName: String
     public let username: String
     public let biography: String?
     public let externalURL: URL?
-    public let connectedFacebookPage: Any?
 
-    public let followedByCount: Int
-    public let followsCount: Int
-
-    public let followsViewer: Bool
-    public let followedByViewer: Bool
-    public let requestedByViewer: Bool
-    public let hasRequestedViewer: Bool
-    
-    public let hasBlockedViewer: Bool
-    public let blockedByViewer: Bool
-    public let isPrivate: Bool
-    public let isVerified: Bool
-
-    public let media: [MediaItem]
-    public let totalNumberOfMediaItems: Int
+    public let media: [MediaItem]?
+    public let totalNumberOfMediaItems: Int?
 
     init(jsonDictionary: [String: Any]) {
         
@@ -43,37 +37,40 @@ public class User {
         
         id = json["id"].stringValue
 
-        profilePictureURL = json["profile_pic_url"].URLWithoutEscaping
+        profilePictureURL = json["profile_pic_url"].URLWithoutEscaping!.bySettingScheme(to: "https")
         fullName = json["full_name"].stringValue
         username = json["username"].stringValue
         biography = json["biography"].string
         externalURL = json["external_url"].URLWithoutEscaping
-        connectedFacebookPage = json["connected_fb_page"].object
-        
-        followedByCount = json["followed_by"]["count"].intValue
-        followsCount = json["follows"]["count"].intValue
-
-        followsViewer = json["follows_viewer"].boolValue
-        followedByViewer = json["followed_by_viewer"].boolValue
-        requestedByViewer = json["requested_by_viewer"].boolValue
-        hasRequestedViewer = json["has_requested_viewer"].boolValue
-        
-        hasBlockedViewer = json["has_blocked_viewer"].boolValue
-        blockedByViewer = json["blocked_by_viewer"].boolValue
-        isPrivate = json["is_private"].boolValue
-        isVerified = json["is_verified"].boolValue
         
         media = User.parseMediaItems(json)
         totalNumberOfMediaItems = json["media"]["count"].intValue
     }
     
-    private class func parseMediaItems(_ json: JSON) -> [MediaItem] {
+    private static func parseMediaItems(_ json: JSON) -> [MediaItem]? {
+        
         let mediaJson = json["media"]
+        guard mediaJson.exists() else {
+            return nil
+        }
+        
         let mediaNodes = mediaJson["nodes"].arrayObject as! [ [String: Any] ]
         var result: [MediaItem] = []
         for node in mediaNodes {
             result.append(MediaItem(jsonDictionary: node as [String: Any]))
         }
         return result
+    }
+    
+    public static func ==(lhs: User, rhs: User) -> Bool {
+        return (
+            lhs.id == rhs.id &&
+            lhs.profilePictureURL == rhs.profilePictureURL &&
+            lhs.fullName == rhs.fullName &&
+            lhs.username == rhs.username &&
+            lhs.biography == rhs.biography &&
+            lhs.externalURL == rhs.externalURL &&
+            lhs.totalNumberOfMediaItems == rhs.totalNumberOfMediaItems
+        )
     }
 }

@@ -21,7 +21,7 @@ class MediaItemTableRow: Object {
     dynamic var date: Date = Date()
     dynamic var dimensionsWidth: Int = 0
     dynamic var dimensionsHeight: Int = 0
-    dynamic var ownerId: String = ""
+    dynamic var owner: UserTableRow?
     dynamic var code: String? = nil
     dynamic var isVideo: Bool = false
     
@@ -47,7 +47,7 @@ extension MediaItemTableRow {
         self.date = mediaItem.date
         self.dimensionsWidth = Int(mediaItem.dimensions.width)
         self.dimensionsHeight = Int(mediaItem.dimensions.height)
-        self.ownerId = mediaItem.ownerId
+        self.owner = UserTableRow(mediaItem.owner)
         self.code = mediaItem.code
         self.isVideo = mediaItem.isVideo
         
@@ -68,7 +68,7 @@ extension MediaItem {
         
         date = mediaItemTableRow.date
         dimensions = CGSize(width: mediaItemTableRow.dimensionsWidth, height: mediaItemTableRow.dimensionsHeight)
-        ownerId = mediaItemTableRow.ownerId
+        owner = User(mediaItemTableRow.owner!)
         code = mediaItemTableRow.code
         isVideo = mediaItemTableRow.isVideo
         

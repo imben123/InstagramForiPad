@@ -43,6 +43,7 @@
 		B54EBEC31E16BC02001BB53C /* MockAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */; };
 		B54EBEC61E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */; };
 		B54EBEC81E16BEDE001BB53C /* AuthManagerLogoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */; };
+		B559CD7F1E1DAC1400745859 /* UserTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B559CD7E1E1DAC1400745859 /* UserTableRow.swift */; };
 		B5A9237F1E16BFBE00C36D9C /* FeedManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */; };
 		B5A923811E16C1EB00C36D9C /* Feed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A923801E16C1EB00C36D9C /* Feed.json */; };
 		B5A923831E16C27000C36D9C /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923821E16C27000C36D9C /* TestCase.swift */; };
@@ -136,6 +137,7 @@
 		B54EBEC11E16BBFF001BB53C /* MockAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPICommunicator.swift; sourceTree = "<group>"; };
 		B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerAuthenticatedTests.swift; sourceTree = "<group>"; };
 		B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerLogoutTests.swift; sourceTree = "<group>"; };
+		B559CD7E1E1DAC1400745859 /* UserTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableRow.swift; sourceTree = "<group>"; };
 		B5A9237E1E16BFBE00C36D9C /* FeedManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManagerTests.swift; sourceTree = "<group>"; };
 		B5A923801E16C1EB00C36D9C /* Feed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Feed.json; sourceTree = "<group>"; };
 		B5A923821E16C27000C36D9C /* TestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 				B5A923A61E17354000C36D9C /* MediaDataStore.swift */,
 				B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */,
 				B5A9239B1E170FCE00C36D9C /* MediaItemTableRow.swift */,
+				B559CD7E1E1DAC1400745859 /* UserTableRow.swift */,
 			);
 			name = MediaDataStore;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				B51D7B381E15E66E00DF5599 /* AuthManager.swift in Sources */,
 				B53693331E15502D000246A7 /* APICommunicator.swift in Sources */,
 				B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */,
+				B559CD7F1E1DAC1400745859 /* UserTableRow.swift in Sources */,
 				B506A08E1E14291600EEA147 /* Media.swift in Sources */,
 				B506A0961E142D6300EEA147 /* SwiftyJSONDimensions.swift in Sources */,
 				B50AD9E51E14123A00F46119 /* User.swift in Sources */,

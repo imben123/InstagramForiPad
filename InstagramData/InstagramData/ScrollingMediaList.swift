@@ -135,7 +135,7 @@ class ScrollingMediaList {
     private func moveBufferUp() {
 
         let cacheToRemove = firstPage + secondPage
-        prefetchingDelegate?.scrollingMediaList(self, removeCachedDataFor: cacheToRemove)
+        informDelegateToRemoveCachedMedia(cacheToRemove)
 
         firstPage = middlePage
         secondPage = fourthPage
@@ -153,10 +153,20 @@ class ScrollingMediaList {
         print("**** FAILED TO MOVE BUFFER UP ****")
     }
     
+    func informDelegateToRemoveCachedMedia(_ cacheToRemove: [MediaItem]) {
+        
+        // Dont remove first page
+        if cacheToRemove.contains(where: { ($0.id == self.mediaList.listItems.first?.id) }) {
+            return
+        }
+        
+        prefetchingDelegate?.scrollingMediaList(self, removeCachedDataFor: cacheToRemove)
+    }
+    
     private func moveBufferDown() {
         
         let cacheToRemove = fourthPage + lastPage
-        prefetchingDelegate?.scrollingMediaList(self, removeCachedDataFor: cacheToRemove)
+        informDelegateToRemoveCachedMedia(cacheToRemove)
 
         lastPage = middlePage
         fourthPage = secondPage

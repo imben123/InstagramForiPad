@@ -45,7 +45,7 @@ class AuthManagerLoginTests: XCTestCase {
         // Given
         let username = "username"
         let password = "password"
-        mockCommunicator.testResonse = AuthManagerTestsExamples.exampleLoginSuccessResponse
+        mockCommunicator.testResponse = AuthManagerTestsExamples.exampleLoginSuccessResponse
         
         
         // When
@@ -73,7 +73,7 @@ class AuthManagerLoginTests: XCTestCase {
         // Given
         let username = "username"
         let password = "password"
-        mockCommunicator.testResonse = AuthManagerTestsExamples.exampleLoginFailedResponse
+        mockCommunicator.testResponse = AuthManagerTestsExamples.exampleLoginFailedResponse
         
         
         // When

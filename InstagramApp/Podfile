@@ -5,6 +5,7 @@ target 'Instagram' do
   pod 'SDWebImage'
   pod 'SwiftyJSON'
   pod 'RealmSwift'
+  pod 'Reachability'
 end
 
 target 'InstagramData' do
@@ -12,12 +13,24 @@ target 'InstagramData' do
   pod 'SDWebImage'
   pod 'SwiftyJSON'
   pod 'RealmSwift'
+  pod 'Reachability'
 
   target 'InstagramDataTests' do
     inherit! :search_paths
   end
 
   project '../InstagramData/InstagramData.xcodeproj'
+end
+
+target 'SwiftToolbox' do
+  use_frameworks!
+  pod 'Reachability'
+    
+  target 'SwiftToolboxTests' do
+    inherit! :search_paths
+  end
+    
+  project '../Submodules/SwiftToolbox/SwiftToolbox.xcodeproj'
 end
 
 post_install do |installer|

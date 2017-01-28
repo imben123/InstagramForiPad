@@ -60,7 +60,7 @@ class FeedManagerTests: XCTestCase {
     func testFetchMoreMediaCompletionCalledOnSuccess() {
         
         // Given
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         let expectation = self.expectation(description: "Completion/Failure called")
@@ -107,7 +107,7 @@ class FeedManagerTests: XCTestCase {
     func testMediaAddedAfterFetch() {
         
         // Given
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         let expectation = self.expectation(description: "Completion called")
@@ -126,7 +126,7 @@ class FeedManagerTests: XCTestCase {
     func testCallingFetchManyTimesDoesntCauseDuplicates() {
         
         // Given
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         let expectation1 = self.expectation(description: "Completion 1 called")
         sut.fetchNewestMedia({
@@ -156,7 +156,7 @@ class FeedManagerTests: XCTestCase {
     
     func testMoreMediaAddedToEndOfArray() {
         
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         var originalMediaItem: String? = nil
@@ -164,7 +164,7 @@ class FeedManagerTests: XCTestCase {
         sut.fetchNewestMedia({
             XCTAssertEqual(self.sut.mediaCount, 1)
             originalMediaItem = self.sut.mediaIDs.first!
-            self.mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
+            self.mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
             self.sut.fetchMoreMedia({
                 expectation.fulfill()
             })
@@ -178,7 +178,7 @@ class FeedManagerTests: XCTestCase {
     
     func testNewMediaAddedToBeginningOfArray() {
         
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         var originalMediaItem: String? = nil
@@ -186,7 +186,7 @@ class FeedManagerTests: XCTestCase {
         sut.fetchNewestMedia({
             XCTAssertEqual(self.sut.mediaCount, 1)
             originalMediaItem = self.sut.mediaIDs.first!
-            self.mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchNewMediaWithOverlapSuccessResponse
+            self.mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchNewMediaWithOverlapSuccessResponse
             self.sut.fetchNewestMedia({
                 expectation.fulfill()
             })
@@ -200,7 +200,7 @@ class FeedManagerTests: XCTestCase {
     
     func testOldMediaDroppedIfNewMediaDoesNotOverlapOldMedia() {
         
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         var originalMediaItem: String? = nil
@@ -208,7 +208,7 @@ class FeedManagerTests: XCTestCase {
         sut.fetchNewestMedia({
             XCTAssertEqual(self.sut.mediaCount, 1)
             originalMediaItem = self.sut.mediaIDs.first!
-            self.mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
+            self.mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
             self.sut.fetchNewestMedia({
                 expectation.fulfill()
             })
@@ -223,7 +223,7 @@ class FeedManagerTests: XCTestCase {
         
         // Given
         XCTAssertEqual(sut.mediaCount, 0)
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         let expectation = self.expectation(description: "Completion called")
@@ -242,7 +242,7 @@ class FeedManagerTests: XCTestCase {
         XCTAssertEqual(sut.mediaCount, 0)
         let expected = MediaItem(id: "1416818863685651136")
         mockMediaDataStore.mediaItemToLoad = expected
-        mockCommunicator.testResonse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
 
         // When
         let expectation = self.expectation(description: "Completion called")
@@ -261,14 +261,18 @@ class FeedManagerTests: XCTestCase {
         
         class FakePrefetchingDelegate: FeedManagerPrefetchingDelegate {
             
-            var delegateMethodCalled = false
-            var delegateMethodParam1: FeedManager? = nil
-            var delegateMethodParam2: [MediaItem]? = nil
+            var prefetchDelegateMethodCalled = false
+            var prefetchDelegateMethodParam1: FeedManager? = nil
+            var prefetchDelegateMethodParam2: [MediaItem]? = nil
             
             func feedManager(_ feedManager: FeedManager, prefetchDataFor mediaItems: [MediaItem]) {
-                delegateMethodCalled = true
-                delegateMethodParam1 = feedManager
-                delegateMethodParam2 = mediaItems
+                prefetchDelegateMethodCalled = true
+                prefetchDelegateMethodParam1 = feedManager
+                prefetchDelegateMethodParam2 = mediaItems
+            }
+            
+            func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem]) {
+
             }
         }
         
@@ -282,8 +286,8 @@ class FeedManagerTests: XCTestCase {
         mediaList.prefetchingDelegate?.scrollingMediaList(mediaList, prefetchDataFor: exampleMedia)
         
         // Then
-        XCTAssertTrue(prefetchDelegate.delegateMethodCalled)
-        XCTAssert(prefetchDelegate.delegateMethodParam1! === sut)
-        XCTAssertEqual(prefetchDelegate.delegateMethodParam2!, exampleMedia)
+        XCTAssertTrue(prefetchDelegate.prefetchDelegateMethodCalled)
+        XCTAssert(prefetchDelegate.prefetchDelegateMethodParam1! === sut)
+        XCTAssertEqual(prefetchDelegate.prefetchDelegateMethodParam2!, exampleMedia)
     }
 }

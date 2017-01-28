@@ -12,6 +12,11 @@ protocol MediaGridViewCellDelegate: class {
     func mediaGridViewCellWillPrepareForReuse(_ mediaGridViewCell: MediaGridViewCell)
 }
 
+protocol MediaGridViewCellLikeDelegate: class {
+    func mediaGridViewCellLikePressed(_ mediaGridViewCell: MediaGridViewCell)
+    func mediaGridViewCellUnlikePressed(_ mediaGridViewCell: MediaGridViewCell)
+}
+
 @IBDesignable class GradientView: UIView {
     
     var gradientLayer = CAGradientLayer()
@@ -42,6 +47,7 @@ class MediaGridViewCell: UICollectionViewCell {
     var currentItem: MediaGridViewItem? = nil
     
     weak var delegate: MediaGridViewCellDelegate? = nil
+    weak var likeDelegate: MediaGridViewCellLikeDelegate? = nil
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var profilePicture: UIImageView!
@@ -49,6 +55,16 @@ class MediaGridViewCell: UICollectionViewCell {
     @IBOutlet var likeImage: UIImageView!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var gradientView: GradientView!
+    
+    var liked: Bool = false {
+        didSet {
+            if liked {
+                likeImage.image = UIImage(named: "heart-red.png")
+            } else {
+                likeImage.image = UIImage(named: "heart-outline-white.png")
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -65,13 +81,18 @@ class MediaGridViewCell: UICollectionViewCell {
         currentItem = nil
         imageView.image = nil
         profilePicture.image = nil
-        likeImage.image = UIImage(named: "heart-outline-white.png")
+        liked = false
         username.text = ""
         delegate = nil
     }
     
     @IBAction func likePressed(_ sender: UIButton) {
-        likeImage.image = UIImage(named: "heart-red.png")
+        if liked {
+            likeDelegate?.mediaGridViewCellUnlikePressed(self)
+        } else {
+            likeDelegate?.mediaGridViewCellLikePressed(self)
+        }
+        liked = !liked
     }
     
 }

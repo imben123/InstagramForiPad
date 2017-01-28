@@ -245,4 +245,37 @@ class ScrollingMediaList {
         return result
     }
     
+    public func updateMediaItemInCache(for id: String) {
+        
+        mediaList.mediaItem(for: id) { (updateMediaItem) in
+            
+            guard let updateMediaItem = updateMediaItem else {
+                return
+            }
+            
+            if let index = self.middlePage.index(where: { $0.id == id }) { // Media most likly to be in middle pages
+                
+                self.middlePage[index] = updateMediaItem
+                
+            } else if let index = self.fourthPage.index(where: { $0.id == id }) {
+                
+                self.fourthPage[index] = updateMediaItem
+                
+            } else if let index = self.secondPage.index(where: { $0.id == id }) {
+                
+                self.secondPage[index] = updateMediaItem
+                
+            } else if let index = self.lastPage.index(where: { $0.id == id }) {
+                
+                self.lastPage[index] = updateMediaItem
+                
+            } else if let index = self.firstPage.index(where: { $0.id == id }) {
+                
+                self.firstPage[index] = updateMediaItem
+                
+            }
+            
+        }
+    }
+    
 }

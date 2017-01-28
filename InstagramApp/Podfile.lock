@@ -1,4 +1,5 @@
 PODS:
+  - Reachability (3.2)
   - Realm (2.1.2):
     - Realm/Headers (= 2.1.2)
   - Realm/Headers (2.1.2)
@@ -10,16 +11,18 @@ PODS:
   - SwiftyJSON (3.1.3)
 
 DEPENDENCIES:
+  - Reachability
   - RealmSwift
   - SDWebImage
   - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Realm: efe855f4d977c8ce5a82d3116d9f1ff155a6550c
   RealmSwift: 17d6ee30b6f9df86364408c2197492e33bfea567
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
-PODFILE CHECKSUM: 95275e0fdd01c1ce3a2826e7ba32531af972ed47
+PODFILE CHECKSUM: fb48a7befd28b644b014b33686905132ef6a722b
 
 COCOAPODS: 1.1.1

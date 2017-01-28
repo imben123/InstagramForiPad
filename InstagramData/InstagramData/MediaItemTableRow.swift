@@ -31,6 +31,7 @@ class MediaItemTableRow: Object {
     dynamic var commentsDisabled: Bool = false
     dynamic var commentsCount: Int = 0
     dynamic var likesCount: Int = 0
+    dynamic var viewerHasLiked: Bool = false
     
     override static func primaryKey() -> String? {
         return "id"
@@ -57,6 +58,7 @@ extension MediaItemTableRow {
         self.commentsDisabled = mediaItem.commentsDisabled
         self.commentsCount = mediaItem.commentsCount
         self.likesCount = mediaItem.likesCount
+        self.viewerHasLiked = mediaItem.viewerHasLiked
     }
 }
 
@@ -78,6 +80,7 @@ extension MediaItem {
         commentsDisabled = mediaItemTableRow.commentsDisabled
         commentsCount = mediaItemTableRow.commentsCount
         likesCount = mediaItemTableRow.likesCount
+        viewerHasLiked = mediaItemTableRow.viewerHasLiked
     }
 }
 

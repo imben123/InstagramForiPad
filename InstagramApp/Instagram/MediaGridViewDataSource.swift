@@ -17,14 +17,14 @@ extension MediaGridView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        print("Loading cell \(indexPath.row)")
         let cell: MediaGridViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaGridView.reuseIdentifier,
                                                                          for: indexPath) as! MediaGridViewCell
-        cell.backgroundColor = .red
         cell.currentItem = item(at: indexPath.row)
+        cell.liked = cell.currentItem!.viewerHasLiked
         cell.username.text = cell.currentItem?.username
         setImage(for: cell, at: indexPath)
         setProfilePictureImage(for: cell, at: indexPath)
+        cell.likeDelegate = self
         return cell
     }
 }
@@ -32,21 +32,11 @@ extension MediaGridView: UICollectionViewDataSource {
 extension MediaGridView: FeedManagerPrefetchingDelegate {
     
     func feedManager(_ feedManager: FeedManager, prefetchDataFor mediaItems: [MediaItem]) {
-//        if let firstItem = mediaItems.first?.id, let lastItem = mediaItems.last?.id {
-//            let firstIndex = InstagramData.shared.feedManager.mediaIDs.index(of: firstItem)!
-//            let lastIndex = InstagramData.shared.feedManager.mediaIDs.index(of: lastItem)!
-//            print("Prefetching images from \(firstIndex) to \(lastIndex)")
-//        }
         let urls = mediaItems.map({ $0.thumbnail })
         SDWebImagePrefetcher.shared().prefetchURLs(urls)
     }
     
     func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem]) {
-//        if let firstItem = mediaItems.first?.id, let lastItem = mediaItems.last?.id {
-//            let firstIndex = InstagramData.shared.feedManager.mediaIDs.index(of: firstItem)!
-//            let lastIndex = InstagramData.shared.feedManager.mediaIDs.index(of: lastItem)!
-//            print("Removing cache from \(firstIndex) to \(lastIndex)")
-//        }
         for media in mediaItems {
             let cacheKey = SDWebImageManager.shared().cacheKey(for: media.thumbnail)
             SDWebImageManager.shared().imageCache.removeImage(forKey: cacheKey, fromDisk: false)
@@ -73,8 +63,8 @@ extension MediaGridView {
     func item(at index: Int) -> MediaGridViewItem {
         let mediaID = InstagramData.shared.feedManager.mediaIDs[index]
         
-        let sema = DispatchSemaphore(value: 0)
         var mediaItem: MediaItem!
+        let sema = DispatchSemaphore(value: 0)
         InstagramData.shared.feedManager.mediaItem(for: mediaID) { (result) in
             mediaItem = result
             sema.signal()
@@ -83,7 +73,8 @@ extension MediaGridView {
         return MediaGridViewItem(id: mediaItem.id,
                                  url: mediaItem.thumbnail,
                                  profilePicture: mediaItem.owner.profilePictureURL,
-                                 username:mediaItem.owner.username)
+                                 username: mediaItem.owner.username,
+                                 viewerHasLiked: mediaItem.viewerHasLiked)
     }
     
     func items(for indexPaths: [IndexPath]) -> [MediaGridViewItem] {
@@ -133,4 +124,20 @@ extension MediaGridView {
         }
         cell.delegate = cellDelegate
     }
+}
+
+extension MediaGridView: MediaGridViewCellLikeDelegate {
+    
+    func mediaGridViewCellLikePressed(_ mediaGridViewCell: MediaGridViewCell) {
+        let mediaId = mediaGridViewCell.currentItem!.id
+        InstagramData.shared.likeReqestsManager.likePost(with: mediaId)
+        InstagramData.shared.feedManager.updateMediaItemInCache(for: mediaId)
+    }
+    
+    func mediaGridViewCellUnlikePressed(_ mediaGridViewCell: MediaGridViewCell) {
+        let mediaId = mediaGridViewCell.currentItem!.id
+        InstagramData.shared.likeReqestsManager.unlikePost(with: mediaGridViewCell.currentItem!.id)
+        InstagramData.shared.feedManager.updateMediaItemInCache(for: mediaId)
+    }
+    
 }

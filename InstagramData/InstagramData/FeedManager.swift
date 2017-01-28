@@ -74,6 +74,10 @@ public class FeedManager {
             
         }, failure: failure)
     }
+    
+    public func updateMediaItemInCache(for id: String) {
+        mediaList.updateMediaItemInCache(for: id)
+    }
 }
 
 extension FeedManager: ScrollingMediaListPrefetchingDelegate {

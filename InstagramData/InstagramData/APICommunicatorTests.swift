@@ -59,4 +59,22 @@ class APICommunicatorTests: XCTestCase {
         XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains(".after(foobar,1)"))
         XCTAssertEqual(response, expectedResponse)
     }
+    
+    func testLikePost() {
+        let response = sut.likePost(with: "12345")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/web/likes/12345/like/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.payload?.count, 0)
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
+    func testUnlikePost() {
+        let response = sut.unlikePost(with: "12345")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/web/likes/12345/unlike/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.payload?.count, 0)
+        XCTAssertEqual(response, expectedResponse)
+    }
 }

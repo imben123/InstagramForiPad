@@ -26,6 +26,8 @@ public struct MediaItem: Equatable {
 //    let comments: [Any]?
     public let likesCount: Int
     
+    public var viewerHasLiked: Bool
+    
     init(jsonDictionary: [String: Any]) {
         
         let json = JSON(jsonDictionary)
@@ -44,6 +46,7 @@ public struct MediaItem: Equatable {
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
         likesCount = json["likes"]["count"].intValue
+        viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
     
     init(jsonDictionary: [String: Any], owner: User) {
@@ -64,6 +67,7 @@ public struct MediaItem: Equatable {
         self.commentsDisabled = json["comments_disabled"].boolValue
         self.commentsCount = json["comments"]["count"].intValue
         self.likesCount = json["likes"]["count"].intValue
+        viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
     
     public static func ==(lhs: MediaItem, rhs: MediaItem) -> Bool {
@@ -78,7 +82,8 @@ public struct MediaItem: Equatable {
             lhs.display == rhs.display &&
             lhs.commentsDisabled == rhs.commentsDisabled &&
             lhs.commentsCount == rhs.commentsCount &&
-            lhs.likesCount == rhs.likesCount
+            lhs.likesCount == rhs.likesCount &&
+            lhs.viewerHasLiked == rhs.viewerHasLiked
         )
     }
 

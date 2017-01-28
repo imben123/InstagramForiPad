@@ -15,11 +15,13 @@ public class InstagramData {
     let communicator: APICommunicator
     public let authManager: AuthManager
     public let feedManager: FeedManager
+    public let likeReqestsManager: LikeReqestsManager
     
     init() {
         communicator = APICommunicator()
         authManager = AuthManager(communicator: communicator)
         feedManager = FeedManager(communicator: communicator)
+        likeReqestsManager = LikeReqestsManager(communicator: communicator)
     }
     
 }

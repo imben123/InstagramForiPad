@@ -27,7 +27,7 @@ class MediaGridView: UICollectionView {
     static let reuseIdentifier = "cell"
     static let minItemSize: CGFloat = 300
     
-    var resizesWithNavigationBar: Bool = true
+    var resizesWithNavigationBar: Bool = false
     var navigationBarHeightForSizeCalculations: CGFloat = 64
 
     fileprivate var flowLayout: UICollectionViewFlowLayout {
@@ -56,22 +56,18 @@ class MediaGridView: UICollectionView {
     }
     
     override var frame: CGRect {
-        get {
-            return super.frame
-        }
-        set {
-            super.frame = newValue
-            preserveCurrentScrollPosition()
+        didSet {
+            if frame != oldValue {
+                preserveCurrentScrollPosition()
+            }
         }
     }
     
     override var contentSize: CGSize {
-        get {
-            return super.contentSize
-        }
-        set {
-            super.contentSize = newValue
-            updateImageSize()
+        didSet {
+            if contentSize != oldValue {
+                updateImageSize()
+            }
         }
     }
 }
@@ -109,10 +105,11 @@ extension MediaGridView {
     func updateImageSize() {
         let newItemSize = calculateBestItemSize()
         flowLayout.itemSize = CGSize(width: newItemSize, height: newItemSize)
+        performBatchUpdates({}) // Animates the change in size
     }
     
     func calculateBestItemSize() -> CGFloat {
-        let navigationBarHeight = resizesWithNavigationBar ? navigationBarHeightForSizeCalculations : 0
+        let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
         let shortestEdge: CGFloat = min(contentSize.width - navigationBarHeight, contentSize.height)
         let numberOfItems: CGFloat = (shortestEdge / MediaGridView.minItemSize).rounded(.down)
         if numberOfItems == 0 {

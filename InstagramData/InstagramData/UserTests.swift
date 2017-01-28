@@ -30,21 +30,7 @@ class UserTests: XCTestCase {
         XCTAssertEqual(user.username, "imben123")
         XCTAssertEqual(user.biography, nil)
         XCTAssertEqual(user.externalURL, nil)
-        XCTAssert(user.connectedFacebookPage as! NSNull == NSNull())
-        
-        XCTAssertEqual(user.followedByCount, 84)
-        XCTAssertEqual(user.followsCount, 93)
-        
-        XCTAssertEqual(user.followsViewer, false)
-        XCTAssertEqual(user.followedByViewer, false)
-        XCTAssertEqual(user.requestedByViewer, false)
-        XCTAssertEqual(user.hasRequestedViewer, false)
-        
-        XCTAssertEqual(user.hasBlockedViewer, false)
-        XCTAssertEqual(user.blockedByViewer, false)
-        XCTAssertEqual(user.isPrivate, false)
-        XCTAssertEqual(user.isVerified, false)
-
-        XCTAssertEqual(user.media.count, 1)
+        XCTAssertEqual(user.media!.count, 1)
+        XCTAssertEqual(user.totalNumberOfMediaItems!, 1)
     }
 }

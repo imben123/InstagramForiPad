@@ -46,6 +46,26 @@ public struct MediaItem: Equatable {
         likesCount = json["likes"]["count"].intValue
     }
     
+    init(jsonDictionary: [String: Any], owner: User) {
+        
+        let json = JSON(jsonDictionary)
+        
+        self.id = json["id"].stringValue
+        
+        self.date = json["date"].dateValue
+        self.dimensions = json["dimensions"].sizeValue
+        self.owner = owner
+        self.code = json["code"].string
+        self.isVideo = json["is_video"].boolValue
+        
+        self.display = json["display_src"].URLWithoutEscaping!
+        self.thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : display
+        
+        self.commentsDisabled = json["comments_disabled"].boolValue
+        self.commentsCount = json["comments"]["count"].intValue
+        self.likesCount = json["likes"]["count"].intValue
+    }
+    
     public static func ==(lhs: MediaItem, rhs: MediaItem) -> Bool {
         return (
             lhs.id == rhs.id &&

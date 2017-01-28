@@ -17,19 +17,29 @@ class MediaTests: XCTestCase {
     func testParsingMediaItem() {
         let mediaItem = MediaItem(jsonDictionary: rawMediaItemJson)
         
-        XCTAssertEqual(mediaItem.id, "1366243591862082687")
+        XCTAssertEqual(mediaItem.id, "1437230250416969754")
         
-        XCTAssertEqual(mediaItem.date, Date(timeIntervalSince1970: 1477088949))
-        XCTAssertEqual(mediaItem.dimensions, CGSize(width: 1080, height: 1080))
-        XCTAssertEqual(mediaItem.ownerId, "200122996")
-        XCTAssertEqual(mediaItem.code, "BL1307hl9x_")
+        XCTAssertEqual(mediaItem.date, Date(timeIntervalSince1970: 1485551218))
+        XCTAssertEqual(mediaItem.dimensions, CGSize(width: 1080, height: 1347))
+
+        //XCTAssertEqual(mediaItem.ownerId, "200122996")
+        XCTAssertEqual(mediaItem.owner.id, "186622962")
+        XCTAssertEqual(mediaItem.owner.profilePictureURL, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-19/s150x150/13561734_210464792681658_976264848_a.jpg")!)
+        XCTAssertEqual(mediaItem.owner.fullName, "Lindsey Stirling")
+        XCTAssertEqual(mediaItem.owner.username, "lindseystirling")
+        XCTAssertNil(mediaItem.owner.biography)
+        XCTAssertNil(mediaItem.owner.externalURL)
+        XCTAssertNil(mediaItem.owner.media)
+        XCTAssertNil(mediaItem.owner.totalNumberOfMediaItems)
+
+        XCTAssertEqual(mediaItem.code, "BPyEUxIjJga")
         XCTAssertEqual(mediaItem.isVideo, false)
         
-        XCTAssertEqual(mediaItem.thumbnail, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/14730568_1798998070347864_3046428708303798272_n.jpg?ig_cache_key=MTM2NjI0MzU5MTg2MjA4MjY4Nw%3D%3D.2"))
-        XCTAssertEqual(mediaItem.display, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/e35/14730568_1798998070347864_3046428708303798272_n.jpg?ig_cache_key=MTM2NjI0MzU5MTg2MjA4MjY4Nw%3D%3D.2"))
+        XCTAssertEqual(mediaItem.thumbnail, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.133.1080.1080/16110609_1619749501666416_8231098677238693888_n.jpg?ig_cache_key=MTQzNzIzMDI1MDQxNjk2OTc1NA%3D%3D.2.c"))
+        XCTAssertEqual(mediaItem.display, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-15/e35/16110609_1619749501666416_8231098677238693888_n.jpg?ig_cache_key=MTQzNzIzMDI1MDQxNjk2OTc1NA%3D%3D.2"))
         
         XCTAssertEqual(mediaItem.commentsDisabled, false)
-        XCTAssertEqual(mediaItem.commentsCount, 0)
-        XCTAssertEqual(mediaItem.likesCount, 18)
+        XCTAssertEqual(mediaItem.commentsCount, 618)
+        XCTAssertEqual(mediaItem.likesCount, 64679)
     }
 }

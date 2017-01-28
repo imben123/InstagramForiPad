@@ -28,8 +28,8 @@ public struct User: Equatable {
     public let biography: String?
     public let externalURL: URL?
 
-    public let media: [MediaItem]?
     public let totalNumberOfMediaItems: Int?
+    public var media: [MediaItem]?
 
     init(jsonDictionary: [String: Any]) {
         
@@ -43,11 +43,11 @@ public struct User: Equatable {
         biography = json["biography"].string
         externalURL = json["external_url"].URLWithoutEscaping
         
-        media = User.parseMediaItems(json)
-        totalNumberOfMediaItems = json["media"]["count"].intValue
+        totalNumberOfMediaItems = json["media"]["count"].int
+        media = parseMediaItems(json)
     }
     
-    private static func parseMediaItems(_ json: JSON) -> [MediaItem]? {
+    private func parseMediaItems(_ json: JSON) -> [MediaItem]? {
         
         let mediaJson = json["media"]
         guard mediaJson.exists() else {
@@ -57,7 +57,7 @@ public struct User: Equatable {
         let mediaNodes = mediaJson["nodes"].arrayObject as! [ [String: Any] ]
         var result: [MediaItem] = []
         for node in mediaNodes {
-            result.append(MediaItem(jsonDictionary: node as [String: Any]))
+            result.append(MediaItem(jsonDictionary: node as [String: Any], owner:self))
         }
         return result
     }

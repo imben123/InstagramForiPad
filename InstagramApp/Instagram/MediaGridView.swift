@@ -22,6 +22,10 @@ struct MediaGridViewItem: Equatable {
     }
 }
 
+protocol MediaGridViewDataSource: UICollectionViewDataSource {
+    func mediaGridViewNeedsMoreMedia(_ sender: MediaGridView)
+}
+
 class MediaGridView: UICollectionView {
 
     static let reuseIdentifier = "cell"
@@ -29,6 +33,10 @@ class MediaGridView: UICollectionView {
     
     var resizesWithNavigationBar: Bool = false
     var navigationBarHeightForSizeCalculations: CGFloat = 64
+    
+    fileprivate var mediaGridViewDataSource: MediaGridViewDataSource? {
+        return dataSource as? MediaGridViewDataSource
+    }
 
     fileprivate var flowLayout: UICollectionViewFlowLayout {
         return self.collectionViewLayout as! UICollectionViewFlowLayout
@@ -39,20 +47,11 @@ class MediaGridView: UICollectionView {
         layout.itemSize = CGSize(width: MediaGridView.minItemSize, height: MediaGridView.minItemSize)
         super.init(frame: .zero, collectionViewLayout: layout)
         self.register(UINib(nibName: "MediaGridViewCell", bundle: nil), forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
-        self.dataSource = self
-        InstagramData.shared.feedManager.prefetchingDelegate = self
+        self.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func reloadCell(for item: MediaGridViewItem) {
-        guard let index = index(of: item) else {
-            return
-        }
-        let indexPath = IndexPath(item: index, section: 0)
-        self.reloadItems(at: [indexPath])
     }
     
     override var frame: CGRect {
@@ -117,5 +116,29 @@ extension MediaGridView {
         }
         let spacing = self.flowLayout.minimumInteritemSpacing*(numberOfItems-1)
         return (shortestEdge-spacing) / numberOfItems
+    }
+}
+
+extension MediaGridView: UICollectionViewDelegateFlowLayout {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.height {
+            mediaGridViewDataSource?.mediaGridViewNeedsMoreMedia(self)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        if contentSize.width < contentSize.height {
+            let itemSize = flowLayout.itemSize.width
+            let spacing = flowLayout.minimumInteritemSpacing
+            let width = collectionView.width
+            let numberOfItems = (contentSize.width / (itemSize + spacing)).rounded(.down)
+            let inset = (width - (numberOfItems * itemSize)) / (numberOfItems + 1)
+            return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+        } else {
+            return .zero
+        }
     }
 }

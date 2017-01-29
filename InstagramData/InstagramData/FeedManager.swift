@@ -75,8 +75,8 @@ public class FeedManager {
         }, failure: failure)
     }
     
-    public func updateMediaItemInCache(for id: String) {
-        mediaList.updateMediaItemInCache(for: id)
+    public func updateMediaItemInMemCache(for id: String) {
+        mediaList.updateMediaItemInMemCache(for: id)
     }
 }
 

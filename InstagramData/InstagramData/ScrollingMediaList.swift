@@ -245,7 +245,7 @@ class ScrollingMediaList {
         return result
     }
     
-    public func updateMediaItemInCache(for id: String) {
+    public func updateMediaItemInMemCache(for id: String) {
         
         mediaList.mediaItem(for: id) { (updateMediaItem) in
             
@@ -274,8 +274,6 @@ class ScrollingMediaList {
                 self.firstPage[index] = updateMediaItem
                 
             }
-            
         }
     }
-    
 }

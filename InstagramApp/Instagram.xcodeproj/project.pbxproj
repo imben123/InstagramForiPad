@@ -26,7 +26,7 @@
 		B546DE0A1E1DC078002F889D /* heart-black.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE051E1DC078002F889D /* heart-black.png */; };
 		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
 		B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */; };
-		B5BEC8F91E17CC51000C3870 /* MediaGridViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8F81E17CC51000C3870 /* MediaGridViewDataSource.swift */; };
+		B5BEC8F91E17CC51000C3870 /* InstagramFeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8F81E17CC51000C3870 /* InstagramFeedDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,7 +97,7 @@
 		B546DE051E1DC078002F889D /* heart-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-black.png"; sourceTree = "<group>"; };
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaGridViewCell.xib; sourceTree = "<group>"; };
-		B5BEC8F81E17CC51000C3870 /* MediaGridViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewDataSource.swift; sourceTree = "<group>"; };
+		B5BEC8F81E17CC51000C3870 /* InstagramFeedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramFeedDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,7 +156,7 @@
 				B50AD9CA1E119CBC00F46119 /* Info.plist */,
 				B536932C1E148BCE000246A7 /* ViewController.swift */,
 				B536932A1E148BC6000246A7 /* MediaGridView.swift */,
-				B5BEC8F81E17CC51000C3870 /* MediaGridViewDataSource.swift */,
+				B5BEC8F81E17CC51000C3870 /* InstagramFeedDataSource.swift */,
 				B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */,
 				B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */,
 				B54EBEA41E16711C001BB53C /* Styles.swift */,
@@ -348,7 +348,7 @@
 			files = (
 				B536932D1E148BCE000246A7 /* ViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
-				B5BEC8F91E17CC51000C3870 /* MediaGridViewDataSource.swift in Sources */,
+				B5BEC8F91E17CC51000C3870 /* InstagramFeedDataSource.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,
 				B54EBEA51E16711C001BB53C /* Styles.swift in Sources */,
 				B53693381E155645000246A7 /* LoginViewController.swift in Sources */,

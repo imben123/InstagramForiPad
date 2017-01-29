@@ -12,8 +12,7 @@ import SDWebImage
 
 class ViewController: UIViewController {
     
-    // TODO: more this logic to managers
-    var fetchingMoreMedia = false
+    var dataSource: InstagramFeedDataSource!
     
     var mediaGridView: MediaGridView {
         return view as! MediaGridView
@@ -27,7 +26,8 @@ class ViewController: UIViewController {
     
     override func loadView() {
         view = MediaGridView()
-        mediaGridView.delegate = self
+        dataSource = InstagramFeedDataSource(mediaGridView: mediaGridView)
+        mediaGridView.dataSource = dataSource
     }
     
     override func viewDidLoad() {
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .black
         updateMediaGridView()
-        loadMoreMedia()
+        dataSource.loadMoreMedia()
         
         navigationItem.rightBarButtonItem = createLogoutButton()
     }
@@ -48,27 +48,4 @@ class ViewController: UIViewController {
         InstagramData.shared.authManager.logout()
         self.navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
-    
-    func loadMoreMedia() {
-        guard fetchingMoreMedia == false else {
-            return
-        }
-        fetchingMoreMedia = true
-        InstagramData.shared.feedManager.fetchMoreMedia({ [weak self] in
-            self?.updateMediaGridView()
-            self?.fetchingMoreMedia = false
-        }, failure: { [weak self] in
-            self?.fetchingMoreMedia = false
-        })
-    }
-}
-
-extension ViewController: UICollectionViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.height {
-            loadMoreMedia()
-        }
-    }
-    
 }

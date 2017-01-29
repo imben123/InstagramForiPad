@@ -35,6 +35,7 @@ extension MediaItem {
         self.commentsDisabled = false
         self.commentsCount = 0
         self.likesCount = 0
+        self.viewerHasLiked = false
     }
 }
 

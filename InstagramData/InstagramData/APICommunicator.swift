@@ -52,6 +52,11 @@ class APICommunicator {
         return response
     }
     
+    func getPost(with code: String) -> APIResponse {
+        let response = self.connection.makeRequest(path: "/p/\(code)/?__a=1", payload: nil)
+        return response
+    }
+    
     func likePost(with id: String) -> APIResponse {
         let path = "/web/likes/\(id)/like/"
         let response = self.connection.makeRequest(path: path, payload: [:])

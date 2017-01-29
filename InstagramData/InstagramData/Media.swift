@@ -15,7 +15,7 @@ public struct MediaItem: Equatable {
     public let date: Date
     public let dimensions: CGSize
     public let owner: User
-    public let code: String?
+    public let code: String
     public let isVideo: Bool
     
     public let display: URL
@@ -37,7 +37,7 @@ public struct MediaItem: Equatable {
         date = json["date"].dateValue
         dimensions = json["dimensions"].sizeValue
         owner = User(jsonDictionary: json["owner"].dictionaryObject!)
-        code = json["code"].string
+        code = json["code"].stringValue
         isVideo = json["is_video"].boolValue
             
         display = json["display_src"].URLWithoutEscaping!
@@ -58,7 +58,7 @@ public struct MediaItem: Equatable {
         self.date = json["date"].dateValue
         self.dimensions = json["dimensions"].sizeValue
         self.owner = owner
-        self.code = json["code"].string
+        self.code = json["code"].stringValue
         self.isVideo = json["is_video"].boolValue
         
         self.display = json["display_src"].URLWithoutEscaping!

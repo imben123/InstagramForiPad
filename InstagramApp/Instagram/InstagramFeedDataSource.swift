@@ -135,14 +135,6 @@ extension InstagramFeedDataSource: FeedManagerPrefetchingDelegate {
     
 }
 
-extension InstagramFeedDataSource: UICollectionViewDataSourcePrefetching {
-    
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        
-    }
-    
-}
-
 extension InstagramFeedDataSource: MediaGridViewCellLikeDelegate {
     
     func mediaGridViewCellLikePressed(_ mediaGridViewCell: MediaGridViewCell) {
@@ -180,6 +172,7 @@ extension InstagramFeedDataSource {
                                  url: mediaItem.thumbnail,
                                  profilePicture: mediaItem.owner.profilePictureURL,
                                  username: mediaItem.owner.username,
+                                 code: mediaItem.code,
                                  viewerHasLiked: mediaItem.viewerHasLiked)
     }
     

@@ -22,7 +22,7 @@ class MediaItemTableRow: Object {
     dynamic var dimensionsWidth: Int = 0
     dynamic var dimensionsHeight: Int = 0
     dynamic var owner: UserTableRow?
-    dynamic var code: String? = nil
+    dynamic var code: String = ""
     dynamic var isVideo: Bool = false
     
     dynamic var displayURL: String = ""

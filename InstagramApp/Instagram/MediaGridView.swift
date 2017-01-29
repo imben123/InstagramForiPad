@@ -15,6 +15,7 @@ struct MediaGridViewItem: Equatable {
     let url: URL
     let profilePicture: URL
     let username: String
+    let code: String
     let viewerHasLiked: Bool
     
     public static func ==(lhs: MediaGridViewItem, rhs: MediaGridViewItem) -> Bool {

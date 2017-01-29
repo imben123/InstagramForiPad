@@ -64,6 +64,19 @@ class FeedWebStore: MediaListWebStore {
         }
     }
     
+    func fetchUpdatedMediaItem(for code: String, completion: @escaping (MediaItem)->(), failure: (()->())?) {
+        DispatchQueue.global().async {
+            let response = self.communicator.getPost(with: code)
+            if response.succeeded {
+                let mediaDictionary = response.responseBody!["media"] as! [String: Any]
+                let mediaItem = MediaItem(jsonDictionary: mediaDictionary)
+                completion(mediaItem)
+            } else {
+                failure?()
+            }
+        }
+    }
+    
     private func parseMedia(from response: APIResponse) -> [MediaItem] {
         
         var result: [MediaItem] = []

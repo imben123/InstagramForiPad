@@ -19,6 +19,7 @@ public class FeedManager {
     public weak var prefetchingDelegate: FeedManagerPrefetchingDelegate?
     
     private let feedWebStore: FeedWebStore
+    private let mediaDataStore: MediaDataStore
     private let mediaList: ScrollingMediaList
     private var endCursor: String? {
         return mediaList.firstGapCursor
@@ -34,6 +35,7 @@ public class FeedManager {
     }
     
     init(communicator: APICommunicator, mediaList: ScrollingMediaList) {
+        self.mediaDataStore = MediaDataStore()
         self.mediaList = mediaList
         self.feedWebStore = FeedWebStore(communicator: communicator)
         self.mediaList.prefetchingDelegate = self
@@ -77,6 +79,16 @@ public class FeedManager {
     
     public func updateMediaItemInMemCache(for id: String) {
         mediaList.updateMediaItemInMemCache(for: id)
+    }
+    
+    public func fetchUpdatedPost(for code: String, completion: ((MediaItem)->())? = nil, failure: (()->())? = nil) {
+        feedWebStore.fetchUpdatedMediaItem(for: code, completion: { [weak self] (mediaItem) in
+            
+            self?.mediaDataStore.archiveMedia([mediaItem])
+            self?.updateMediaItemInMemCache(for: mediaItem.id)
+            completion?(mediaItem)
+            
+        }, failure: failure)
     }
 }
 

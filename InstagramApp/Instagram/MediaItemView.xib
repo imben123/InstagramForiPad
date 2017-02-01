@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="iN0-l3-epB" customClass="MediaItemView" customModule="Instagram" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="795" height="831"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
+                    <rect key="frame" x="0.0" y="0.0" width="555" height="831"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJm-Qw-pZD">
+                    <rect key="frame" x="555" y="0.0" width="240" height="831"/>
+                    <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="SE6-j9-ikF"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="jeT-ka-9RO" secondAttribute="bottom" id="39S-N1-8Se"/>
+                <constraint firstItem="hJm-Qw-pZD" firstAttribute="leading" secondItem="jeT-ka-9RO" secondAttribute="trailing" id="8jB-H3-PHy"/>
+                <constraint firstAttribute="trailing" secondItem="hJm-Qw-pZD" secondAttribute="trailing" id="Bjh-dl-dG5"/>
+                <constraint firstAttribute="bottom" secondItem="hJm-Qw-pZD" secondAttribute="bottom" id="TbE-2L-HyT"/>
+                <constraint firstItem="hJm-Qw-pZD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sbx-yX-YBL"/>
+                <constraint firstItem="jeT-ka-9RO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="u1B-pK-Mvd"/>
+                <constraint firstItem="jeT-ka-9RO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uae-fa-4ye"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="commentsView" destination="hJm-Qw-pZD" id="skh-9S-eBn"/>
+                <outlet property="imageView" destination="jeT-ka-9RO" id="Bvk-r3-IgE"/>
+            </connections>
+            <point key="canvasLocation" x="47.5" y="-41.5"/>
+        </view>
+    </objects>
+</document>

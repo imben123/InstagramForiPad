@@ -102,7 +102,7 @@ class LoginViewController: UIViewController {
             password: self.passwordField.text!,
             completion: { [weak self] in
                 self?.setInteractionEnabled(true)
-                self?.navigationController?.pushViewController(ViewController(), animated: true)
+                self?.navigationController?.pushViewController(FeedViewController(), animated: true)
             }, failure:  { [weak self] in
                 self?.setInteractionEnabled(true)
                 self?.showAlert(withTitle: "Login Failed", message: "Please try again")

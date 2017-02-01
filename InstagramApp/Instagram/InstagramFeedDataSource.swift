@@ -48,6 +48,27 @@ class InstagramFeedDataSource: NSObject, MediaGridViewDataSource {
         let indexPath = IndexPath(item: index, section: 0)
         mediaGridView.reloadItems(at: [indexPath])
     }
+    
+    func mediaGridViewNeedsUpdateVisibleCells(_ sender: MediaGridView) {
+        let visibleIndexPaths = mediaGridView.indexPathsForVisibleItems
+        let urls = visibleIndexPaths.map { indexPath -> URL in
+            mediaItem(at: indexPath.item).display
+        }
+        SDWebImagePrefetcher.shared().prefetchURLs(urls)
+    }
+    
+    func mediaItem(at index: Int) -> MediaItem {
+        let mediaID = InstagramData.shared.feedManager.mediaIDs[index]
+        
+        var mediaItem: MediaItem!
+        let sema = DispatchSemaphore(value: 0)
+        InstagramData.shared.feedManager.mediaItem(for: mediaID) { (result) in
+            mediaItem = result
+            sema.signal()
+        }
+        sema.wait()
+        return mediaItem
+    }
 }
 
 extension InstagramFeedDataSource: UICollectionViewDataSource {
@@ -159,15 +180,7 @@ extension InstagramFeedDataSource {
     }
     
     fileprivate func item(at index: Int) -> MediaGridViewItem {
-        let mediaID = InstagramData.shared.feedManager.mediaIDs[index]
-        
-        var mediaItem: MediaItem!
-        let sema = DispatchSemaphore(value: 0)
-        InstagramData.shared.feedManager.mediaItem(for: mediaID) { (result) in
-            mediaItem = result
-            sema.signal()
-        }
-        sema.wait()
+        let mediaItem = self.mediaItem(at: index)
         return MediaGridViewItem(id: mediaItem.id,
                                  url: mediaItem.thumbnail,
                                  profilePicture: mediaItem.owner.profilePictureURL,

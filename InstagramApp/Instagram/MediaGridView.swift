@@ -25,6 +25,12 @@ struct MediaGridViewItem: Equatable {
 
 protocol MediaGridViewDataSource: UICollectionViewDataSource {
     func mediaGridViewNeedsMoreMedia(_ sender: MediaGridView)
+    func mediaGridViewNeedsUpdateVisibleCells(_ sender: MediaGridView)
+    func mediaItem(at index: Int) -> MediaItem
+}
+
+protocol MediaGridViewDelegate: class {
+    func mediaGridView(_ sender: MediaGridView, userTappedCellForItem mediaItem: MediaItem, imageView: UIImageView)
 }
 
 class MediaGridView: UICollectionView {
@@ -35,7 +41,9 @@ class MediaGridView: UICollectionView {
     var resizesWithNavigationBar: Bool = false
     var navigationBarHeightForSizeCalculations: CGFloat = 64
     
-    fileprivate var mediaGridViewDataSource: MediaGridViewDataSource? {
+    weak var mediaGridViewDelegate: MediaGridViewDelegate?
+    
+    var mediaGridViewDataSource: MediaGridViewDataSource? {
         return dataSource as? MediaGridViewDataSource
     }
 
@@ -128,6 +136,10 @@ extension MediaGridView: UICollectionViewDelegateFlowLayout {
         }
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        mediaGridViewDataSource?.mediaGridViewNeedsUpdateVisibleCells(self)
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -141,5 +153,11 @@ extension MediaGridView: UICollectionViewDelegateFlowLayout {
         } else {
             return .zero
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mediaItem = mediaGridViewDataSource!.mediaItem(at: indexPath.item)
+        let cell = collectionView.cellForItem(at: indexPath) as! MediaGridViewCell
+        mediaGridViewDelegate?.mediaGridView(self, userTappedCellForItem: mediaItem, imageView:cell.imageView)
     }
 }

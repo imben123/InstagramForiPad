@@ -24,12 +24,15 @@ class MediaItemTableRow: Object {
     dynamic var owner: UserTableRow?
     dynamic var code: String = ""
     dynamic var isVideo: Bool = false
-    
+
+    dynamic var caption: String?
+
     dynamic var displayURL: String = ""
     dynamic var thumbnailURL: String = ""
     
     dynamic var commentsDisabled: Bool = false
     dynamic var commentsCount: Int = 0
+    let comments = List<MediaItemCommentTableRow>()
     dynamic var likesCount: Int = 0
     dynamic var viewerHasLiked: Bool = false
     
@@ -52,11 +55,17 @@ extension MediaItemTableRow {
         self.code = mediaItem.code
         self.isVideo = mediaItem.isVideo
         
+        self.caption = mediaItem.caption
+        
         self.thumbnailURL = mediaItem.thumbnail.absoluteString
         self.displayURL = mediaItem.display.absoluteString
         
         self.commentsDisabled = mediaItem.commentsDisabled
         self.commentsCount = mediaItem.commentsCount
+        
+        for comment in mediaItem.comments {
+            comments.append(MediaItemCommentTableRow(comment))
+        }
         self.likesCount = mediaItem.likesCount
         self.viewerHasLiked = mediaItem.viewerHasLiked
     }
@@ -74,11 +83,16 @@ extension MediaItem {
         code = mediaItemTableRow.code
         isVideo = mediaItemTableRow.isVideo
         
+        caption = mediaItemTableRow.caption
+        
         display = URL(string: mediaItemTableRow.displayURL)!
         thumbnail = URL(string: mediaItemTableRow.thumbnailURL)!
         
         commentsDisabled = mediaItemTableRow.commentsDisabled
         commentsCount = mediaItemTableRow.commentsCount
+        comments = mediaItemTableRow.comments.map({ (row) -> MediaItemComment in
+            return MediaItemComment(row)
+        })
         likesCount = mediaItemTableRow.likesCount
         viewerHasLiked = mediaItemTableRow.viewerHasLiked
     }

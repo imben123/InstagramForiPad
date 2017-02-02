@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        SDImageCache.shared().clearDisk()
+//        SDImageCache.shared().clearDisk()
 //        try! Realm().write { try! Realm().deleteAll() }
         
         let rootViewController: UIViewController

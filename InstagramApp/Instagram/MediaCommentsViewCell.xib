@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="48" id="NdX-xc-jsI" customClass="MediaCommentsViewCell" customModule="Instagram" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NdX-xc-jsI" id="fPq-Li-NsA">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="52.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc9-j1-fvr">
+                        <rect key="frame" x="48" y="12" width="311" height="28.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qIg-Vo-8Ng">
+                        <rect key="frame" x="8" y="4.5" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="Zq1-tF-mSv"/>
+                            <constraint firstAttribute="width" constant="32" id="egr-gY-Ff1"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="fc9-j1-fvr" secondAttribute="bottom" constant="4" id="6Mh-hu-5JU"/>
+                    <constraint firstItem="qIg-Vo-8Ng" firstAttribute="leading" secondItem="fPq-Li-NsA" secondAttribute="leading" constant="8" id="73L-qK-Rjs"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fc9-j1-fvr" secondAttribute="trailing" constant="8" id="HMc-Xz-lcn"/>
+                    <constraint firstItem="qIg-Vo-8Ng" firstAttribute="baseline" secondItem="fc9-j1-fvr" secondAttribute="firstBaseline" constant="8.5" id="bO2-s0-azC"/>
+                    <constraint firstItem="fc9-j1-fvr" firstAttribute="top" secondItem="fPq-Li-NsA" secondAttribute="topMargin" constant="4" id="mPK-hT-rq4"/>
+                    <constraint firstItem="fc9-j1-fvr" firstAttribute="leading" secondItem="qIg-Vo-8Ng" secondAttribute="trailing" constant="8" id="o28-Qk-CAi"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <inset key="separatorInset" minX="48" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="label" destination="fc9-j1-fvr" id="PSz-Q4-QHo"/>
+                <outlet property="profilePicture" destination="qIg-Vo-8Ng" id="fi8-V6-2A6"/>
+            </connections>
+            <point key="canvasLocation" x="-29.5" y="-322.5"/>
+        </tableViewCell>
+    </objects>
+</document>

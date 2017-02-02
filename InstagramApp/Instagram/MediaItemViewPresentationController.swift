@@ -20,6 +20,18 @@ class MediaItemViewPresentationController: UIPresentationController {
         return false
     }
     
+    override var frameOfPresentedViewInContainerView: CGRect {
+        let frameOfPresentingViewController = presentingViewController.view.frame
+        let boundingSize = CGSize(width: frameOfPresentingViewController.size.width - 44,
+                                  height: frameOfPresentingViewController.size.height - 44)
+        let size = mediaItemViewController.preferredSize(thatFits: boundingSize)
+        let result = CGRect(x: frameOfPresentingViewController.width*0.5 - size.width*0.5,
+                            y: frameOfPresentingViewController.height*0.5 - size.height*0.5,
+                            width: size.width,
+                            height: size.height)
+        return result
+    }
+    
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentedViewController)
         setupDimmingView()
@@ -27,7 +39,6 @@ class MediaItemViewPresentationController: UIPresentationController {
     
     func setupDimmingView() {
         dimmingView = UIView()
-        dimmingView.translatesAutoresizingMaskIntoConstraints = false
         dimmingView.backgroundColor = UIColor(white: 0.0, alpha: 0.6)
         dimmingView.alpha = 0.0
         
@@ -68,18 +79,6 @@ class MediaItemViewPresentationController: UIPresentationController {
         super.containerViewWillLayoutSubviews()
         presentedView?.frame = frameOfPresentedViewInContainerView
         dimmingView.frame = containerView!.bounds
-    }
-    
-    override var frameOfPresentedViewInContainerView: CGRect {
-        let frameOfPresentingViewController = presentingViewController.view.frame
-        let boundingSize = CGSize(width: frameOfPresentingViewController.size.width - 44,
-                                  height: frameOfPresentingViewController.size.height - 44)
-        let size = mediaItemViewController.preferredSize(thatFits: boundingSize)
-        let result = CGRect(x: frameOfPresentingViewController.width*0.5 - size.width*0.5,
-                            y: frameOfPresentingViewController.height*0.5 - size.height*0.5,
-                            width: size.width,
-                            height: size.height)
-        return result
     }
     
 }

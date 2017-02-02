@@ -33,9 +33,18 @@ func proportionalSize(_ size: CGSize, thatFits constrainingSize: CGSize) -> CGSi
 class MediaItemView: UIView {
     
     @IBOutlet var imageView: UIImageView!
-    @IBOutlet var commentsView: UIView!
+    @IBOutlet var commentsView: MediaCommentsView!
     
-    var mediaItem: MediaItem?
+    var mediaItem: MediaItem? {
+        didSet {
+            if let newValue = mediaItem {
+                commentsView.setComments(newValue.comments,
+                                         initialComment: newValue.caption,
+                                         usernameOfOwner: newValue.owner.username,
+                                         profilePictureOfOwner: newValue.owner.profilePictureURL)
+            }
+        }
+    }
     
     func calculateImageViewSize() -> CGSize {
         return CGSize(width: width - 240.0, height: height)

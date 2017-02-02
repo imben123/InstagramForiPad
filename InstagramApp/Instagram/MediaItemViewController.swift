@@ -119,7 +119,6 @@ class MediaItemViewController: UIViewController {
             
         } else {
             
-            
             let cacheKey = SDWebImageManager.shared().cacheKey(for: mediaItem.thumbnail)
             let cachedThumbnail = SDImageCache.shared().imageFromMemoryCache(forKey: cacheKey)
             UIView.transition(with: self.mediaItemView.imageView,

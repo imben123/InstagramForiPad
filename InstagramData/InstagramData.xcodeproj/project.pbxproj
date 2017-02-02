@@ -61,6 +61,8 @@
 		B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */; };
 		B5BEC9111E181B82000C3870 /* MockMediaListDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */; };
 		B5BEC9131E184DF7000C3870 /* ScrollingMediaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9121E184DF7000C3870 /* ScrollingMediaList.swift */; };
+		B5D32CB21E43E7CE00BA7DF8 /* MediaItemComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32CB11E43E7CE00BA7DF8 /* MediaItemComment.swift */; };
+		B5D32CB51E43E91100BA7DF8 /* MediaItemCommentTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D32CB41E43E91100BA7DF8 /* MediaItemCommentTableRow.swift */; };
 		B5DF5B621E3CFD9500FA6FF4 /* LikeReqestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DF5B611E3CFD9500FA6FF4 /* LikeReqestsManager.swift */; };
 		B5DF5B661E3CFF0A00FA6FF4 /* LikeReqestsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DF5B651E3CFF0A00FA6FF4 /* LikeReqestsManagerTests.swift */; };
 /* End PBXBuildFile section */
@@ -157,6 +159,8 @@
 		B5BEC90C1E1816F3000C3870 /* MediaListTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListTableRow.swift; sourceTree = "<group>"; };
 		B5BEC90F1E181B7E000C3870 /* MockMediaListDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaListDataStore.swift; sourceTree = "<group>"; };
 		B5BEC9121E184DF7000C3870 /* ScrollingMediaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollingMediaList.swift; sourceTree = "<group>"; };
+		B5D32CB11E43E7CE00BA7DF8 /* MediaItemComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemComment.swift; sourceTree = "<group>"; };
+		B5D32CB41E43E91100BA7DF8 /* MediaItemCommentTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemCommentTableRow.swift; sourceTree = "<group>"; };
 		B5DF5B611E3CFD9500FA6FF4 /* LikeReqestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeReqestsManager.swift; sourceTree = "<group>"; };
 		B5DF5B651E3CFF0A00FA6FF4 /* LikeReqestsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeReqestsManagerTests.swift; sourceTree = "<group>"; };
 		B70CF493509CE7EF3CA3F4A2 /* Pods-InstagramData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramData.debug.xcconfig"; path = "../InstagramApp/Pods/Target Support Files/Pods-InstagramData/Pods-InstagramData.debug.xcconfig"; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 				B506A0891E14252500EEA147 /* UserTests.swift */,
 				B506A08D1E14291600EEA147 /* Media.swift */,
 				B506A0911E14294300EEA147 /* MediaTests.swift */,
+				B5D32CB11E43E7CE00BA7DF8 /* MediaItemComment.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 				B5A923A61E17354000C36D9C /* MediaDataStore.swift */,
 				B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */,
 				B5A9239B1E170FCE00C36D9C /* MediaItemTableRow.swift */,
+				B5D32CB41E43E91100BA7DF8 /* MediaItemCommentTableRow.swift */,
 				B559CD7E1E1DAC1400745859 /* UserTableRow.swift */,
 			);
 			name = MediaDataStore;
@@ -685,6 +691,8 @@
 				B5BEC90A1E18169B000C3870 /* MediaListDataStore.swift in Sources */,
 				B51D7B2D1E15E5B000DF5599 /* APIResponse.swift in Sources */,
 				B51D7B321E15E5F100DF5599 /* APIConnectionRequestBuilder.swift in Sources */,
+				B5D32CB51E43E91100BA7DF8 /* MediaItemCommentTableRow.swift in Sources */,
+				B5D32CB21E43E7CE00BA7DF8 /* MediaItemComment.swift in Sources */,
 				B53693281E144637000246A7 /* UserFetcher.swift in Sources */,
 				B51D7B3A1E15E6A800DF5599 /* InstagramData.swift in Sources */,
 				B5A9239C1E170FCE00C36D9C /* MediaItemTableRow.swift in Sources */,

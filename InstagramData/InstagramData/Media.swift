@@ -18,12 +18,14 @@ public struct MediaItem: Equatable {
     public let code: String
     public let isVideo: Bool
     
+    public let caption: String?
+    
     public let display: URL
     public let thumbnail: URL
     
     public let commentsDisabled: Bool
     public let commentsCount: Int
-//    let comments: [Any]?
+    public let comments: [MediaItemComment]
     public let likesCount: Int
     
     public var viewerHasLiked: Bool
@@ -39,12 +41,17 @@ public struct MediaItem: Equatable {
         owner = User(jsonDictionary: json["owner"].dictionaryObject!)
         code = json["code"].stringValue
         isVideo = json["is_video"].boolValue
-            
+        
+        caption = json["caption"].string
+        
         display = json["display_src"].URLWithoutEscaping!
         thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : display
         
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
+        comments = json["comments"]["nodes"].arrayValue.map({ (json) -> MediaItemComment in
+            return MediaItemComment(jsonDictionary: json)
+        })
         likesCount = json["likes"]["count"].intValue
         viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
@@ -61,11 +68,16 @@ public struct MediaItem: Equatable {
         self.code = json["code"].stringValue
         self.isVideo = json["is_video"].boolValue
         
+        self.caption = json["caption"].string
+
         self.display = json["display_src"].URLWithoutEscaping!
         self.thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : display
         
         self.commentsDisabled = json["comments_disabled"].boolValue
         self.commentsCount = json["comments"]["count"].intValue
+        comments = json["comments"]["nodes"].arrayValue.map({ (json) -> MediaItemComment in
+            return MediaItemComment(jsonDictionary: json)
+        })
         self.likesCount = json["likes"]["count"].intValue
         viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
@@ -78,6 +90,7 @@ public struct MediaItem: Equatable {
             lhs.owner == rhs.owner &&
             lhs.code == rhs.code &&
             lhs.isVideo == rhs.isVideo &&
+            lhs.caption == rhs.caption &&
             lhs.thumbnail == rhs.thumbnail &&
             lhs.display == rhs.display &&
             lhs.commentsDisabled == rhs.commentsDisabled &&

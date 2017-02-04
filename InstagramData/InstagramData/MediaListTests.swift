@@ -9,47 +9,17 @@
 import XCTest
 @testable import InstagramData
 
-extension User {
-    init(id: String) {
-        self.id = id
-        self.profilePictureURL = URL(string: "https://google.com")!
-        self.fullName = "Full name"
-        self.username = "username"
-        self.biography = "This is a user biography"
-        self.externalURL = URL(string: "https://google.com")!
-        self.media = []
-        self.totalNumberOfMediaItems = 0
-    }
-}
-
-extension MediaItem {
-    init(id: String) {
-        self.id = id
-        self.date = Date(timeIntervalSince1970: 0)
-        self.dimensions = CGSize.zero
-        self.owner = User(id: "123")
-        self.code = nil
-        self.isVideo = false
-        self.display = URL(string: "https://google.com")!
-        self.thumbnail = display
-        self.commentsDisabled = false
-        self.commentsCount = 0
-        self.likesCount = 0
-        self.viewerHasLiked = false
-    }
-}
-
 class MediaListTests: XCTestCase {
     
     let exampleListName = "Test Name"
     var mockMediaDataStore: MockMediaDataStore!
-    var mockListDataStore: MockMediaListDataStore!
+    var mockListDataStore: MockGappedListDataStore!
     var sut: MediaList!
     
     override func setUp() {
         super.setUp()
         mockMediaDataStore = MockMediaDataStore()
-        mockListDataStore = MockMediaListDataStore()
+        mockListDataStore = MockGappedListDataStore()
         sut = MediaList(name: exampleListName, mediaDataStore: mockMediaDataStore, listDataStore: mockListDataStore)
     }
     
@@ -61,10 +31,10 @@ class MediaListTests: XCTestCase {
         return result
     }
     
-    func exampleMediaListWithIDs(in range: CountableRange<Int>) -> [MediaListItem] {
-        var result: [MediaListItem] = []
+    func exampleMediaListWithIDs(in range: CountableRange<Int>) -> [GappedListItem] {
+        var result: [GappedListItem] = []
         for i in range {
-            result.append(MediaListItem(id: "\(i)"))
+            result.append(GappedListItem(id: "\(i)"))
         }
         return result
     }
@@ -77,10 +47,10 @@ class MediaListTests: XCTestCase {
         return result
     }
     
-    func exampleMediaList(withIDs ids: [Int]) -> [MediaListItem] {
-        var result: [MediaListItem] = []
+    func exampleMediaList(withIDs ids: [Int]) -> [GappedListItem] {
+        var result: [GappedListItem] = []
         for id in ids {
-            result.append(MediaListItem(id: "\(id)"))
+            result.append(GappedListItem(id: "\(id)"))
         }
         return result
     }
@@ -88,81 +58,6 @@ class MediaListTests: XCTestCase {
     func testMediaListEmptyIfNoArchive() {
         XCTAssertEqual(sut.listItems.count, 0)
         XCTAssertNil(sut.firstGapCursor)
-    }
-    
-    func testAddInitialMedia() {
-        let endCursor = "endCursor"
-        let media = exampleMediaWithIDs(in: 1..<4)
-        sut.addNewMedia(media, with: endCursor)
-        
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(gapCursor: endCursor)]
-        
-        XCTAssertEqual(sut.listItems, expectedListItems)
-        XCTAssertEqual(sut.firstGapCursor, endCursor)
-    }
-    
-    func testAddOverlappingNewMedia() {
-        let endCursor1 = "endCursor1"
-        let endCursor2 = "endCursor2"
-        sut.addNewMedia(exampleMediaWithIDs(in: 3..<6), with: endCursor1)
-        sut.addNewMedia(exampleMediaWithIDs(in: 1..<4), with: endCursor2)
-
-        
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(id: "4"),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(gapCursor: endCursor1)]
-        
-        XCTAssertEqual(sut.listItems, expectedListItems)
-        XCTAssertEqual(sut.firstGapCursor, endCursor1)
-    }
-    
-    func testCanGetMediaCount() {
-        let endCursor1 = "endCursor1"
-        sut.addNewMedia(exampleMediaWithIDs(in: 3..<6), with: endCursor1)
-        XCTAssertEqual(sut.mediaCount, 3)
-        
-        let endCursor2 = "endCursor2"
-        sut.addNewMedia(exampleMediaWithIDs(in: 1..<4), with: endCursor2)
-        XCTAssertEqual(sut.mediaCount, 5)
-    }
-    
-    func testAddingNonOverlappingNewMediaLeavesGap() {
-        let endCursor1 = "endCursor1"
-        let endCursor2 = "endCursor2"
-        
-        sut.addNewMedia(exampleMediaWithIDs(in: 5..<8), with: endCursor1)
-        sut.addNewMedia(exampleMediaWithIDs(in: 1..<4), with: endCursor2)
-        
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(gapCursor: endCursor2),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(id: "6"),
-                                 MediaListItem(id: "7"),
-                                 MediaListItem(gapCursor: endCursor1)
-        ]
-        
-        XCTAssertEqual(sut.listItems, expectedListItems)
-    }
-    
-    func testCanGetMediaListBeforeFirstGap() {
-        let endCursor1 = "endCursor1"
-        let endCursor2 = "endCursor2"
-        
-        sut.addNewMedia(exampleMediaWithIDs(in: 5..<8), with: endCursor1)
-        sut.addNewMedia(exampleMediaWithIDs(in: 1..<4), with: endCursor2)
-        
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3")]
-        XCTAssertEqual(sut.listItemsBeforeFirstGap, expectedListItems)
     }
     
     func testAppendingMoreMediaDoesNotLeaveGap() {
@@ -173,13 +68,13 @@ class MediaListTests: XCTestCase {
         sut.appendMoreMedia(exampleMediaWithIDs(in: 4..<7), from: endCursor1, to: endCursor2)
         
         
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(id: "4"),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(id: "6"),
-                                 MediaListItem(gapCursor: endCursor2)]
+        let expectedListItems = [GappedListItem(id: "1"),
+                                 GappedListItem(id: "2"),
+                                 GappedListItem(id: "3"),
+                                 GappedListItem(id: "4"),
+                                 GappedListItem(id: "5"),
+                                 GappedListItem(id: "6"),
+                                 GappedListItem(gapCursor: endCursor2)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
     }
@@ -193,16 +88,16 @@ class MediaListTests: XCTestCase {
         sut.addNewMedia(exampleMediaWithIDs(in: 1..<4), with: endCursor2)
         sut.appendMoreMedia(exampleMediaWithIDs(in: 4..<7), from: endCursor2, to: endCursor3)
         
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(id: "4"),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(id: "6"),
-                                 MediaListItem(gapCursor: endCursor3),
-                                 MediaListItem(id: "8"),
-                                 MediaListItem(id: "9"),
-                                 MediaListItem(gapCursor: endCursor1)]
+        let expectedListItems = [GappedListItem(id: "1"),
+                                 GappedListItem(id: "2"),
+                                 GappedListItem(id: "3"),
+                                 GappedListItem(id: "4"),
+                                 GappedListItem(id: "5"),
+                                 GappedListItem(id: "6"),
+                                 GappedListItem(gapCursor: endCursor3),
+                                 GappedListItem(id: "8"),
+                                 GappedListItem(id: "9"),
+                                 GappedListItem(gapCursor: endCursor1)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
         
@@ -217,16 +112,16 @@ class MediaListTests: XCTestCase {
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor2)
         sut.appendMoreMedia(exampleMedia(withIDs: [4,5,6,7,8]), from: endCursor2, to: endCursor3)
         
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(id: "4"),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(id: "6"),
-                                 MediaListItem(id: "7"),
-                                 MediaListItem(id: "8"),
-                                 MediaListItem(id: "9"),
-                                 MediaListItem(gapCursor: endCursor1)]
+        let expectedListItems = [GappedListItem(id: "1"),
+                                 GappedListItem(id: "2"),
+                                 GappedListItem(id: "3"),
+                                 GappedListItem(id: "4"),
+                                 GappedListItem(id: "5"),
+                                 GappedListItem(id: "6"),
+                                 GappedListItem(id: "7"),
+                                 GappedListItem(id: "8"),
+                                 GappedListItem(id: "9"),
+                                 GappedListItem(gapCursor: endCursor1)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
         
@@ -249,26 +144,26 @@ class MediaListTests: XCTestCase {
     func testMediaUnarchivedOnLaunch() {
         let endCursor = "endCursor"
         mockMediaDataStore.archivedMediaList = exampleMedia(withIDs: [1,2,3])
-        mockListDataStore.savedMediaList = ([MediaListItem(id: "1"),
-                                             MediaListItem(id: "2"),
-                                             MediaListItem(id: "3"),
-                                             MediaListItem(gapCursor: endCursor)], exampleListName)
+        mockListDataStore.savedItemList = ([GappedListItem(id: "1"),
+                                             GappedListItem(id: "2"),
+                                             GappedListItem(id: "3"),
+                                             GappedListItem(gapCursor: endCursor)], exampleListName)
         sut = MediaList(name: exampleListName, mediaDataStore: mockMediaDataStore, listDataStore: mockListDataStore)
-        XCTAssertEqual(sut.listItems, mockListDataStore.savedMediaList!.listItems)
+        XCTAssertEqual(sut.listItems, mockListDataStore.savedItemList!.listItems)
     }
     
     func testMediaListArchivedOnAddingFirstMedia() {
         let endCursor = "endCursor"
         
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor)
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(gapCursor: endCursor)]
+        let expectedListItems = [GappedListItem(id: "1"),
+                                 GappedListItem(id: "2"),
+                                 GappedListItem(id: "3"),
+                                 GappedListItem(gapCursor: endCursor)]
         
-        XCTAssertNotNil(mockListDataStore.savedMediaList)
-        XCTAssertEqual(mockListDataStore.savedMediaList!.listItems, expectedListItems)
-        XCTAssertEqual(mockListDataStore.savedMediaList!.name, exampleListName)
+        XCTAssertNotNil(mockListDataStore.savedItemList)
+        XCTAssertEqual(mockListDataStore.savedItemList!.listItems, expectedListItems)
+        XCTAssertEqual(mockListDataStore.savedItemList!.name, exampleListName)
     }
     
     func testMediaListArchivedOnAddingAddingMoreNewMedia() {
@@ -277,18 +172,18 @@ class MediaListTests: XCTestCase {
         
         sut.addNewMedia(exampleMedia(withIDs: [4,5,6]), with: endCursor2)
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor1)
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(gapCursor: endCursor1),
-                                 MediaListItem(id: "4"),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(id: "6"),
-                                 MediaListItem(gapCursor: endCursor2)]
+        let expectedListItems = [GappedListItem(id: "1"),
+                                 GappedListItem(id: "2"),
+                                 GappedListItem(id: "3"),
+                                 GappedListItem(gapCursor: endCursor1),
+                                 GappedListItem(id: "4"),
+                                 GappedListItem(id: "5"),
+                                 GappedListItem(id: "6"),
+                                 GappedListItem(gapCursor: endCursor2)]
         
-        XCTAssertNotNil(mockListDataStore.savedMediaList)
-        XCTAssertEqual(mockListDataStore.savedMediaList!.listItems, expectedListItems)
-        XCTAssertEqual(mockListDataStore.savedMediaList!.name, exampleListName)
+        XCTAssertNotNil(mockListDataStore.savedItemList)
+        XCTAssertEqual(mockListDataStore.savedItemList!.listItems, expectedListItems)
+        XCTAssertEqual(mockListDataStore.savedItemList!.name, exampleListName)
     }
     
     func testMediaListArchivedOnAppendingMoreMedia() {
@@ -297,17 +192,17 @@ class MediaListTests: XCTestCase {
         
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor1)
         sut.appendMoreMedia(exampleMedia(withIDs: [4,5,6]), from: endCursor1, to: endCursor2)
-        let expectedListItems = [MediaListItem(id: "1"),
-                                 MediaListItem(id: "2"),
-                                 MediaListItem(id: "3"),
-                                 MediaListItem(id: "4"),
-                                 MediaListItem(id: "5"),
-                                 MediaListItem(id: "6"),
-                                 MediaListItem(gapCursor: endCursor2)]
+        let expectedListItems = [GappedListItem(id: "1"),
+                                 GappedListItem(id: "2"),
+                                 GappedListItem(id: "3"),
+                                 GappedListItem(id: "4"),
+                                 GappedListItem(id: "5"),
+                                 GappedListItem(id: "6"),
+                                 GappedListItem(gapCursor: endCursor2)]
         
-        XCTAssertNotNil(mockListDataStore.savedMediaList)
-        XCTAssertEqual(mockListDataStore.savedMediaList!.listItems, expectedListItems)
-        XCTAssertEqual(mockListDataStore.savedMediaList!.name, exampleListName)
+        XCTAssertNotNil(mockListDataStore.savedItemList)
+        XCTAssertEqual(mockListDataStore.savedItemList!.listItems, expectedListItems)
+        XCTAssertEqual(mockListDataStore.savedItemList!.name, exampleListName)
     }
     
     func testMediaArchivedOnAddingFirstMedia() {
@@ -341,27 +236,27 @@ class MediaListTests: XCTestCase {
         let endCursor1 = "endCursor"
         let endCursor2 = "endCursor"
         
-        XCTAssertEqual(sut.mediaCount, 0)
+        XCTAssertEqual(sut.itemCount, 0)
         
         sut.addNewMedia(exampleMedia(withIDs: [4,5,6]), with: endCursor2)
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor1)
         
-        XCTAssertEqual(sut.mediaCount, 3)
+        XCTAssertEqual(sut.itemCount, 3)
     }
     
     func testCanGetCountOfMediaIDsAvailableBeforeFirstGap() {
         let endCursor1 = "endCursor"
         let endCursor2 = "endCursor"
         
-        XCTAssertEqual(sut.mediaIDsBeforeFirstGap, [])
+        XCTAssertEqual(sut.itemIDsBeforeFirstGap, [])
         
         sut.addNewMedia(exampleMedia(withIDs: [4,5,6]), with: endCursor2)
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor1)
         
-        XCTAssertEqual(sut.mediaIDsBeforeFirstGap, ["1","2","3"])
+        XCTAssertEqual(sut.itemIDsBeforeFirstGap, ["1","2","3"])
     }
     
-    func testCanGetCountOfMediaListItemsAvailableBeforeFirstGap() {
+    func testCanGetCountOfGappedListItemsAvailableBeforeFirstGap() {
         let endCursor1 = "endCursor"
         let endCursor2 = "endCursor"
         
@@ -370,9 +265,9 @@ class MediaListTests: XCTestCase {
         sut.addNewMedia(exampleMedia(withIDs: [4,5,6]), with: endCursor2)
         sut.addNewMedia(exampleMedia(withIDs: [1,2,3]), with: endCursor1)
         
-        XCTAssertEqual(sut.listItemsBeforeFirstGap, [MediaListItem(id: "1"),
-                                                     MediaListItem(id: "2"),
-                                                     MediaListItem(id: "3"),])
+        XCTAssertEqual(sut.listItemsBeforeFirstGap, [GappedListItem(id: "1"),
+                                                     GappedListItem(id: "2"),
+                                                     GappedListItem(id: "3"),])
     }
     
     func testCanLoadMediaItemFromDataStore() {

@@ -29,7 +29,7 @@ public class FeedManager {
         let mediaList = ScrollingMediaList(name: "feed",
                                            pageSize: 50,
                                            mediaDataStore: MediaDataStore(),
-                                           listDataStore: MediaListDataStore())
+                                           listDataStore: GappedListDataStore())
         
         self.init(communicator: communicator, mediaList: mediaList)
     }
@@ -42,7 +42,7 @@ public class FeedManager {
     }
     
     public var mediaIDs: [String] {
-        return mediaList.mediaIDsBeforeFirstGap
+        return mediaList.itemIDsBeforeFirstGap
     }
     
     public var mediaCount: Int {

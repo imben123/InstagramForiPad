@@ -37,18 +37,18 @@ class FeedManagerTests: XCTestCase {
     var sut: FeedManager!
     var mockCommunicator: MockAPICommunicator!
     var mockMediaDataStore: MockMediaDataStore!
-    var mockMediaListDataStore: MockMediaListDataStore!
+    var mockGappedListDataStore: MockGappedListDataStore!
     var mediaList: ScrollingMediaList!
     
     override func setUp() {
         super.setUp()
         mockCommunicator = MockAPICommunicator()
         mockMediaDataStore = MockMediaDataStore()
-        mockMediaListDataStore = MockMediaListDataStore()
+        mockGappedListDataStore = MockGappedListDataStore()
         mediaList = ScrollingMediaList(name: "feed",
                                        pageSize: 50,
                                        mediaDataStore: mockMediaDataStore,
-                                       listDataStore: mockMediaListDataStore)
+                                       listDataStore: mockGappedListDataStore)
         sut = FeedManager(communicator: mockCommunicator, mediaList: mediaList)
     }
     
@@ -234,27 +234,6 @@ class FeedManagerTests: XCTestCase {
         
         // Then
         XCTAssertEqual(sut.mediaCount, 1)
-    }
-    
-    func testCanGetMediaItemForID() {
-        
-        // Given
-        XCTAssertEqual(sut.mediaCount, 0)
-        let expected = MediaItem(id: "1416818863685651136")
-        mockMediaDataStore.mediaItemToLoad = expected
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
-
-        // When
-        let expectation = self.expectation(description: "Completion called")
-        sut.fetchMoreMedia({
-            // Then
-            self.sut.mediaItem(for: "1416818863685651136") { mediaItem in
-                XCTAssertEqual(mediaItem, expected)
-                expectation.fulfill()
-            }
-        })
-        
-        self.waitForExpectations(timeout: 0.1)
     }
     
     func testPrefetchingDelegate() {

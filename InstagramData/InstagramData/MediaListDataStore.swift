@@ -1,5 +1,5 @@
 //
-//  MediaListDataStore.swift
+//  GappedListDataStore.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 31/12/2016.
@@ -11,11 +11,11 @@ import RealmSwift
 
 // TODO: Needs tests
 
-class MediaListDataStore {
+class GappedListDataStore {
     
-    private let backgroundQueue = DispatchQueue(label: "uk.co.bendavisapps.MediaListDataStore", qos: .background)
+    private let backgroundQueue = DispatchQueue(label: "uk.co.bendavisapps.GappedListDataStore", qos: .background)
     
-    func saveMediaList(_ listItems: [MediaListItem], with name: String) {
+    func saveItemList(_ listItems: [GappedListItem], with name: String) {
         
         backgroundQueue.async {
             
@@ -23,17 +23,17 @@ class MediaListDataStore {
             
             // TODO: Handle error
             try! realm.write {
-                realm.delete(realm.objects(MediaListTableRow.self).filter("name = '\(name)'"))
-                realm.add(MediaListTableRow(name, listItems: listItems))
+                realm.delete(realm.objects(GappedListTableRow.self).filter("name = '\(name)'"))
+                realm.add(GappedListTableRow(name, listItems: listItems))
             }
         }
     }
     
-    func getMediaList(with name: String, completion: @escaping (_ listItems: [MediaListItem]?) -> Void) {
+    func getItemList(with name: String, completion: @escaping (_ listItems: [GappedListItem]?) -> Void) {
         
         backgroundQueue.async {
             let realm = try! Realm()
-            let mediaItemRows = realm.objects(MediaListTableRow.self).filter("name = '\(name)'").first
+            let mediaItemRows = realm.objects(GappedListTableRow.self).filter("name = '\(name)'").first
             completion(mediaItemRows?.allListItems())
         }
     }

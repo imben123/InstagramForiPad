@@ -8,102 +8,14 @@
 
 import Foundation
 
-public struct MediaListItem: Equatable {
-    public let id: String?
-    public let isGap: Bool
-    public let gapCursor: String?
+class MediaList: GappedList {
     
-    public static func ==(_ lhs: MediaListItem, rhs: MediaListItem) -> Bool {
-        return (lhs.id == rhs.id && lhs.isGap == rhs.isGap && lhs.gapCursor == rhs.gapCursor)
-    }
-    
-    init(id: String) {
-        self.id = id
-        self.isGap = false
-        self.gapCursor = nil
-    }
-    
-    init(gapCursor: String?) {
-        self.id = nil
-        self.isGap = true
-        self.gapCursor = gapCursor
-    }
-}
-
-class MediaList {
-    
-    private let name: String
-    private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
     private let mediaDataStore: MediaDataStore
-    private let listDataStore: MediaListDataStore
-    
-    var listItems: [MediaListItem] {
-        return privateListItems
-    }
-    
-    var firstGapCursor: String? {
-        return listItems.filter({ $0.isGap && $0.gapCursor != nil }).first?.gapCursor
-    }
-    
-    private var privateListItemsBeforeFirstGap: [MediaListItem] = []
-    var listItemsBeforeFirstGap: [MediaListItem] {
-        return privateListItemsBeforeFirstGap
-    }
-    
-    private var privateMediaIDsBeforeFirstGap: [String] = []
-    var mediaIDsBeforeFirstGap: [String] {
-        return privateMediaIDsBeforeFirstGap
-    }
-    
-    private var privateMediaCount: Int = 0
-    var mediaCount: Int {
-        return privateMediaCount
-    }
-    
-    private var privateListItemsValue: [MediaListItem] = []
-    private var privateListItems: [MediaListItem] {
-        set {
-            privateListItemsValue = newValue
-            privateListItemsBeforeFirstGap = calculatelistItemsBeforeFirstGap()
-            privateMediaIDsBeforeFirstGap = privateListItemsBeforeFirstGap.map({ $0.id! })
-            privateMediaCount = calculateMediaCount()
-        }
-        get {
-            return privateListItemsValue
-        }
-    }
-    
-    private func calculatelistItemsBeforeFirstGap() -> [MediaListItem] {
-        guard let firstGap = listItems.filter({ $0.isGap }).first else {
-            return []
-        }
-        let gapIndex = listItems.index(of: firstGap)!
-        return Array(listItems[0..<gapIndex])
-    }
-    
-    private func calculateMediaCount() -> Int {
-        guard let firstGap = listItems.filter({ $0.isGap }).first else {
-            return 0
-        }
-        return privateListItems.index(of: firstGap)!
-    }
-    
-    init(name: String, mediaDataStore: MediaDataStore, listDataStore: MediaListDataStore) {
-        self.name = name
+    private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
+
+    init(name: String, mediaDataStore: MediaDataStore, listDataStore: GappedListDataStore) {
         self.mediaDataStore = mediaDataStore
-        self.listDataStore = listDataStore
-        unarchiveMedia()
-    }
-    
-    private func unarchiveMedia() {
-        let semaphore = DispatchSemaphore(value: 0)
-        listDataStore.getMediaList(with: name) { [weak self] listItems in
-            if let listItems = listItems {
-                self?.privateListItems = listItems
-            }
-            semaphore.signal()
-        }
-        semaphore.wait()
+        super.init(name: name, listDataStore: listDataStore)
     }
     
     func mediaItem(for id: String, completion: @escaping (MediaItem?)->Void) {
@@ -116,68 +28,20 @@ class MediaList {
     
     func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String?) {
         lockQueue.sync() {
-            
-            guard let gapIndex = privateListItems.index(where: { $0.isGap && $0.gapCursor == startCursor }) else {
-                return
+            if indexOfGap(withCursor: startCursor) != nil {
+                mediaDataStore.archiveMedia(newMedia)
             }
-            
-            let newerItems = privateListItems[0..<gapIndex]
-            let olderItems = privateListItems[gapIndex+1..<privateListItems.count]
-
-            let listItemsToAdd: [MediaListItem]
-            if let firstOlderItem = olderItems.first,
-                let indexOfOverlap = newMedia.index(where: { $0.id == firstOlderItem.id }) {
-                listItemsToAdd = newMedia[0..<indexOfOverlap].map(createMediaListItem)
-            } else {
-                listItemsToAdd = newMedia.map(createMediaListItem) + [MediaListItem(gapCursor: newEndCursor)]
-            }
-
-            privateListItems = newerItems + listItemsToAdd + olderItems
-            
-            mediaDataStore.archiveMedia(newMedia)
-            listDataStore.saveMediaList(privateListItems, with: name)
         }
-    }
-    
-    private func createMediaListItem(from mediaItem: MediaItem) -> MediaListItem {
-        return MediaListItem(id: mediaItem.id)
+        super.appendMoreItems(newMedia.map() { $0.id }, from: startCursor, to: newEndCursor)
     }
     
     func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String?) {
         lockQueue.sync() {
-            
             if newEndCursor == nil {
-                privateListItems = []
                 mediaDataStore.deleteAllMedia()
-                print("Latest media had no end cursor. Cannot link up with previous cached media so deleting all.")
             }
-            
-            guard let currentHead = privateListItems.first else {
-                privateListItems = newMedia.map(createMediaListItem) + [ MediaListItem(gapCursor: newEndCursor) ]
-                mediaDataStore.archiveMedia(newMedia)
-                listDataStore.saveMediaList(privateListItems, with: name)
-                return
-            }
-            
-            var foundMatch = false
-            var result: [MediaListItem] = []
-            for mediaItem in newMedia {
-                if mediaItem.id == currentHead.id {
-                    foundMatch = true
-                    break
-                }
-                result.append(createMediaListItem(from: mediaItem))
-            }
-            
-            if !foundMatch {
-                result.append(MediaListItem(gapCursor: newEndCursor))
-            }
-            result.append(contentsOf: listItems)
-
-            privateListItems = result
-            
             mediaDataStore.archiveMedia(newMedia)
-            listDataStore.saveMediaList(privateListItems, with: name)
         }
+        super.addNewItems(newMedia.map() { $0.id }, with: newEndCursor)
     }
 }

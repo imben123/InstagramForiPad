@@ -9,6 +9,7 @@
 import XCTest
 @testable import InstagramData
 import SwiftToolbox
+import Realm
 
 class LikeReqestsManagerTests: XCTestCase {
     
@@ -19,6 +20,8 @@ class LikeReqestsManagerTests: XCTestCase {
     var sut: LikeReqestsManager!
     
     override func setUp() {
+        try? FileManager.default.removeItem(at: RLMRealmConfiguration.default().fileURL!)
+        
         reachability = MockReachability()
         taskDispatcher = MockTaskDispatcher(queue: DispatchQueue(label: "LikeReqestsManagerTestsQueue"))
         reliableNetworkTaskManager = MockReliableNetworkTaskManager(reachability: reachability,

@@ -29,7 +29,7 @@ class ScrollingMediaList {
     
     weak var prefetchingDelegate: ScrollingMediaListPrefetchingDelegate? = nil
     
-    var listItems: [MediaListItem] {
+    var listItems: [GappedListItem] {
         return mediaList.listItems
     }
     
@@ -37,19 +37,19 @@ class ScrollingMediaList {
         return mediaList.firstGapCursor
     }
     
-    var listItemsBeforeFirstGap: [MediaListItem] {
+    var listItemsBeforeFirstGap: [GappedListItem] {
         return mediaList.listItemsBeforeFirstGap
     }
     
-    var mediaIDsBeforeFirstGap: [String] {
-        return mediaList.mediaIDsBeforeFirstGap
+    var itemIDsBeforeFirstGap: [String] {
+        return mediaList.itemIDsBeforeFirstGap
     }
     
     var mediaCount: Int {
-        return mediaList.mediaCount
+        return mediaList.itemCount
     }
     
-    init(name: String, pageSize: Int, mediaDataStore: MediaDataStore, listDataStore: MediaListDataStore) {
+    init(name: String, pageSize: Int, mediaDataStore: MediaDataStore, listDataStore: GappedListDataStore) {
         self.mediaList = MediaList(name: name, mediaDataStore: mediaDataStore, listDataStore: listDataStore)
         self.pageSize = pageSize
     }
@@ -230,7 +230,7 @@ class ScrollingMediaList {
         return getMediaItemsSynchronously(for: resultListItems)
     }
     
-    private func getMediaItemsSynchronously(for listItems: ArraySlice<MediaListItem>) -> [MediaItem] {
+    private func getMediaItemsSynchronously(for listItems: ArraySlice<GappedListItem>) -> [MediaItem] {
         
         let semaphore = DispatchSemaphore(value: 0)
         

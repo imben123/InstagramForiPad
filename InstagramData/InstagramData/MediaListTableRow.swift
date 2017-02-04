@@ -1,5 +1,5 @@
 //
-//  MediaListTableRow.swift
+//  GappedListTableRow.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 31/12/2016.
@@ -9,38 +9,38 @@
 import Foundation
 import RealmSwift
 
-class MediaListTableRow: Object {
+class GappedListTableRow: Object {
     dynamic var name: String = ""
-    let items = List<MediaListItemTableRow>()
+    let items = List<GappedListItemTableRow>()
 }
 
-extension MediaListTableRow {
-    convenience init(_ name: String, listItems: [MediaListItem]) {
+extension GappedListTableRow {
+    convenience init(_ name: String, listItems: [GappedListItem]) {
         self.init()
         self.name = name
         
         for item in listItems {
-            items.append(MediaListItemTableRow(item))
+            items.append(GappedListItemTableRow(item))
         }
     }
     
-    func allListItems() -> [MediaListItem] {
-        var result: [MediaListItem] = []
+    func allListItems() -> [GappedListItem] {
+        var result: [GappedListItem] = []
         for rowItem in items {
-            result.append(MediaListItem(rowItem))
+            result.append(GappedListItem(rowItem))
         }
         return result
     }
 }
 
-class MediaListItemTableRow: Object {
+class GappedListItemTableRow: Object {
     dynamic var id: String?
     dynamic var isGap: Bool = false
     dynamic var gapCursor: String?
 }
 
-extension MediaListItemTableRow {
-    convenience init(_ listItem: MediaListItem) {
+extension GappedListItemTableRow {
+    convenience init(_ listItem: GappedListItem) {
         self.init()
         self.id = listItem.id
         self.isGap = listItem.isGap
@@ -48,8 +48,8 @@ extension MediaListItemTableRow {
     }
 }
 
-extension MediaListItem {
-    init(_ mediaListItemTableRow: MediaListItemTableRow) {
+extension GappedListItem {
+    init(_ mediaListItemTableRow: GappedListItemTableRow) {
         id = mediaListItemTableRow.id
         isGap = mediaListItemTableRow.isGap
         gapCursor = mediaListItemTableRow.gapCursor

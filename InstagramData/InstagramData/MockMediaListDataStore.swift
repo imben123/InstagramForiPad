@@ -1,5 +1,5 @@
 //
-//  MockMediaListDataStore.swift
+//  MockGappedListDataStore.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 31/12/2016.
@@ -9,17 +9,17 @@
 import Foundation
 @testable import InstagramData
 
-class MockMediaListDataStore: MediaListDataStore {
+class MockGappedListDataStore: GappedListDataStore {
     
-    var savedMediaList: (listItems: [MediaListItem], name: String)? = nil
+    var savedItemList: (listItems: [GappedListItem], name: String)? = nil
     
-    override func saveMediaList(_ listItems: [MediaListItem], with name: String) {
-        savedMediaList = (listItems, name)
+    override func saveItemList(_ listItems: [GappedListItem], with name: String) {
+        savedItemList = (listItems, name)
     }
     
-    override func getMediaList(with name: String, completion: @escaping (_ listItems: [MediaListItem]?) -> Void) {
-        if name == savedMediaList?.name {
-            completion(savedMediaList?.listItems)
+    override func getItemList(with name: String, completion: @escaping (_ listItems: [GappedListItem]?) -> Void) {
+        if name == savedItemList?.name {
+            completion(savedItemList?.listItems)
         } else {
             completion(nil)
         }

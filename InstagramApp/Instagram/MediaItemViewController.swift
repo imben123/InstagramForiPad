@@ -57,7 +57,7 @@ class MediaItemViewController: UIViewController {
     }
     
     func preferredSize(thatFits size: CGSize) -> CGSize {
-        let boundingSize = minSize(size, second: view.frame.size)
+        let boundingSize = size //minSize(size, second: view.frame.size)
         return mediaItemView.sizeThatFits(boundingSize)
     }
     

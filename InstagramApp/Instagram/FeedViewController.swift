@@ -34,7 +34,9 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
+        title = "Instagram"
+        
+        view.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
         updateMediaGridView()
         dataSource.loadMoreMedia()
         

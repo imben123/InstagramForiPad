@@ -34,20 +34,18 @@ class MediaItemView: UIView {
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var commentsView: MediaCommentsView!
+    @IBOutlet var commentsViewWidthConstraint: NSLayoutConstraint!
     
     var mediaItem: MediaItem? {
         didSet {
             if let newValue = mediaItem {
-                commentsView.setComments(newValue.comments,
-                                         initialComment: newValue.caption,
-                                         usernameOfOwner: newValue.owner.username,
-                                         profilePictureOfOwner: newValue.owner.profilePictureURL)
+                commentsView.setComments(newValue)
             }
         }
     }
     
     func calculateImageViewSize() -> CGSize {
-        return CGSize(width: width - 240.0, height: height)
+        return CGSize(width: width - commentsViewWidthConstraint.constant, height: height)
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {

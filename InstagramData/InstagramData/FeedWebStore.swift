@@ -70,9 +70,13 @@ class FeedWebStore: MediaListWebStore {
             if response.succeeded {
                 let mediaDictionary = response.responseBody!["media"] as! [String: Any]
                 let mediaItem = MediaItem(jsonDictionary: mediaDictionary)
-                completion(mediaItem)
+                DispatchQueue.main.async {
+                    completion(mediaItem)
+                }
             } else {
-                failure?()
+                DispatchQueue.main.async {
+                    failure?()
+                }
             }
         }
     }

@@ -38,6 +38,7 @@ class MediaList: GappedList {
     func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String?) {
         lockQueue.sync() {
             if newEndCursor == nil {
+                print("Latest media had no end cursor. Cannot link up with previous cached media so deleting all.")
                 mediaDataStore.deleteAllMedia()
             }
             mediaDataStore.archiveMedia(newMedia)

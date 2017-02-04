@@ -34,6 +34,7 @@ extension MediaItem {
         self.thumbnail = display
         self.commentsDisabled = false
         self.commentsCount = 0
+        self.commentsStartCursor = ""
         self.likesCount = 0
         self.viewerHasLiked = false
         self.caption = nil

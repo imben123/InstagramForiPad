@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
-                    <rect key="frame" x="0.0" y="0.0" width="555" height="831"/>
+                    <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJm-Qw-pZD" customClass="MediaCommentsView" customModule="Instagram" customModuleProvider="target">
-                    <rect key="frame" x="555" y="0.0" width="240" height="831"/>
+                    <rect key="frame" x="515" y="0.0" width="280" height="831"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="240" id="SE6-j9-ikF"/>
+                        <constraint firstAttribute="width" constant="280" id="SE6-j9-ikF"/>
                     </constraints>
                 </view>
             </subviews>
@@ -42,6 +42,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="commentsView" destination="hJm-Qw-pZD" id="skh-9S-eBn"/>
+                <outlet property="commentsViewWidthConstraint" destination="SE6-j9-ikF" id="x3B-K2-tWR"/>
                 <outlet property="imageView" destination="jeT-ka-9RO" id="Bvk-r3-IgE"/>
             </connections>
             <point key="canvasLocation" x="47.5" y="-41.5"/>

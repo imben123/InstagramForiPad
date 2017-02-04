@@ -8,7 +8,7 @@
 
 import RealmSwift
 
-class MediaItemCommentTableRow: Object {
+public class MediaItemCommentTableRow: Object {
     
     dynamic var id: String = ""
     dynamic var text: String = ""
@@ -16,7 +16,7 @@ class MediaItemCommentTableRow: Object {
     dynamic var userName: String = ""
     dynamic var profilePicture: String = ""
     
-    override static func primaryKey() -> String? {
+    public override static func primaryKey() -> String? {
         return "id"
     }
 

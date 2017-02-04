@@ -95,9 +95,9 @@ class GappedList {
     
     private func unarchiveMedia() {
         let semaphore = DispatchSemaphore(value: 0)
-        listDataStore.getItemList(with: name) { [weak self] listItems in
+        listDataStore.getItemList(with: name) { listItems in
             if let listItems = listItems {
-                self?.privateListItems = listItems
+                self.privateListItems = listItems
             }
             semaphore.signal()
         }
@@ -141,7 +141,6 @@ class GappedList {
             
             if newEndCursor == nil {
                 privateListItems = []
-                print("Latest media had no end cursor. Cannot link up with previous cached media so deleting all.")
             }
             
             guard let currentHead = privateListItems.first else {

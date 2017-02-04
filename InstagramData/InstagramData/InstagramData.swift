@@ -24,4 +24,8 @@ public class InstagramData {
         likeReqestsManager = LikeReqestsManager(communicator: communicator)
     }
     
+    public func createCommentsManager(for mediaItem: MediaItem) -> CommentsManager {
+        return CommentsManager(mediaItem: mediaItem, communicator: communicator)
+    }
+    
 }

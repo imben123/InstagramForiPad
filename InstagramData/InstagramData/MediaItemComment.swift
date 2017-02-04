@@ -35,4 +35,16 @@ public struct MediaItemComment: Equatable {
         self.profilePicture = json["user"]["profile_pic_url"].URLWithoutEscaping!.bySettingScheme(to: "https")
 
     }
+    
+    public init(_ id: String,
+                text: String,
+                userId: String,
+                userName: String,
+                profilePicture: URL) {
+        self.id = id
+        self.text = text
+        self.userId = userId
+        self.userName = userName
+        self.profilePicture = profilePicture
+    }
 }

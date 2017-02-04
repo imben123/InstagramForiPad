@@ -30,6 +30,7 @@
 		B546DE0A1E1DC078002F889D /* heart-black.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE051E1DC078002F889D /* heart-black.png */; };
 		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
 		B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */; };
+		B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */; };
 		B5B53D301E3E45D400620238 /* MediaItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */; };
 		B5B53D321E3E460D00620238 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B53D311E3E460D00620238 /* MediaItemView.swift */; };
 		B5B53D341E3E466500620238 /* MediaItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B53D331E3E466500620238 /* MediaItemView.xib */; };
@@ -108,6 +109,7 @@
 		B546DE051E1DC078002F889D /* heart-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-black.png"; sourceTree = "<group>"; };
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaGridViewCell.xib; sourceTree = "<group>"; };
+		B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCommentsViewDataSource.swift; sourceTree = "<group>"; };
 		B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewController.swift; sourceTree = "<group>"; };
 		B5B53D311E3E460D00620238 /* MediaItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
 		B5B53D331E3E466500620238 /* MediaItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaItemView.xib; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */,
 				B51D5C871E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift */,
 				B51D5C891E429FE400EE44BD /* MediaCommentsView.swift */,
+				B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */,
 				B51D5C8B1E42A01300EE44BD /* MediaCommentsViewCell.xib */,
 			);
 			name = "Media Item view controller";
@@ -404,6 +407,7 @@
 				B51D5C851E4286E700EE44BD /* MediaItemViewPresentationController.swift in Sources */,
 				B536932D1E148BCE000246A7 /* FeedViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
+				B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */,
 				B51D5C8A1E429FE400EE44BD /* MediaCommentsView.swift in Sources */,
 				B5BEC8F91E17CC51000C3870 /* InstagramFeedDataSource.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,

@@ -68,4 +68,14 @@ class APICommunicator {
         let response = self.connection.makeRequest(path: path, payload: [:])
         return response
     }
+    
+    func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String) -> APIResponse {
+        
+        let payload = [
+            "q": "ig_shortcode(\(mediaCode)){comments.before(\(previousIndex),\(numberOfComments)){count,nodes{id,created_at,text,user{id,profile_pic_url,username}},page_info}}"
+        ]
+        
+        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+        return response
+    }
 }

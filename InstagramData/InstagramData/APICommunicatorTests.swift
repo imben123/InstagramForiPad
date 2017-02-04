@@ -77,4 +77,13 @@ class APICommunicatorTests: XCTestCase {
         XCTAssertEqual(mockConnection.makeRequestCalls.first!.payload?.count, 0)
         XCTAssertEqual(response, expectedResponse)
     }
+    
+    func testGetCommentsForPost() {
+        let response = sut.getComments(for: "mediaCode", numberOfComments: 123, from: "foobar")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains("ig_shortcode(mediaCode){comments.before(foobar,123)"))
+        XCTAssertEqual(response, expectedResponse)
+    }
 }

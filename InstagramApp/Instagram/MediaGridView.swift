@@ -67,13 +67,16 @@ class MediaGridView: UICollectionView {
         didSet {
             if frame != oldValue {
                 preserveCurrentScrollPosition()
+                setScrollDirection()
             }
         }
     }
     
     override var contentSize: CGSize {
         didSet {
-            if contentSize != oldValue {
+            let oldShortestEdge = min(oldValue.width, oldValue.height)
+            let newShortestEdge = min(contentSize.width, contentSize.height)
+            if oldShortestEdge != newShortestEdge {
                 updateImageSize()
             }
         }
@@ -82,29 +85,33 @@ class MediaGridView: UICollectionView {
 
 extension MediaGridView {
     
-    func preserveCurrentScrollPosition() {
-        let indexPath = firstVisibleIndexPath()
+    func setScrollDirection() {
         if width > height {
             flowLayout.scrollDirection = .horizontal
-            if let indexPath = indexPath {
-                self.scrollToItem(at: indexPath, at: .left, animated: false)
-            }
         } else {
             flowLayout.scrollDirection = .vertical
-            if let indexPath = indexPath {
-                self.scrollToItem(at: indexPath, at: .top, animated: false)
+        }
+    }
+    
+    func preserveCurrentScrollPosition() {
+        let oldOffset = currentOffset()
+        let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
+        DispatchQueue.main.async {
+            if self.flowLayout.scrollDirection == .horizontal {
+                self.contentOffset = CGPoint(x: oldOffset, y: self.contentOffset.y)
+            } else {
+                self.contentOffset = CGPoint(x: self.contentOffset.x, y: oldOffset - navigationBarHeight)
             }
         }
     }
     
-    func firstVisibleIndexPath() -> IndexPath? {
-        var firstIndexPath = indexPathsForVisibleItems.first
-        for indexPath in indexPathsForVisibleItems {
-            if indexPath.row < firstIndexPath!.row {
-                firstIndexPath = indexPath
-            }
+    func currentOffset() -> CGFloat {
+        let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
+        if flowLayout.scrollDirection == .horizontal {
+            return contentOffset.x - navigationBarHeight*2
+        } else {
+            return contentOffset.y - navigationBarHeight
         }
-        return firstIndexPath
     }
 }
 

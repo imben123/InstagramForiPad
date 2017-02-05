@@ -38,7 +38,6 @@ class MediaGridView: UICollectionView {
     static let reuseIdentifier = "cell"
     static let minItemSize: CGFloat = 300
     
-    var resizesWithNavigationBar: Bool = false
     var navigationBarHeightForSizeCalculations: CGFloat = 64
     
     weak var mediaGridViewDelegate: MediaGridViewDelegate?
@@ -74,10 +73,9 @@ class MediaGridView: UICollectionView {
     
     override var contentSize: CGSize {
         didSet {
-            let oldShortestEdge = min(oldValue.width, oldValue.height)
-            let newShortestEdge = min(contentSize.width, contentSize.height)
-            if oldShortestEdge != newShortestEdge {
+            if contentSize != oldValue {
                 updateImageSize()
+                performBatchUpdates({}) // Animates things correctly
             }
         }
     }
@@ -95,7 +93,7 @@ extension MediaGridView {
     
     func preserveCurrentScrollPosition() {
         let oldOffset = currentOffset()
-        let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
+        let navigationBarHeight = navigationBarHeightForSizeCalculations
         DispatchQueue.main.async {
             if self.flowLayout.scrollDirection == .horizontal {
                 self.contentOffset = CGPoint(x: oldOffset, y: self.contentOffset.y)
@@ -106,8 +104,11 @@ extension MediaGridView {
     }
     
     private func currentOffset() -> CGFloat {
-        let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
+        let navigationBarHeight = navigationBarHeightForSizeCalculations
         if flowLayout.scrollDirection == .horizontal {
+            // I'm unsure why, but at the point of a rotation the
+            // contentOffset jumps 2 x navigationBarHeight
+            // so I'm removing that here.
             return max(contentOffset.x - navigationBarHeight*2, 0)
         } else {
             return max(contentOffset.y - navigationBarHeight, 0)
@@ -120,11 +121,11 @@ extension MediaGridView {
     func updateImageSize() {
         let newItemSize = calculateBestItemSize()
         flowLayout.itemSize = CGSize(width: newItemSize, height: newItemSize)
-        performBatchUpdates({}) // Animates the change in size
+        flowLayout.invalidateLayout()
     }
     
     func calculateBestItemSize() -> CGFloat {
-        let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
+        let navigationBarHeight = navigationBarHeightForSizeCalculations
         let shortestEdge: CGFloat = min(contentSize.width - navigationBarHeight, contentSize.height)
         let numberOfItems: CGFloat = (shortestEdge / MediaGridView.minItemSize).rounded(.down)
         if numberOfItems == 0 {

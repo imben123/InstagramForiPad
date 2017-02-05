@@ -15,6 +15,10 @@
             <rect key="frame" x="0.0" y="0.0" width="795" height="831"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3b-PU-Iiq">
+                    <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
                     <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
                 </imageView>
@@ -31,7 +35,11 @@
                 <constraint firstAttribute="bottom" secondItem="jeT-ka-9RO" secondAttribute="bottom" id="39S-N1-8Se"/>
                 <constraint firstItem="hJm-Qw-pZD" firstAttribute="leading" secondItem="jeT-ka-9RO" secondAttribute="trailing" id="8jB-H3-PHy"/>
                 <constraint firstAttribute="trailing" secondItem="hJm-Qw-pZD" secondAttribute="trailing" id="Bjh-dl-dG5"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerY" secondItem="jeT-ka-9RO" secondAttribute="centerY" id="R8p-QX-54s"/>
                 <constraint firstAttribute="bottom" secondItem="hJm-Qw-pZD" secondAttribute="bottom" id="TbE-2L-HyT"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="height" secondItem="jeT-ka-9RO" secondAttribute="height" id="Zlq-md-BKn"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerX" secondItem="jeT-ka-9RO" secondAttribute="centerX" id="jU0-N9-pMI"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="width" secondItem="jeT-ka-9RO" secondAttribute="width" id="qjk-YZ-9sL"/>
                 <constraint firstItem="hJm-Qw-pZD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sbx-yX-YBL"/>
                 <constraint firstItem="jeT-ka-9RO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="u1B-pK-Mvd"/>
                 <constraint firstItem="jeT-ka-9RO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uae-fa-4ye"/>
@@ -41,6 +49,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="backgroundView" destination="o3b-PU-Iiq" id="zJg-Nv-MIT"/>
                 <outlet property="commentsView" destination="hJm-Qw-pZD" id="skh-9S-eBn"/>
                 <outlet property="commentsViewWidthConstraint" destination="SE6-j9-ikF" id="x3B-K2-tWR"/>
                 <outlet property="imageView" destination="jeT-ka-9RO" id="Bvk-r3-IgE"/>

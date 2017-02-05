@@ -21,6 +21,7 @@ class MediaItemViewController: UIViewController {
     var originalImageFrame: CGRect?
 
     var mediaItemView: MediaItemView!
+    var gotFullResolutionImage = false
     
     init(mediaItem: MediaItem) {
         self.mediaItem = mediaItem
@@ -43,16 +44,25 @@ class MediaItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cacheKey = SDWebImageManager.shared().cacheKey(for: mediaItem.thumbnail)
-        let cachedThumbnail = SDImageCache.shared().imageFromMemoryCache(forKey: cacheKey)
-        self.mediaItemView.imageView.image = cachedThumbnail
+        self.mediaItemView.imageView.image = getThumbnailFromCache()
         
+        if getDisplayImageFromCache() == nil {
+            downloadDisplayImage()
+        } else {
+            gotFullResolutionImage = true
+        }
+    }
+    
+    private func downloadDisplayImage() {
         SDWebImageManager.shared().downloadImage(with: mediaItem.display,
-                                                 options: SDWebImageOptions.cacheMemoryOnly,
+                                                 options: SDWebImageOptions.highPriority,
                                                  progress: nil)
         { [weak self] (image, error, cacheType, finished, url) in
-
-            self?.mediaItemView.imageView.image = image
+            
+            if let image = image {
+                self?.gotFullResolutionImage = true
+                self?.crossDisolveImageView(to: image, duration: 0.3)
+            }
         }
     }
     
@@ -65,7 +75,7 @@ class MediaItemViewController: UIViewController {
         originalImageFrame = imageFrame
         view.transform = viewTransformationForPresentation(from: imageFrame)
         mediaItemView.commentsView.alpha = 0
-        mediaItemView.imageView.backgroundColor = .black
+        mediaItemView.backgroundView.alpha = 0
     }
     
     func viewTransformationForPresentation(from imageFrame:CGRect) -> CGAffineTransform {
@@ -102,45 +112,81 @@ class MediaItemViewController: UIViewController {
         
         if direction == .present {
             
-            UIView.animate(withDuration: duration,
-                           delay: 0,
-                           usingSpringWithDamping: 0.6,
-                           initialSpringVelocity: 0,
-                           options: .curveEaseOut,
-                           animations: {
-                            
-                            self.view.transform = .identity
-                            self.mediaItemView.commentsView.alpha = 1
-                            
-            }, completion: { _ in
-                self.mediaItemView.imageView.backgroundColor = .clear
-                completion()
-            })
+            if let cachedDisplayImage = getDisplayImageFromCache() {
+                crossDisolveImageView(to: cachedDisplayImage, duration: duration)
+            }
+
+            performOpeningBounceAnimation(duration, completion: completion)
             
         } else {
             
-            let cacheKey = SDWebImageManager.shared().cacheKey(for: mediaItem.thumbnail)
-            let cachedThumbnail = SDImageCache.shared().imageFromMemoryCache(forKey: cacheKey)
-            UIView.transition(with: self.mediaItemView.imageView,
-                              duration: duration,
-                              options: .transitionCrossDissolve,
-                              animations: { 
-                                self.mediaItemView.imageView.image = cachedThumbnail
-            }, completion: nil)
+            if self.gotFullResolutionImage {
+                self.mediaItemView.backgroundView.alpha = 0
+            }
             
-            UIView.animate(withDuration: duration,
-                           delay: 0,
-                           options: .curveEaseInOut,
-                           animations: {
-                            
-                            self.view.transform = self.viewTransformationForPresentation(from: self.originalImageFrame!)
-                            self.mediaItemView.commentsView.alpha = 0
-                            
-            }, completion: { _ in
-                completion()
-            })
-            
+            let cachedThumbnail = getThumbnailFromCache()!
+            crossDisolveImageView(to: cachedThumbnail, duration: duration)
+            performDismissalAnimation(duration, completion: completion)
         }
+    }
+    
+    private func crossDisolveImageView(to image: UIImage, duration: TimeInterval) {
+        UIView.transition(with: self.mediaItemView.imageView,
+                          duration: duration,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            self.mediaItemView.imageView.image = image
+        }, completion: nil)
+    }
+    
+    private func performOpeningBounceAnimation(_ duration: TimeInterval, completion: @escaping ()->()) {
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseOut,
+                       animations: {
+                        
+                        self.view.transform = .identity
+                        self.mediaItemView.commentsView.alpha = 1
+                        self.mediaItemView.backgroundView.alpha = 1
+                        
+        }, completion: { _ in
+            completion()
+        })
+    }
+    
+    private func performDismissalAnimation(_ duration: TimeInterval, completion: @escaping ()->()) {
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       options: .curveEaseInOut,
+                       animations: {
+                        
+                        self.view.transform = self.viewTransformationForPresentation(from: self.originalImageFrame!)
+                        self.mediaItemView.commentsView.alpha = 0
+                        self.mediaItemView.backgroundView.alpha = 0
+                        
+        }, completion: { _ in
+            completion()
+        })
+    }
+    
+    private func getThumbnailFromCache() -> UIImage? {
+        return self.getImageFromCache(mediaItem.thumbnail)
+    }
+    
+    private func getDisplayImageFromCache() -> UIImage? {
+        return self.getImageFromCache(mediaItem.display)
+    }
+    
+    private func getImageFromCache(_ url: URL) -> UIImage? {
+        let cacheKey = SDWebImageManager.shared().cacheKey(for: url)
+        let cachedImage = SDImageCache.shared().imageFromMemoryCache(forKey: cacheKey)
+        if cachedImage == nil {
+            let cachedImage = SDImageCache.shared().imageFromDiskCache(forKey: cacheKey)
+            return cachedImage
+        }
+        return cachedImage
     }
     
 }

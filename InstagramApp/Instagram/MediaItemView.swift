@@ -32,6 +32,7 @@ func proportionalSize(_ size: CGSize, thatFits constrainingSize: CGSize) -> CGSi
 
 class MediaItemView: UIView {
     
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var commentsView: MediaCommentsView!
     @IBOutlet var commentsViewWidthConstraint: NSLayoutConstraint!

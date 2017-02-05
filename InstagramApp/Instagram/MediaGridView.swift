@@ -105,12 +105,12 @@ extension MediaGridView {
         }
     }
     
-    func currentOffset() -> CGFloat {
+    private func currentOffset() -> CGFloat {
         let navigationBarHeight = resizesWithNavigationBar ? 0 : navigationBarHeightForSizeCalculations
         if flowLayout.scrollDirection == .horizontal {
-            return contentOffset.x - navigationBarHeight*2
+            return max(contentOffset.x - navigationBarHeight*2, 0)
         } else {
-            return contentOffset.y - navigationBarHeight
+            return max(contentOffset.y - navigationBarHeight, 0)
         }
     }
 }

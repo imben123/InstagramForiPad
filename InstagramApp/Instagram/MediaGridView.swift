@@ -147,21 +147,6 @@ extension MediaGridView: UICollectionViewDelegateFlowLayout {
         mediaGridViewDataSource?.mediaGridViewNeedsUpdateVisibleCells(self)
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        if contentSize.width < contentSize.height {
-            let itemSize = flowLayout.itemSize.width
-            let spacing = flowLayout.minimumInteritemSpacing
-            let width = collectionView.width
-            let numberOfItems = (contentSize.width / (itemSize + spacing)).rounded(.down)
-            let inset = (width - (numberOfItems * itemSize)) / (numberOfItems + 1)
-            return UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-        } else {
-            return .zero
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let mediaItem = mediaGridViewDataSource!.mediaItem(at: indexPath.item)
         let cell = collectionView.cellForItem(at: indexPath) as! MediaGridViewCell

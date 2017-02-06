@@ -81,6 +81,10 @@ public class FeedManager {
         mediaList.updateMediaItemInMemCache(for: id)
     }
     
+    public func updateMediaItemInMemCache(with mediaItem: MediaItem) {
+        mediaList.updateMediaItemInMemCache(with: mediaItem)
+    }
+    
     public func fetchUpdatedPost(for code: String, completion: ((MediaItem)->())? = nil, failure: (()->())? = nil) {
         feedWebStore.fetchUpdatedMediaItem(for: code, completion: { [weak self] (mediaItem) in
             

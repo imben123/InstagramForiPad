@@ -161,13 +161,23 @@ extension InstagramFeedDataSource: MediaGridViewCellLikeDelegate {
     func mediaGridViewCellLikePressed(_ mediaGridViewCell: MediaGridViewCell) {
         let mediaId = mediaGridViewCell.currentItem!.id
         InstagramData.shared.likeReqestsManager.likePost(with: mediaId)
-        InstagramData.shared.feedManager.updateMediaItemInMemCache(for: mediaId)
+        updateMediaItemInMemCache(for: mediaId, liked: true)
     }
     
     func mediaGridViewCellUnlikePressed(_ mediaGridViewCell: MediaGridViewCell) {
         let mediaId = mediaGridViewCell.currentItem!.id
         InstagramData.shared.likeReqestsManager.unlikePost(with: mediaGridViewCell.currentItem!.id)
-        InstagramData.shared.feedManager.updateMediaItemInMemCache(for: mediaId)
+        updateMediaItemInMemCache(for: mediaId, liked: false)
+    }
+    
+    func updateMediaItemInMemCache(for mediaId: String, liked: Bool) {
+        InstagramData.shared.feedManager.mediaItem(for: mediaId) { (mediaItem) in
+            if let mediaItem = mediaItem {
+                var mediaItem = mediaItem
+                mediaItem.viewerHasLiked = liked
+                InstagramData.shared.feedManager.updateMediaItemInMemCache(with: mediaItem)
+            }
+        }
     }
     
 }

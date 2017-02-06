@@ -53,6 +53,8 @@ class MediaGridView: UICollectionView {
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: MediaGridView.minItemSize, height: MediaGridView.minItemSize)
+        layout.minimumInteritemSpacing = 2.0
+        layout.minimumLineSpacing = 2.0
         super.init(frame: .zero, collectionViewLayout: layout)
         self.register(UINib(nibName: "MediaGridViewCell", bundle: nil), forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
         self.delegate = self

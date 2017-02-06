@@ -32,7 +32,7 @@ public class LikeReqestsManager {
         self.init(communicator: communicator, reliableNetworkTaskManager: reliableNetworkTaskManager)
     }
     
-    public func likePost(with id: String) {
+    public func likePost(with id: String, completion: (()->())? = nil) {
         
         pendingTasks[id] = true
         
@@ -53,13 +53,13 @@ public class LikeReqestsManager {
                 if let mediaItem = mediaItem {
                     var mediaItem = mediaItem
                     mediaItem.viewerHasLiked = true
-                    self.mediaDataStore.archiveMedia([mediaItem])
+                    self.mediaDataStore.archiveMedia([mediaItem], completion: completion)
                 }
             })
         }
     }
     
-    public func unlikePost(with id: String) {
+    public func unlikePost(with id: String, completion: (()->())? = nil) {
         
         pendingTasks[id] = false
         
@@ -80,7 +80,7 @@ public class LikeReqestsManager {
                 if let mediaItem = mediaItem {
                     var mediaItem = mediaItem
                     mediaItem.viewerHasLiked = false
-                    self.mediaDataStore.archiveMedia([mediaItem])
+                    self.mediaDataStore.archiveMedia([mediaItem], completion: completion)
                 }
             })
         }

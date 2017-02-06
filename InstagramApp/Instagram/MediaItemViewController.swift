@@ -112,11 +112,11 @@ class MediaItemViewController: UIViewController {
         
         if direction == .present {
             
+            performOpeningBounceAnimation(duration, completion: completion)
+
             if let cachedDisplayImage = getDisplayImageFromCache() {
                 crossDisolveImageView(to: cachedDisplayImage, duration: duration)
             }
-
-            performOpeningBounceAnimation(duration, completion: completion)
             
         } else {
             

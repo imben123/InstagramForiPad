@@ -253,27 +253,32 @@ class ScrollingMediaList {
                 return
             }
             
-            if let index = self.middlePage.index(where: { $0.id == id }) { // Media most likly to be in middle pages
-                
-                self.middlePage[index] = updateMediaItem
-                
-            } else if let index = self.fourthPage.index(where: { $0.id == id }) {
-                
-                self.fourthPage[index] = updateMediaItem
-                
-            } else if let index = self.secondPage.index(where: { $0.id == id }) {
-                
-                self.secondPage[index] = updateMediaItem
-                
-            } else if let index = self.lastPage.index(where: { $0.id == id }) {
-                
-                self.lastPage[index] = updateMediaItem
-                
-            } else if let index = self.firstPage.index(where: { $0.id == id }) {
-                
-                self.firstPage[index] = updateMediaItem
-                
-            }
+            self.updateMediaItemInMemCache(with: updateMediaItem)
+        }
+    }
+    
+    public func updateMediaItemInMemCache(with mediaItem: MediaItem) {
+        
+        if let index = middlePage.index(where: { $0.id == mediaItem.id }) { // Media most likly to be in middle pages
+            
+            middlePage[index] = mediaItem
+            
+        } else if let index = fourthPage.index(where: { $0.id == mediaItem.id }) {
+            
+            fourthPage[index] = mediaItem
+            
+        } else if let index = secondPage.index(where: { $0.id == mediaItem.id }) {
+            
+            secondPage[index] = mediaItem
+            
+        } else if let index = lastPage.index(where: { $0.id == mediaItem.id }) {
+            
+            lastPage[index] = mediaItem
+            
+        } else if let index = firstPage.index(where: { $0.id == mediaItem.id }) {
+            
+            firstPage[index] = mediaItem
+            
         }
     }
 }

@@ -44,12 +44,12 @@ class FeedViewController: UIViewController {
     }
     
     func updateMediaGridView() {
-        self.mediaGridView.reloadData()
+        mediaGridView.reloadData()
     }
     
     @objc func logoutPressed() {
         InstagramData.shared.authManager.logout()
-        self.navigationController?.setViewControllers([LoginViewController()], animated: true)
+        navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
     
     var imageViewToTransision: UIImageView?

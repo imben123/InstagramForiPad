@@ -15,7 +15,7 @@ class MediaDataStore {
         
     private let backgroundQueue = DispatchQueue(label: "uk.co.bendavisapps.MediaDataStore", qos: .background)
     
-    func archiveMedia(_ media: [MediaItem]) {
+    func archiveMedia(_ media: [MediaItem], completion: (()->Void)? = nil) {
         
         backgroundQueue.async {
             
@@ -30,6 +30,10 @@ class MediaDataStore {
             }
             
             try? realm.commitWrite()
+            
+            DispatchQueue.main.async {
+                completion?()
+            }
         }
         
     }

@@ -47,6 +47,8 @@
 		B54EBEC61E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */; };
 		B54EBEC81E16BEDE001BB53C /* AuthManagerLogoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */; };
 		B559CD7F1E1DAC1400745859 /* UserTableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B559CD7E1E1DAC1400745859 /* UserTableRow.swift */; };
+		B57FE3661E4A718800555CD5 /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FE3651E4A718800555CD5 /* MediaManager.swift */; };
+		B57FE36A1E4A72D500555CD5 /* MediaManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FE3691E4A72D500555CD5 /* MediaManagerTests.swift */; };
 		B58AC0101E45F77A00A01783 /* MediaListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */; };
 		B58AC0191E45FF3100A01783 /* CommentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AC0181E45FF3100A01783 /* CommentsManager.swift */; };
 		B58AC01B1E46010300A01783 /* CommentsDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AC01A1E46010300A01783 /* CommentsDataStore.swift */; };
@@ -153,6 +155,8 @@
 		B54EBEC51E16BE9A001BB53C /* AuthManagerAuthenticatedTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerAuthenticatedTests.swift; sourceTree = "<group>"; };
 		B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManagerLogoutTests.swift; sourceTree = "<group>"; };
 		B559CD7E1E1DAC1400745859 /* UserTableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableRow.swift; sourceTree = "<group>"; };
+		B57FE3651E4A718800555CD5 /* MediaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
+		B57FE3691E4A72D500555CD5 /* MediaManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaManagerTests.swift; sourceTree = "<group>"; };
 		B58AC0181E45FF3100A01783 /* CommentsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsManager.swift; sourceTree = "<group>"; };
 		B58AC01A1E46010300A01783 /* CommentsDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsDataStore.swift; sourceTree = "<group>"; };
 		B58AC01C1E46138200A01783 /* Comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Comments.json; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 		B51D7B361E15E63C00DF5599 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B57FE3631E4A717A00555CD5 /* Media Manager */,
 				B58AC0171E45FF1F00A01783 /* CommentsManger */,
 				B5DF5B5A1E3CB8D200FA6FF4 /* LikesManager */,
 				B54EBEC41E16BE7A001BB53C /* AuthManager */,
@@ -345,6 +350,15 @@
 				B54EBEC71E16BEDE001BB53C /* AuthManagerLogoutTests.swift */,
 			);
 			name = AuthManager;
+			sourceTree = "<group>";
+		};
+		B57FE3631E4A717A00555CD5 /* Media Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B57FE3651E4A718800555CD5 /* MediaManager.swift */,
+				B57FE3691E4A72D500555CD5 /* MediaManagerTests.swift */,
+			);
+			name = "Media Manager";
 			sourceTree = "<group>";
 		};
 		B58AC0121E45F94300A01783 /* Gapped List */ = {
@@ -723,6 +737,7 @@
 				B53693331E15502D000246A7 /* APICommunicator.swift in Sources */,
 				B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */,
 				B559CD7F1E1DAC1400745859 /* UserTableRow.swift in Sources */,
+				B57FE3661E4A718800555CD5 /* MediaManager.swift in Sources */,
 				B506A08E1E14291600EEA147 /* MediaItem.swift in Sources */,
 				B506A0961E142D6300EEA147 /* SwiftyJSONDimensions.swift in Sources */,
 				B50AD9E51E14123A00F46119 /* User.swift in Sources */,
@@ -761,6 +776,7 @@
 				B5A923831E16C27000C36D9C /* TestCase.swift in Sources */,
 				B58AC0101E45F77A00A01783 /* MediaListTests.swift in Sources */,
 				B54EBEBA1E16B63C001BB53C /* APICommunicatorTests.swift in Sources */,
+				B57FE36A1E4A72D500555CD5 /* MediaManagerTests.swift in Sources */,
 				B506A0921E14294300EEA147 /* MediaTests.swift in Sources */,
 				B5BEC9111E181B82000C3870 /* MockMediaListDataStore.swift in Sources */,
 				B54EBEAF1E1687D9001BB53C /* APIResponseTests.swift in Sources */,

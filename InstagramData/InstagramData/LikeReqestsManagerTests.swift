@@ -17,17 +17,21 @@ class LikeReqestsManagerTests: XCTestCase {
     var taskDispatcher: MockTaskDispatcher!
     var reliableNetworkTaskManager: MockReliableNetworkTaskManager!
     var mockCommunicator: MockAPICommunicator!
+    var mediaDataStore: MockMediaDataStore!
     var sut: LikeReqestsManager!
     
     override func setUp() {
         try? FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL!)
         
         reachability = MockReachability()
-        taskDispatcher = MockTaskDispatcher(queue: DispatchQueue(label: "LikeReqestsManagerTestsQueue"))
+        taskDispatcher = MockTaskDispatcher()
         reliableNetworkTaskManager = MockReliableNetworkTaskManager(reachability: reachability,
                                                                     taskDispatcher: taskDispatcher)
         mockCommunicator = MockAPICommunicator()
-        sut = LikeReqestsManager(communicator: mockCommunicator, reliableNetworkTaskManager: reliableNetworkTaskManager)
+        mediaDataStore = MockMediaDataStore()
+        sut = LikeReqestsManager(communicator: mockCommunicator,
+                                 mediaDataStore: mediaDataStore,
+                                 reliableNetworkTaskManager: reliableNetworkTaskManager)
         
         mockCommunicator.testResponse = APIResponse(responseCode: 200,
                                                     responseBody: [:],
@@ -83,7 +87,9 @@ class LikeReqestsManagerTests: XCTestCase {
         // Recreate sut
         let mockCommunicator = _MockAPICommunicator()
         mockCommunicator.expectation = self.expectation(description: "Like retried")
-        sut = LikeReqestsManager(communicator: mockCommunicator, reliableNetworkTaskManager: reliableNetworkTaskManager)
+        sut = LikeReqestsManager(communicator: mockCommunicator,
+                                 mediaDataStore: mediaDataStore,
+                                 reliableNetworkTaskManager: reliableNetworkTaskManager)
         
         let postId = "12345"
         sut.likePost(with: postId)
@@ -116,7 +122,9 @@ class LikeReqestsManagerTests: XCTestCase {
         // Recreate sut
         let mockCommunicator = _MockAPICommunicator()
         mockCommunicator.expectation = self.expectation(description: "Unlike retried")
-        sut = LikeReqestsManager(communicator: mockCommunicator, reliableNetworkTaskManager: reliableNetworkTaskManager)
+        sut = LikeReqestsManager(communicator: mockCommunicator,
+                                 mediaDataStore: mediaDataStore,
+                                 reliableNetworkTaskManager: reliableNetworkTaskManager)
         
         let postId = "12345"
         sut.unlikePost(with: postId)

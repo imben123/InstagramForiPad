@@ -19,7 +19,7 @@ class MockMediaDataStore: MediaDataStore {
     var mediaItemsToLoad: [MediaItem] = []
     var loadMediaItemsIDsParameter: [String]? = nil
     
-    override func archiveMedia(_ media: [MediaItem]) {
+    override func archiveMedia(_ media: [MediaItem], completion: (() -> Void)?) {
         archivedMediaList = media
     }
     
@@ -35,5 +35,9 @@ class MockMediaDataStore: MediaDataStore {
     
     override func unarchiveMedia(_ completion: @escaping (_ media: [MediaItem]) -> Void) {
         completion(archivedMediaList ?? [])
+    }
+    
+    override func deleteAllMedia() {
+        
     }
 }

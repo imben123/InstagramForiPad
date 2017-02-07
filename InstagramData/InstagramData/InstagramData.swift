@@ -13,15 +13,19 @@ public class InstagramData {
     public static let shared: InstagramData = InstagramData()
     
     let communicator: APICommunicator
+    let mediaDataStore: MediaDataStore
     public let authManager: AuthManager
     public let feedManager: FeedManager
     public let likeReqestsManager: LikeReqestsManager
+    public let mediaManager: MediaManager
     
     init() {
         communicator = APICommunicator()
+        mediaDataStore = MediaDataStore()
         authManager = AuthManager(communicator: communicator)
-        feedManager = FeedManager(communicator: communicator)
-        likeReqestsManager = LikeReqestsManager(communicator: communicator)
+        feedManager = FeedManager(communicator: communicator, mediaDataStore: mediaDataStore)
+        likeReqestsManager = LikeReqestsManager(communicator: communicator, mediaDataStore: mediaDataStore)
+        mediaManager = MediaManager(communicator: communicator, mediaDataStore: mediaDataStore)
     }
     
     public func createCommentsManager(for mediaItem: MediaItem) -> CommentsManager {

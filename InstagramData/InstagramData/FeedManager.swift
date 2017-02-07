@@ -25,17 +25,17 @@ public class FeedManager {
         return mediaList.firstGapCursor
     }
     
-    convenience init(communicator: APICommunicator) {
+    convenience init(communicator: APICommunicator, mediaDataStore: MediaDataStore) {
         let mediaList = ScrollingMediaList(name: "feed",
                                            pageSize: 50,
-                                           mediaDataStore: MediaDataStore(),
+                                           mediaDataStore: mediaDataStore,
                                            listDataStore: GappedListDataStore())
         
-        self.init(communicator: communicator, mediaList: mediaList)
+        self.init(communicator: communicator, mediaList: mediaList, mediaDataStore: mediaDataStore)
     }
     
-    init(communicator: APICommunicator, mediaList: ScrollingMediaList) {
-        self.mediaDataStore = MediaDataStore()
+    init(communicator: APICommunicator, mediaList: ScrollingMediaList, mediaDataStore: MediaDataStore) {
+        self.mediaDataStore = mediaDataStore
         self.mediaList = mediaList
         self.feedWebStore = FeedWebStore(communicator: communicator)
         self.mediaList.prefetchingDelegate = self

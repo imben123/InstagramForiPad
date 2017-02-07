@@ -17,19 +17,21 @@ public class LikeReqestsManager {
     let reliableNetworkTaskManager: ReliableNetworkTaskManager
     var pendingTasks: [String:Bool] = [:] // Map of id's to like/unlike request
     
-    init(communicator: APICommunicator, reliableNetworkTaskManager: ReliableNetworkTaskManager) {
-        self.communicator = communicator
-        self.reliableNetworkTaskManager = reliableNetworkTaskManager
-        self.mediaDataStore = MediaDataStore()
-    }
-    
-    convenience init(communicator: APICommunicator) {
+    convenience init(communicator: APICommunicator, mediaDataStore: MediaDataStore) {
         let queue = DispatchQueue(label: "LikeReqestsManagerQueue")
         let taskDispatcher = TaskDispatcher(queue: queue)
         let reachability = Reachability(hostName: "instagram.com")!
         let reliableNetworkTaskManager = ReliableNetworkTaskManager(reachability: reachability,
                                                                     taskDispatcher: taskDispatcher)
-        self.init(communicator: communicator, reliableNetworkTaskManager: reliableNetworkTaskManager)
+        self.init(communicator: communicator,
+                  mediaDataStore: mediaDataStore,
+                  reliableNetworkTaskManager: reliableNetworkTaskManager)
+    }
+    
+    init(communicator: APICommunicator, mediaDataStore: MediaDataStore, reliableNetworkTaskManager: ReliableNetworkTaskManager) {
+        self.communicator = communicator
+        self.reliableNetworkTaskManager = reliableNetworkTaskManager
+        self.mediaDataStore = mediaDataStore
     }
     
     public func likePost(with id: String, completion: (()->())? = nil) {

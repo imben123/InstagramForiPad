@@ -49,7 +49,7 @@ class FeedManagerTests: XCTestCase {
                                        pageSize: 50,
                                        mediaDataStore: mockMediaDataStore,
                                        listDataStore: mockGappedListDataStore)
-        sut = FeedManager(communicator: mockCommunicator, mediaList: mediaList)
+        sut = FeedManager(communicator: mockCommunicator, mediaList: mediaList, mediaDataStore: mockMediaDataStore)
     }
     
     func testMediaIsEmptyOnCreate() {

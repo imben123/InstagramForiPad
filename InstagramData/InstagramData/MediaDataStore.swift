@@ -11,8 +11,14 @@ import RealmSwift
 
 // TODO: Needs tests
 
+protocol MediaDataStoreObserver: class {
+    func mediaDataStore(_ sender: MediaDataStore, didArchiveNewMedia newMedia: [MediaItem])
+}
+
 class MediaDataStore {
-        
+    
+    weak var observer: MediaDataStoreObserver?
+    
     private let backgroundQueue = DispatchQueue(label: "uk.co.bendavisapps.MediaDataStore", qos: .background)
     
     func archiveMedia(_ media: [MediaItem], completion: (()->Void)? = nil) {
@@ -31,8 +37,9 @@ class MediaDataStore {
             
             try? realm.commitWrite()
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 completion?()
+                self?.observer?.mediaDataStore(self!, didArchiveNewMedia: media)
             }
         }
         

@@ -8,29 +8,37 @@
 
 import Foundation
 import SwiftyJSON
+import SwiftToolbox
 
 class FeedWebStore: MediaListWebStore {
     
     let communicator: APICommunicator
+    let taskDispatcher: TaskDispatcher
     var numberOfPostsToFetch = 30
     
-    init(communicator: APICommunicator) {
+    convenience init(communicator: APICommunicator) {
+        let taskDispatcher = TaskDispatcher(queue: DispatchQueue(label: "FeedWebStore.queue"))
+        self.init(communicator: communicator, taskDispatcher: taskDispatcher)
+    }
+    
+    init(communicator: APICommunicator, taskDispatcher: TaskDispatcher) {
         self.communicator = communicator
+        self.taskDispatcher = taskDispatcher
     }
 
     func fetchNewestMedia(_ completion: ((_ newMedia: [MediaItem], _ endCursor: String?)->())?, failure: (()->())?) {
-        DispatchQueue.global().async {
+        taskDispatcher.async {
             let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: nil)
             if response.succeeded {
                 
                 let newMedia = self.parseMedia(from: response)
                 let newEndCursor = self.parseEndCursor(from: response)
                 
-                DispatchQueue.main.async {
+                self.taskDispatcher.asyncOnMainQueue {
                     completion?(newMedia, newEndCursor)
                 }
             } else {
-                DispatchQueue.main.async {
+                self.taskDispatcher.asyncOnMainQueue {
                     failure?()
                 }
             }
@@ -39,7 +47,7 @@ class FeedWebStore: MediaListWebStore {
     
     func fetchMedia(after endCursor: String, completion: ((_ newMedia: [MediaItem], _ endCursor: String?)->())?, failure: (()->())?) {
         
-        DispatchQueue.global().async {
+        taskDispatcher.async {
             let response = self.communicator.getFeed(numberOfPosts: self.numberOfPostsToFetch, from: endCursor)
             if response.succeeded {
                 
@@ -53,11 +61,11 @@ class FeedWebStore: MediaListWebStore {
                 let newEndCursor = self.parseEndCursor(from: response)
                 let newMedia = self.parseMedia(from: response)
                 
-                DispatchQueue.main.async {
+                self.taskDispatcher.asyncOnMainQueue {
                     completion?(newMedia, newEndCursor)
                 }
             } else {
-                DispatchQueue.main.async {
+                self.taskDispatcher.asyncOnMainQueue {
                     failure?()
                 }
             }
@@ -65,16 +73,16 @@ class FeedWebStore: MediaListWebStore {
     }
     
     func fetchUpdatedMediaItem(for code: String, completion: @escaping (MediaItem)->(), failure: (()->())?) {
-        DispatchQueue.global().async {
+        taskDispatcher.async {
             let response = self.communicator.getPost(with: code)
             if response.succeeded {
                 let mediaDictionary = response.responseBody!["media"] as! [String: Any]
                 let mediaItem = MediaItem(jsonDictionary: mediaDictionary)
-                DispatchQueue.main.async {
+                self.taskDispatcher.asyncOnMainQueue {
                     completion(mediaItem)
                 }
             } else {
-                DispatchQueue.main.async {
+                self.taskDispatcher.asyncOnMainQueue {
                     failure?()
                 }
             }

@@ -154,6 +154,18 @@ extension InstagramFeedDataSource: FeedManagerPrefetchingDelegate {
         }
     }
     
+    func feedManager(_ feedManager: FeedManager, updatedMediaItems mediaItems: [MediaItem]) {
+        
+        var indexPaths: [IndexPath] = []
+        for mediaItem in mediaItems {
+            if let index = indexOfItem(with: mediaItem.id) {
+                indexPaths.append(IndexPath(item: index, section: 0))
+            }
+        }
+        mediaGridView.reloadItems(at: indexPaths)
+        
+    }
+    
 }
 
 extension InstagramFeedDataSource: MediaGridViewCellLikeDelegate {
@@ -187,6 +199,10 @@ extension InstagramFeedDataSource {
     
     fileprivate func index(of item: MediaGridViewItem) -> Int? {
         return InstagramData.shared.feedManager.mediaIDs.index(of: item.id)
+    }
+    
+    fileprivate func indexOfItem(with id: String) -> Int? {
+        return InstagramData.shared.feedManager.mediaIDs.index(where: { $0 == id })
     }
     
     fileprivate func item(at index: Int) -> MediaGridViewItem {

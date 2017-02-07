@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import InstagramData
+import SwiftToolbox
 
 class FeedManagerTestsExamples: ResourceLoader {
     
@@ -35,21 +36,28 @@ class FeedManagerTestsExamples: ResourceLoader {
 class FeedManagerTests: XCTestCase {
     
     var sut: FeedManager!
+    var mockTaskDispatcher: MockTaskDispatcher!
     var mockCommunicator: MockAPICommunicator!
+    var feedWebStore: FeedWebStore!
     var mockMediaDataStore: MockMediaDataStore!
     var mockGappedListDataStore: MockGappedListDataStore!
     var mediaList: ScrollingMediaList!
     
     override func setUp() {
         super.setUp()
+        
+        mockTaskDispatcher = MockTaskDispatcher()
+        mockTaskDispatcher.forceSynchronous = false
+
         mockCommunicator = MockAPICommunicator()
+        feedWebStore = FeedWebStore(communicator: mockCommunicator, taskDispatcher: mockTaskDispatcher)
         mockMediaDataStore = MockMediaDataStore()
         mockGappedListDataStore = MockGappedListDataStore()
         mediaList = ScrollingMediaList(name: "feed",
                                        pageSize: 50,
                                        mediaDataStore: mockMediaDataStore,
                                        listDataStore: mockGappedListDataStore)
-        sut = FeedManager(communicator: mockCommunicator, mediaList: mediaList, mediaDataStore: mockMediaDataStore)
+        sut = FeedManager(feedWebStore: feedWebStore, mediaList: mediaList, mediaDataStore: mockMediaDataStore)
     }
     
     func testMediaIsEmptyOnCreate() {
@@ -269,4 +277,31 @@ class FeedManagerTests: XCTestCase {
         XCTAssert(prefetchDelegate.prefetchDelegateMethodParam1! === sut)
         XCTAssertEqual(prefetchDelegate.prefetchDelegateMethodParam2!, exampleMedia)
     }
+    
+    /** Not working as cache isn't filled until media is attempted to load **/
+//    func testUpdatesLocallyCachedMedia_whenMediaDataStoreArchivesNewMedia() {
+//        
+//        // Given
+//        mockTaskDispatcher.forceSynchronous = true
+//        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+//        sut.fetchMoreMedia(nil)
+//        let exampleUpdateMediaItem = MediaItem(id: "1416818863685651136")
+//        
+//        
+//        // When
+//        sut.mediaDataStore(mockMediaDataStore, didArchiveNewMedia: [exampleUpdateMediaItem])
+//        
+//        // Then
+//        let expectation = self.expectation(description: "Got media item from cache")
+//        sut.mediaItem(for: "1416818863685651136") { (mediaItem) in
+//            
+//            XCTAssertNotNil(mediaItem)
+//            XCTAssertEqual(mediaItem, exampleUpdateMediaItem)
+//            
+//            expectation.fulfill()
+//        }
+//        
+//        waitForExpectations(timeout: 0.1)
+//    }
+    
 }

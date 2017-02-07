@@ -12,6 +12,7 @@ import SwiftyJSON
 public protocol FeedManagerPrefetchingDelegate: class {
     func feedManager(_ feedManager: FeedManager, prefetchDataFor mediaItems: [MediaItem])
     func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem])
+    func feedManager(_ feedManager: FeedManager, updatedMediaItems mediaItems: [MediaItem])
 }
 
 public class FeedManager {
@@ -31,13 +32,20 @@ public class FeedManager {
                                            mediaDataStore: mediaDataStore,
                                            listDataStore: GappedListDataStore())
         
-        self.init(communicator: communicator, mediaList: mediaList, mediaDataStore: mediaDataStore)
+        let feedWebStore = FeedWebStore(communicator: communicator)
+        
+        self.init(feedWebStore: feedWebStore,
+                  mediaList: mediaList,
+                  mediaDataStore: mediaDataStore)
     }
     
-    init(communicator: APICommunicator, mediaList: ScrollingMediaList, mediaDataStore: MediaDataStore) {
+    init(feedWebStore: FeedWebStore,
+         mediaList: ScrollingMediaList,
+         mediaDataStore: MediaDataStore) {
+        
         self.mediaDataStore = mediaDataStore
         self.mediaList = mediaList
-        self.feedWebStore = FeedWebStore(communicator: communicator)
+        self.feedWebStore = feedWebStore
         self.mediaList.prefetchingDelegate = self
     }
     
@@ -105,4 +113,15 @@ extension FeedManager: ScrollingMediaListPrefetchingDelegate {
     func scrollingMediaList(_ scrollingMediaList: ScrollingMediaList, removeCachedDataFor mediaItems: [MediaItem]) {
         prefetchingDelegate?.feedManager(self, removeCachedDataFor: mediaItems)
     }
+}
+
+extension FeedManager: MediaDataStoreObserver {
+    
+    func mediaDataStore(_ sender: MediaDataStore, didArchiveNewMedia newMedia: [MediaItem]) {
+        for newMediaItem in newMedia {
+            updateMediaItemInMemCache(with: newMediaItem)
+        }
+        prefetchingDelegate?.feedManager(self, updatedMediaItems: newMedia)
+    }
+
 }

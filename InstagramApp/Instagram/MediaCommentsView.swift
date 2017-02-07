@@ -31,17 +31,27 @@ class MediaCommentsView: UIView {
     func setComments(_ mediaItem: MediaItem) {
         
         dataSource.setComments(mediaItem)
-        
-        tableView = UITableView(frame: .zero, style: .plain)
-        let nib = UINib(nibName: "MediaCommentsViewCell", bundle: nil)
-        tableView!.register(nib, forCellReuseIdentifier: MediaCommentsViewDataSource.cellReuseIdentifier)
-        tableView!.delegate = dataSource
-        tableView!.dataSource = dataSource
-        tableView!.rowHeight = UITableViewAutomaticDimension
-        tableView!.estimatedRowHeight = 140
-        tableView!.tableFooterView = UIView()
-        tableView!.backgroundColor = .clear
-        addSubview(tableView!)
+        createTableViewIfNeeded(mediaItem)
+    }
+    
+    private func createTableViewIfNeeded(_ mediaItem: MediaItem) {
+        if tableView == nil {
+            
+            tableView = UITableView(frame: .zero, style: .plain)
+            let nib = UINib(nibName: "MediaCommentsViewCell", bundle: nil)
+            tableView!.register(nib, forCellReuseIdentifier: MediaCommentsViewDataSource.cellReuseIdentifier)
+            tableView!.delegate = dataSource
+            tableView!.dataSource = dataSource
+            tableView!.rowHeight = UITableViewAutomaticDimension
+            tableView!.estimatedRowHeight = 140
+            tableView!.tableFooterView = UIView()
+            tableView!.backgroundColor = .clear
+            addSubview(tableView!)
+            
+        } else {
+            
+            tableView!.reloadData()
+        }
     }
 }
 

@@ -17,6 +17,9 @@ public class CommentsManager {
     private let hasCaption: Bool
     
     public var numberOfAvailableComments: Int {
+        if hasCaption {
+            return commentsList.itemIDsBeforeFirstGap.count + 1
+        }
         return commentsList.itemIDsBeforeFirstGap.count
     }
     
@@ -35,22 +38,21 @@ public class CommentsManager {
         
         if commentsList.itemCount == 0 {
             initializeNewCommentsList()
+        } else {
+            checkCommentsListIsUpToDate()
         }
     }
     
     private func initializeNewCommentsList() {
-        let comments: [MediaItemComment]
-        if hasCaption {
-            let captionComment = MediaItemComment(captionItemId,
-                                                  text: mediaItem.caption!,
-                                                  userId: mediaItem.owner.id,
-                                                  userName: mediaItem.owner.username,
-                                                  profilePicture: mediaItem.owner.profilePictureURL)
-            comments = mediaItem.comments + [captionComment]
-        } else {
-            comments = mediaItem.comments
-        }
+        let comments = mediaItem.comments
         commentsList.addNewComments(comments, with: mediaItem.commentsStartCursor)
+    }
+    
+    private func checkCommentsListIsUpToDate() {
+        let comments = mediaItem.comments
+        if comments.last?.id != commentsList.itemIDsBeforeFirstGap.first {
+            commentsList.addNewComments(comments, with: mediaItem.commentsStartCursor)
+        }
     }
     
     public func comment(at index: Int) -> MediaItemComment? {
@@ -59,19 +61,31 @@ public class CommentsManager {
             return nil
         }
         
-        guard !hasCaption || index > 0 else {
+        if hasCaption && index == 0 {
             return captionComment()
         }
         
-        let commentId = commentsList.itemIDsBeforeFirstGap[index]
+        let commentId = commentsList.itemIDsBeforeFirstGap[index-1]
         return comment(with: commentId)
     }
     
     private func captionComment() -> MediaItemComment? {
-        return comment(with: captionItemId)
+        if let caption = mediaItem.caption {
+            return MediaItemComment(captionItemId,
+                                    text: caption,
+                                    userId: mediaItem.owner.id,
+                                    userName: mediaItem.owner.username,
+                                    profilePicture: mediaItem.owner.profilePictureURL)
+        }
+        return nil
     }
     
     private func comment(with id: String) -> MediaItemComment? {
+        
+        guard id != captionItemId else {
+            return captionComment()
+        }
+        
         var result: MediaItemComment?
         
         let semaphore = DispatchSemaphore(value: 0)

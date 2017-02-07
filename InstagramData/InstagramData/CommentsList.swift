@@ -29,7 +29,6 @@ class CommentsList: GappedList {
             }
         }
         
-        
         let newCommentsIds: [String] = newComments.map({ $0.id }).reversed()
         super.appendMoreItems(newCommentsIds, from: startCursor, to: newEndCursor)
     }

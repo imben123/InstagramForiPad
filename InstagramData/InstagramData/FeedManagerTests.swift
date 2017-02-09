@@ -261,6 +261,10 @@ class FeedManagerTests: XCTestCase {
             func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem]) {
 
             }
+            
+            func feedManager(_ feedManager: FeedManager, updatedMediaItems mediaItems: [MediaItem]) {
+                
+            }
         }
         
         // Given

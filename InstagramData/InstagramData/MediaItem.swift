@@ -58,6 +58,33 @@ public struct MediaItem: Equatable {
         viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
     
+    init(jsonDictionary: [String: Any], original: MediaItem) {
+        
+        let json = JSON(jsonDictionary)
+        
+        id = json["id"].stringValue
+        
+        date = json["date"].dateValue
+        dimensions = json["dimensions"].sizeValue
+        owner = User(jsonDictionary: json["owner"].dictionaryObject!)
+        code = json["code"].stringValue
+        isVideo = json["is_video"].boolValue
+        
+        caption = json["caption"].string
+        
+        display = json["display_src"].URLWithoutEscaping!
+        thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : original.thumbnail
+        
+        commentsDisabled = json["comments_disabled"].boolValue
+        commentsCount = json["comments"]["count"].intValue
+        commentsStartCursor = json["comments"]["page_info"]["start_cursor"].string
+        comments = json["comments"]["nodes"].arrayValue.map({ (json) -> MediaItemComment in
+            return MediaItemComment(jsonDictionary: json)
+        })
+        likesCount = json["likes"]["count"].intValue
+        viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
+    }
+    
     init(jsonDictionary: [String: Any], owner: User) {
         
         let json = JSON(jsonDictionary)

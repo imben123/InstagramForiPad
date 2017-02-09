@@ -28,12 +28,12 @@ public class MediaManager {
                   taskDispatcher: TaskDispatcher(queue: queue))
     }
     
-    public func updatePost(for code: String, completion: ((_ mediaItem: MediaItem)->Void)? = nil) {
+    public func updateMediaItem(_ originalMediaItem: MediaItem, completion: ((_ mediaItem: MediaItem)->Void)? = nil) {
         taskDispatcher.async {
-            let response = self.communicator.getPost(with: code)
+            let response = self.communicator.getPost(with: originalMediaItem.code)
             if response.succeeded {
                 let mediaDictionary = response.responseBody?["media"] as! [String: Any]
-                let mediaItem = MediaItem(jsonDictionary: mediaDictionary)
+                let mediaItem = MediaItem(jsonDictionary: mediaDictionary, original: originalMediaItem)
                 self.mediaDataStore.archiveMedia([mediaItem])
                 DispatchQueue.main.async {
                     completion?(mediaItem)

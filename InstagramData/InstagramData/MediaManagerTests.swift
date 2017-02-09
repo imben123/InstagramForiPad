@@ -32,14 +32,15 @@ class MediaManagerTests: XCTestCase {
                            taskDispatcher: taskDispatcher)
     }
     
-    func testUpdatePostCalledGetPost() {
+    func testUpdateMediaCalledGetPost() {
         
         // When
-        sut.updatePost(for: "code")
+        let exampleMediaItem = MediaItem(id: "")
+        sut.updateMediaItem(exampleMediaItem)
         
         // Then
         XCTAssertEqual(self.mockCommunicator.getPostCallCount, 1)
-        XCTAssertEqual(self.mockCommunicator.getPostParameter, "code")
+        XCTAssertEqual(self.mockCommunicator.getPostParameter, exampleMediaItem.code)
     }
     
     func testUpdatePostParsesMediaItem() {
@@ -51,7 +52,8 @@ class MediaManagerTests: XCTestCase {
         let expectation = self.expectation(description: "Completion closure called")
         
         // When
-        sut.updatePost(for: "BPyEUxIjJga") { mediaItem in
+        let exampleMediaItem = MediaItem(id: "1437230250416969754", code: "BPyEUxIjJga")
+        sut.updateMediaItem(exampleMediaItem) { mediaItem in
             
             // Then
             expectation.fulfill()
@@ -69,7 +71,8 @@ class MediaManagerTests: XCTestCase {
                                                          urlResponse: nil)
         
         // When
-        sut.updatePost(for: "BPyEUxIjJga")
+        let exampleMediaItem = MediaItem(id: "1437230250416969754", code: "BPyEUxIjJga")
+        sut.updateMediaItem(exampleMediaItem)
 
         // Then
         XCTAssertEqual(mediaDataStore.archivedMediaList?.count, 1)

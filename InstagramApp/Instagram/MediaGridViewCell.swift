@@ -87,12 +87,12 @@ class MediaGridViewCell: UICollectionViewCell {
     }
     
     @IBAction func likePressed(_ sender: UIButton) {
-        if liked {
-            likeDelegate?.mediaGridViewCellUnlikePressed(self)
-        } else {
-            likeDelegate?.mediaGridViewCellLikePressed(self)
-        }
         liked = !liked
+        if liked {
+            likeDelegate?.mediaGridViewCellLikePressed(self)
+        } else {
+            likeDelegate?.mediaGridViewCellUnlikePressed(self)
+        }
     }
     
 }

@@ -23,12 +23,12 @@ extension User {
 }
 
 extension MediaItem {
-    init(id: String) {
+    init(id: String, code: String = "code") {
         self.id = id
         self.date = Date(timeIntervalSince1970: 0)
         self.dimensions = CGSize.zero
         self.owner = User(id: "123")
-        self.code = ""
+        self.code = "code"
         self.isVideo = false
         self.display = URL(string: "https://google.com")!
         self.thumbnail = display

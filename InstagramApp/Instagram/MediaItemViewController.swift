@@ -52,7 +52,7 @@ class MediaItemViewController: UIViewController {
             gotFullResolutionImage = true
         }
         
-        InstagramData.shared.mediaManager.updatePost(for: mediaItem.code) { (updatedMediaItem) in
+        InstagramData.shared.mediaManager.updateMediaItem(mediaItem) { (updatedMediaItem) in
             self.mediaItemView.commentsView.setComments(updatedMediaItem)
         }
     }

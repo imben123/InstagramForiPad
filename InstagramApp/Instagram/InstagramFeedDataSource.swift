@@ -69,6 +69,16 @@ class InstagramFeedDataSource: NSObject, MediaGridViewDataSource {
         sema.wait()
         return mediaItem
     }
+    
+    func updateLatestMedia() {
+        loadMoreMedia()
+
+        // Update 20 most recent
+        for index in 0..<20 {
+            let mediaItem = self.mediaItem(at: index)
+            InstagramData.shared.mediaManager.updateMediaItem(mediaItem)
+        }
+    }
 }
 
 extension InstagramFeedDataSource: UICollectionViewDataSource {

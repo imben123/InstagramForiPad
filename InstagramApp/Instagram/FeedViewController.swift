@@ -38,7 +38,7 @@ class FeedViewController: UIViewController {
         
         view.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
         updateMediaGridView()
-        dataSource.loadMoreMedia()
+        dataSource.updateLatestMedia()
         
         navigationItem.rightBarButtonItem = createLogoutButton()
     }

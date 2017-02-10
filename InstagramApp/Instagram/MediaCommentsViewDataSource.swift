@@ -57,9 +57,7 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
             return cell
             
         } else {
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "Load more cell")
-            cell.textLabel?.text = "Load more comments"
-            return cell
+            return MediaCommentsViewLoadMoreCommentsCell(style: .default, reuseIdentifier: "Load more cell")
         }
     }
     

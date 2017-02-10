@@ -36,7 +36,7 @@ class FeedViewController: UIViewController {
         
         title = "Instagram"
         
-        view.backgroundColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)
+        view.backgroundColor = .white
         updateMediaGridView()
         dataSource.updateLatestMedia()
         

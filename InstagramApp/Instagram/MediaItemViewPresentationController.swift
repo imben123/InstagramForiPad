@@ -39,7 +39,7 @@ class MediaItemViewPresentationController: UIPresentationController {
     
     func setupDimmingView() {
         dimmingView = UIView()
-        dimmingView.backgroundColor = UIColor(white: 0.0, alpha: 0.6)
+        dimmingView.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
         dimmingView.alpha = 0.0
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))

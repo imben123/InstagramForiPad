@@ -17,30 +17,34 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3b-PU-Iiq">
                     <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
                     <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJm-Qw-pZD" customClass="MediaCommentsView" customModule="Instagram" customModuleProvider="target">
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3S-Ff-P9J" customClass="MediaCommentsView" customModule="Instagram" customModuleProvider="target">
                     <rect key="frame" x="515" y="0.0" width="280" height="831"/>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZzF-Aq-k7Y">
+                        <rect key="frame" x="0.0" y="0.0" width="280" height="831"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
                     <constraints>
-                        <constraint firstAttribute="width" constant="280" id="SE6-j9-ikF"/>
+                        <constraint firstAttribute="width" constant="280" id="z8g-SS-RN3"/>
                     </constraints>
-                </view>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="jeT-ka-9RO" secondAttribute="bottom" id="39S-N1-8Se"/>
-                <constraint firstItem="hJm-Qw-pZD" firstAttribute="leading" secondItem="jeT-ka-9RO" secondAttribute="trailing" id="8jB-H3-PHy"/>
-                <constraint firstAttribute="trailing" secondItem="hJm-Qw-pZD" secondAttribute="trailing" id="Bjh-dl-dG5"/>
+                <constraint firstItem="M3S-Ff-P9J" firstAttribute="leading" secondItem="jeT-ka-9RO" secondAttribute="trailing" id="3bW-xn-Rwa"/>
+                <constraint firstItem="M3S-Ff-P9J" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9PZ-5u-hdM"/>
+                <constraint firstAttribute="bottom" secondItem="M3S-Ff-P9J" secondAttribute="bottom" id="Nps-Ef-fS6"/>
                 <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerY" secondItem="jeT-ka-9RO" secondAttribute="centerY" id="R8p-QX-54s"/>
-                <constraint firstAttribute="bottom" secondItem="hJm-Qw-pZD" secondAttribute="bottom" id="TbE-2L-HyT"/>
                 <constraint firstItem="o3b-PU-Iiq" firstAttribute="height" secondItem="jeT-ka-9RO" secondAttribute="height" id="Zlq-md-BKn"/>
                 <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerX" secondItem="jeT-ka-9RO" secondAttribute="centerX" id="jU0-N9-pMI"/>
+                <constraint firstAttribute="trailing" secondItem="M3S-Ff-P9J" secondAttribute="trailing" id="mK6-9f-S25"/>
                 <constraint firstItem="o3b-PU-Iiq" firstAttribute="width" secondItem="jeT-ka-9RO" secondAttribute="width" id="qjk-YZ-9sL"/>
-                <constraint firstItem="hJm-Qw-pZD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sbx-yX-YBL"/>
                 <constraint firstItem="jeT-ka-9RO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="u1B-pK-Mvd"/>
                 <constraint firstItem="jeT-ka-9RO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uae-fa-4ye"/>
             </constraints>
@@ -50,8 +54,8 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="backgroundView" destination="o3b-PU-Iiq" id="zJg-Nv-MIT"/>
-                <outlet property="commentsView" destination="hJm-Qw-pZD" id="skh-9S-eBn"/>
-                <outlet property="commentsViewWidthConstraint" destination="SE6-j9-ikF" id="x3B-K2-tWR"/>
+                <outlet property="commentsView" destination="M3S-Ff-P9J" id="fmG-NO-Fej"/>
+                <outlet property="commentsViewWidthConstraint" destination="z8g-SS-RN3" id="Qst-cL-eti"/>
                 <outlet property="imageView" destination="jeT-ka-9RO" id="Bvk-r3-IgE"/>
             </connections>
             <point key="canvasLocation" x="47.5" y="-41.5"/>

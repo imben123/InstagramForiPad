@@ -9,7 +9,7 @@
 import UIKit
 import InstagramData
 
-class MediaCommentsView: UIView {
+class MediaCommentsView: UIVisualEffectView {
     
     fileprivate var tableView: UITableView?
     private let dataSource: MediaCommentsViewDataSource
@@ -46,7 +46,7 @@ class MediaCommentsView: UIView {
             tableView!.estimatedRowHeight = 140
             tableView!.tableFooterView = UIView()
             tableView!.backgroundColor = .clear
-            addSubview(tableView!)
+            contentView.addSubview(tableView!)
             
         } else {
             
@@ -65,6 +65,29 @@ class MediaCommentsViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         profilePicture.layer.cornerRadius = profilePicture.width * 0.5
+    }
+    
+}
+
+class MediaCommentsViewLoadMoreCommentsCell: UITableViewCell {
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        textLabel?.textAlignment = .center
+        textLabel?.textColor = .blue
+        backgroundColor = .clear
+        textLabel?.font = .systemFont(ofSize: 14)
+        textLabel?.text = "Load more comments"
+        selectionStyle = .none
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setHighlighted(_ setHighlighted: Bool, animated: Bool) {
+        super.setHighlighted(setHighlighted, animated: animated)
+        textLabel?.alpha = setHighlighted ? 0.4 : 1
     }
     
 }

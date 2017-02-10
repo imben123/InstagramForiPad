@@ -73,8 +73,10 @@ class InstagramFeedDataSource: NSObject, MediaGridViewDataSource {
     func updateLatestMedia() {
         loadMoreMedia()
 
+        let numberOfPosts = InstagramData.shared.feedManager.mediaIDs.count
+        
         // Update 20 most recent
-        for index in 0..<20 {
+        for index in 0..<min(20, numberOfPosts) {
             let mediaItem = self.mediaItem(at: index)
             InstagramData.shared.mediaManager.updateMediaItem(mediaItem)
         }

@@ -39,8 +39,6 @@ class MediaGridView: UICollectionView {
     static let reuseIdentifier = "cell"
     static let minItemSize: CGFloat = 300
     
-    var navigationBarHeightForSizeCalculations: CGFloat = 64
-    
     weak var mediaGridViewDelegate: MediaGridViewDelegate?
     
     var mediaGridViewDataSource: MediaGridViewDataSource? {
@@ -65,28 +63,10 @@ class MediaGridView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var frame: CGRect {
-        didSet {
-            if frame != oldValue {
-                preserveCurrentScrollPosition()
-                setScrollDirection()
-            }
-        }
-    }
-    
-    override var contentSize: CGSize {
-        didSet {
-            if contentSize != oldValue {
-                updateImageSize()
-                performBatchUpdates({}) // Animates things correctly
-            }
-        }
-    }
-    
     func imageViewForMediaItem(_ mediaItem: MediaItem) -> UIImageView? {
         if let index = mediaGridViewDataSource?.indexOfItem(with: mediaItem.id) {
-            let cell = cellForItem(at: IndexPath(item: index, section: 0)) as! MediaGridViewCell
-            return cell.imageView
+            let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? MediaGridViewCell
+            return cell?.imageView
         }
         return nil
     }
@@ -99,30 +79,6 @@ extension MediaGridView {
             flowLayout.scrollDirection = .horizontal
         } else {
             flowLayout.scrollDirection = .vertical
-        }
-    }
-    
-    func preserveCurrentScrollPosition() {
-        let oldOffset = currentOffset()
-        let navigationBarHeight = navigationBarHeightForSizeCalculations
-        DispatchQueue.main.async {
-            if self.flowLayout.scrollDirection == .horizontal {
-                self.contentOffset = CGPoint(x: oldOffset, y: self.contentOffset.y)
-            } else {
-                self.contentOffset = CGPoint(x: self.contentOffset.x, y: oldOffset - navigationBarHeight)
-            }
-        }
-    }
-    
-    private func currentOffset() -> CGFloat {
-        let navigationBarHeight = navigationBarHeightForSizeCalculations
-        if flowLayout.scrollDirection == .horizontal {
-            // I'm unsure why, but at the point of a rotation the
-            // contentOffset jumps 2 x navigationBarHeight
-            // so I'm removing that here.
-            return max(contentOffset.x - navigationBarHeight*2, 0)
-        } else {
-            return max(contentOffset.y - navigationBarHeight, 0)
         }
     }
     
@@ -171,8 +127,7 @@ extension MediaGridView {
     }
     
     func calculateBestItemSize() -> CGFloat {
-        let navigationBarHeight = navigationBarHeightForSizeCalculations
-        let shortestEdge: CGFloat = min(contentSize.width - navigationBarHeight, contentSize.height)
+        let shortestEdge: CGFloat = min(contentSize.width, contentSize.height - contentInset.top)
         let numberOfItems: CGFloat = (shortestEdge / MediaGridView.minItemSize).rounded(.down)
         if numberOfItems == 0 {
             return MediaGridView.minItemSize

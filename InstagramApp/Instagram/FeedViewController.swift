@@ -17,9 +17,7 @@ class FeedViewController: UIViewController {
     
     var dataSource: InstagramFeedDataSource!
     
-    var mediaGridView: MediaGridView {
-        return view as! MediaGridView
-    }
+    var mediaGridView: MediaGridView!
     
     func createLogoutButton() -> UIBarButtonItem {
         let result = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutPressed))
@@ -28,10 +26,26 @@ class FeedViewController: UIViewController {
     }
     
     override func loadView() {
-        view = MediaGridView()
-        dataSource = InstagramFeedDataSource(mediaGridView: mediaGridView)
-        mediaGridView.dataSource = dataSource
-        mediaGridView.mediaGridViewDelegate = self
+        view = UIView()
+        mediaGridView = createMediaGridView(contentSize: .zero)
+        view.addSubview(mediaGridView)
+    }
+    
+    func createMediaGridView(contentSize: CGSize) -> MediaGridView {
+        let result = MediaGridView()
+        dataSource = InstagramFeedDataSource(mediaGridView: result)
+        result.dataSource = dataSource
+        result.mediaGridViewDelegate = self
+        result.backgroundColor = .white
+        return result
+    }
+    
+    func initializeMediaGridView(with contentSize: CGSize) {
+        mediaGridView.frame = view.bounds
+        mediaGridView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
+        mediaGridView.contentSize = contentSize
+        mediaGridView.setScrollDirection()
+        mediaGridView.updateImageSize()
     }
     
     override func viewDidLoad() {
@@ -39,11 +53,19 @@ class FeedViewController: UIViewController {
         
         title = "Instagram"
         
-        view.backgroundColor = .white
         updateMediaGridView()
         dataSource.updateLatestMedia()
         
         navigationItem.rightBarButtonItem = createLogoutButton()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let oldFrame = mediaGridView.frame
+        mediaGridView.frame = view.bounds
+        if oldFrame == .zero {
+            initializeMediaGridView(with: mediaGridView.frame.size)
+        }
     }
     
     func updateMediaGridView() {
@@ -54,6 +76,19 @@ class FeedViewController: UIViewController {
         InstagramData.shared.authManager.logout()
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        let currentOffset = mediaGridView.firstVisibleIndexPath()
+        DispatchQueue.main.async {
+            self.mediaGridView.removeFromSuperview()
+            self.mediaGridView = self.createMediaGridView(contentSize: size)
+            self.initializeMediaGridView(with: size)
+            self.mediaGridView.resetScrollPosition(to: currentOffset)
+            self.view.addSubview(self.mediaGridView)
+        }
+    }
 }
 
 extension FeedViewController: MediaGridViewDelegate {
@@ -62,7 +97,7 @@ extension FeedViewController: MediaGridViewDelegate {
         
         mediaItemTransitioningDelegate = MediaItemViewControllerTransitioningDelegate()
         mediaItemTransitioningDelegate!.imageViewToTransision = {
-            return self.mediaGridView.imageViewForMediaItem(self.openMediaItem!)!
+            return self.mediaGridView.imageViewForMediaItem(self.openMediaItem!)
 
         }
         openMediaItem = mediaItem

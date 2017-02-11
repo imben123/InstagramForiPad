@@ -125,6 +125,41 @@ extension MediaGridView {
             return max(contentOffset.y - navigationBarHeight, 0)
         }
     }
+    
+    func resetScrollPosition(to indexPath: IndexPath?, animated: Bool = false) {
+        guard let indexPath = indexPath else { return }
+        
+        if flowLayout.scrollDirection == .horizontal {
+            scrollToItem(at: indexPath, at: .left, animated: animated)
+        } else {
+            scrollToItem(at: indexPath, at: .top, animated: animated)
+        }
+    }
+    
+    func firstVisibleIndexPath() -> IndexPath? {
+        var firstIndexPath = indexPathsForVisibleItems.first
+        for indexPath in indexPathsForVisibleItems {
+            if indexPath.row < firstIndexPath!.row {
+                firstIndexPath = indexPath
+            }
+        }
+        
+        // First item may be under nav bar
+        if let firstIndexPath = firstIndexPath, flowLayout.scrollDirection == .vertical {
+            let position = cellForItem(at: firstIndexPath)!.originY - contentOffset.y
+            let itemSize = flowLayout.itemSize.height
+            if position + itemSize < contentInset.top {
+                let numberOfItemsInRow = Int((width / itemSize).rounded(.down))
+                let newItemIndex = firstIndexPath.item + numberOfItemsInRow
+                if newItemIndex < numberOfItems(inSection: 0) {
+                    return IndexPath(item: newItemIndex, section: firstIndexPath.section)
+                }
+            }
+        }
+        
+        return firstIndexPath
+    }
+
 }
 
 extension MediaGridView {

@@ -70,6 +70,10 @@ class InstagramFeedDataSource: NSObject, MediaGridViewDataSource {
         return mediaItem
     }
     
+    func indexOfItem(with id: String) -> Int? {
+        return InstagramData.shared.feedManager.mediaIDs.index(where: { $0 == id })
+    }
+    
     func updateLatestMedia() {
         loadMoreMedia()
 
@@ -211,10 +215,6 @@ extension InstagramFeedDataSource {
     
     fileprivate func index(of item: MediaGridViewItem) -> Int? {
         return InstagramData.shared.feedManager.mediaIDs.index(of: item.id)
-    }
-    
-    fileprivate func indexOfItem(with id: String) -> Int? {
-        return InstagramData.shared.feedManager.mediaIDs.index(where: { $0 == id })
     }
     
     fileprivate func item(at index: Int) -> MediaGridViewItem {

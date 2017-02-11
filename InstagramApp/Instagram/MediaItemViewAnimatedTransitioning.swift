@@ -10,10 +10,10 @@ import UIKit
 
 class MediaItemViewAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
-    let initialImageView: UIImageView
+    let initialImageView: UIImageView?
     let direction: MediaItemViewTransitioningDirection
     
-    init(initialImageView: UIImageView, direction: MediaItemViewTransitioningDirection) {
+    init(initialImageView: UIImageView?, direction: MediaItemViewTransitioningDirection) {
         self.initialImageView = initialImageView
         self.direction = direction
     }
@@ -35,8 +35,7 @@ class MediaItemViewAnimatedTransitioning: NSObject, UIViewControllerAnimatedTran
             mediaItemViewController = transitionContext.viewController(forKey: .from) as! MediaItemViewController
         }
         
-        let imageStartFrame = transitionContext.containerView.convert(initialImageView.frame,
-                                                                      from: initialImageView.superview)
+        let imageStartFrame = self.imageStartFrame(in: transitionContext)
 
         if direction == .present {
             mediaItemViewController.view.frame = transitionContext.finalFrame(for: mediaItemViewController)
@@ -45,8 +44,19 @@ class MediaItemViewAnimatedTransitioning: NSObject, UIViewControllerAnimatedTran
         }
         
         let duration = transitionDuration(using: transitionContext)
-        mediaItemViewController.performTransition(with: duration, direction: direction) { completed in
+        mediaItemViewController.performTransition(with: duration,
+                                                  direction: direction,
+                                                  fromFrame: imageStartFrame) { completed in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        }
+    }
+    
+    private func imageStartFrame(in transitionContext: UIViewControllerContextTransitioning) -> CGRect {
+        if let initialImageView = initialImageView {
+            return transitionContext.containerView.convert(initialImageView.frame,
+                                                           from: initialImageView.superview)
+        } else {
+            return .zero
         }
     }
 }

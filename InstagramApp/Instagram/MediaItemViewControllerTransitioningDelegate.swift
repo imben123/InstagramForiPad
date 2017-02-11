@@ -10,19 +10,19 @@ import UIKit
 
 class MediaItemViewControllerTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
-    var imageViewToTransision: UIImageView?
+    var imageViewToTransision: (()->UIImageView?)? = nil
     let interactionController = PercentDrivenInteractiveTransition()
     
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
                              source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        return MediaItemViewAnimatedTransitioning(initialImageView: imageViewToTransision!, direction: .present)
+        return MediaItemViewAnimatedTransitioning(initialImageView: imageViewToTransision!(), direction: .present)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        return MediaItemViewAnimatedTransitioning(initialImageView: imageViewToTransision!, direction: .dismiss)
+        return MediaItemViewAnimatedTransitioning(initialImageView: imageViewToTransision!(), direction: .dismiss)
     }
     
     func presentationController(forPresented presented: UIViewController,

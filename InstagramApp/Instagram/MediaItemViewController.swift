@@ -24,7 +24,6 @@ class MediaItemViewController: UIViewController {
     var dismissalInteractionController: PercentDrivenInteractiveTransition?
 
     let mediaItem: MediaItem
-    var originalImageFrame: CGRect?
 
     var mediaItemView: MediaItemView!
     var gotFullResolutionImage = false

@@ -11,7 +11,6 @@ import UIKit
 extension MediaItemViewController {
     
     func prepareForPresentation(from imageFrame:CGRect) {
-        originalImageFrame = imageFrame
         view.transform = viewTransformationForPresentation(from: imageFrame)
         mediaItemView.commentsView.alpha = 0
         mediaItemView.backgroundView.alpha = 0
@@ -47,6 +46,7 @@ extension MediaItemViewController {
     
     func performTransition(with duration: TimeInterval,
                            direction: MediaItemViewTransitioningDirection,
+                           fromFrame: CGRect,
                            completion: @escaping (_ completed: Bool)->()) {
         
         if direction == .present {
@@ -65,7 +65,7 @@ extension MediaItemViewController {
             
             let cachedThumbnail = getThumbnailFromCache()!
             crossDisolveImageView(to: cachedThumbnail, duration: duration)
-            performDismissalAnimation(duration, completion: { (completed) in
+            performDismissalAnimation(duration, fromFrame: fromFrame, completion: { (completed) in
                 
                 // Put this back incase the animation was cancelled
                 let displayImage = self.getDisplayImageFromCache()!
@@ -100,13 +100,15 @@ extension MediaItemViewController {
         }, completion: completion)
     }
     
-    private func performDismissalAnimation(_ duration: TimeInterval, completion: @escaping (_ completed: Bool)->()) {
+    private func performDismissalAnimation(_ duration: TimeInterval,
+                                           fromFrame: CGRect,
+                                           completion: @escaping (_ completed: Bool)->()) {
         UIView.animate(withDuration: duration,
                        delay: 0,
                        options: .curveEaseInOut,
                        animations: {
                         
-                        self.view.transform = self.viewTransformationForPresentation(from: self.originalImageFrame!)
+                        self.view.transform = self.viewTransformationForPresentation(from: fromFrame)
                         self.mediaItemView.commentsView.alpha = 0
                         self.mediaItemView.backgroundView.alpha = 0
                         

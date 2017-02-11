@@ -27,6 +27,7 @@ protocol MediaGridViewDataSource: UICollectionViewDataSource {
     func mediaGridViewNeedsMoreMedia(_ sender: MediaGridView)
     func mediaGridViewNeedsUpdateVisibleCells(_ sender: MediaGridView)
     func mediaItem(at index: Int) -> MediaItem
+    func indexOfItem(with id: String) -> Int?
 }
 
 protocol MediaGridViewDelegate: class {
@@ -80,6 +81,14 @@ class MediaGridView: UICollectionView {
                 performBatchUpdates({}) // Animates things correctly
             }
         }
+    }
+    
+    func imageViewForMediaItem(_ mediaItem: MediaItem) -> UIImageView? {
+        if let index = mediaGridViewDataSource?.indexOfItem(with: mediaItem.id) {
+            let cell = cellForItem(at: IndexPath(item: index, section: 0)) as! MediaGridViewCell
+            return cell.imageView
+        }
+        return nil
     }
 }
 

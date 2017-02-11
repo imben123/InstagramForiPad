@@ -13,7 +13,8 @@ import SDWebImage
 class FeedViewController: UIViewController {
     
     var mediaItemTransitioningDelegate: MediaItemViewControllerTransitioningDelegate?
-
+    var openMediaItem: MediaItem?
+    
     var dataSource: InstagramFeedDataSource!
     
     var mediaGridView: MediaGridView {
@@ -53,7 +54,6 @@ class FeedViewController: UIViewController {
         InstagramData.shared.authManager.logout()
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
-    
 }
 
 extension FeedViewController: MediaGridViewDelegate {
@@ -61,8 +61,12 @@ extension FeedViewController: MediaGridViewDelegate {
     func mediaGridView(_ sender: MediaGridView, userTappedCellForItem mediaItem: MediaItem, imageView: UIImageView) {
         
         mediaItemTransitioningDelegate = MediaItemViewControllerTransitioningDelegate()
-        mediaItemTransitioningDelegate!.imageViewToTransision = imageView
+        mediaItemTransitioningDelegate!.imageViewToTransision = {
+            return self.mediaGridView.imageViewForMediaItem(self.openMediaItem!)!
 
+        }
+        openMediaItem = mediaItem
+        
         let viewController = MediaItemViewController(mediaItem: mediaItem,
                                                      dismissalInteractionController: mediaItemTransitioningDelegate!.interactionController)
 

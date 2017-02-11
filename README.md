@@ -7,6 +7,8 @@ It was written as a personal project to spend some time trying out feature of sw
 and iOS 10 outside of my job. Also because I love instagram and really wanted to it 
 on iPad, and I wanted to build an app with lots of great media for iPad.
 
+**Note** - This project has no affiliation with Instagram.
+
 ![Demo GIF](/../master/Assets/InstagramDemo.gif?raw=true)
 
 ##Current features

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SDWebImage
+import RealmSwift
 
 fileprivate class MediaDataStoreObserverDistribution: NSObject, MediaDataStoreObserver {
     
@@ -43,6 +45,12 @@ public class InstagramData {
     
     public func createCommentsManager(for mediaItem: MediaItem) -> CommentsManager {
         return CommentsManager(mediaItem: mediaItem, communicator: communicator)
+    }
+    
+    public func logout() {
+        authManager.logout()
+        SDImageCache.shared().clearDisk()
+        try! Realm().write { try! Realm().deleteAll() }
     }
     
 }

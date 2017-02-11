@@ -36,14 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.makeKeyAndVisible()
         return true
     }
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url)
-        if url.absoluteString.begins(with: "insta-ipad://") {
-            return true
-        }
-        return false
-    }
 
 }
 

@@ -73,7 +73,7 @@ class FeedViewController: UIViewController {
     }
     
     @objc func logoutPressed() {
-        InstagramData.shared.authManager.logout()
+        InstagramData.shared.logout()
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
     

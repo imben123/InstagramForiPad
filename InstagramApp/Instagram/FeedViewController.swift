@@ -12,6 +12,8 @@ import SDWebImage
 
 class FeedViewController: UIViewController {
     
+    var mediaItemTransitioningDelegate: MediaItemViewControllerTransitioningDelegate?
+
     var dataSource: InstagramFeedDataSource!
     
     var mediaGridView: MediaGridView {
@@ -52,36 +54,21 @@ class FeedViewController: UIViewController {
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
     
-    var imageViewToTransision: UIImageView?
 }
 
 extension FeedViewController: MediaGridViewDelegate {
+    
     func mediaGridView(_ sender: MediaGridView, userTappedCellForItem mediaItem: MediaItem, imageView: UIImageView) {
-        imageViewToTransision = imageView
-        let viewController = MediaItemViewController(mediaItem: mediaItem)
+        
+        mediaItemTransitioningDelegate = MediaItemViewControllerTransitioningDelegate()
+        mediaItemTransitioningDelegate!.imageViewToTransision = imageView
+
+        let viewController = MediaItemViewController(mediaItem: mediaItem,
+                                                     dismissalInteractionController: mediaItemTransitioningDelegate!.interactionController)
+
+        viewController.transitioningDelegate = mediaItemTransitioningDelegate
         viewController.modalPresentationStyle = .custom
-        viewController.transitioningDelegate = self
+        
         present(viewController, animated: true)
     }
-}
-
-extension FeedViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController,
-                             presenting: UIViewController,
-                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        return MediaItemViewAnimatedTransitioning(initialImageView: imageViewToTransision!, direction: .present)
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
-        return MediaItemViewAnimatedTransitioning(initialImageView: imageViewToTransision!, direction: .dismiss)
-    }
-    
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        
-        return MediaItemViewPresentationController(presentedViewController: presented, presenting: presenting)
-    }
-    
 }

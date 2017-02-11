@@ -10,6 +10,10 @@ import UIKit
 import InstagramData
 import SDWebImage
 
+class PercentDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition {
+    var hasStarted = false
+}
+
 enum MediaItemViewTransitioningDirection {
     case present
     case dismiss
@@ -17,13 +21,16 @@ enum MediaItemViewTransitioningDirection {
 
 class MediaItemViewController: UIViewController {
     
+    var dismissalInteractionController: PercentDrivenInteractiveTransition?
+
     let mediaItem: MediaItem
     var originalImageFrame: CGRect?
 
     var mediaItemView: MediaItemView!
     var gotFullResolutionImage = false
     
-    init(mediaItem: MediaItem) {
+    init(mediaItem: MediaItem, dismissalInteractionController: PercentDrivenInteractiveTransition?) {
+        self.dismissalInteractionController = dismissalInteractionController
         self.mediaItem = mediaItem
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,13 +45,14 @@ class MediaItemViewController: UIViewController {
         let nib = Bundle.main.loadNibNamed("MediaItemView", owner: nil, options: [:])!
         mediaItemView = nib.first as! MediaItemView
         mediaItemView.mediaItem = mediaItem
+        mediaItemView.dismissalDelegate = self
         view = mediaItemView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.mediaItemView.imageView.image = getThumbnailFromCache()
+        self.mediaItemView.image = getThumbnailFromCache()
         
         if getDisplayImageFromCache() == nil {
             downloadDisplayImage()
@@ -57,7 +65,16 @@ class MediaItemViewController: UIViewController {
         }
     }
     
-    private func downloadDisplayImage() {
+    func preferredSize(thatFits size: CGSize) -> CGSize {
+        let boundingSize = size //minSize(size, second: view.frame.size)
+        return mediaItemView.sizeThatFits(boundingSize)
+    }
+    
+}
+
+extension MediaItemViewController {
+    
+    fileprivate func downloadDisplayImage() {
         SDWebImageManager.shared().downloadImage(with: mediaItem.display,
                                                  options: SDWebImageOptions.highPriority,
                                                  progress: nil)
@@ -65,121 +82,16 @@ class MediaItemViewController: UIViewController {
             
             if let image = image {
                 self?.gotFullResolutionImage = true
-                self?.crossDisolveImageView(to: image, duration: 0.3)
+                self?.crossDisolveImageView(to: image, duration: 0.1)
             }
         }
     }
     
-    func preferredSize(thatFits size: CGSize) -> CGSize {
-        let boundingSize = size //minSize(size, second: view.frame.size)
-        return mediaItemView.sizeThatFits(boundingSize)
-    }
-    
-    func prepareForPresentation(from imageFrame:CGRect) {
-        originalImageFrame = imageFrame
-        view.transform = viewTransformationForPresentation(from: imageFrame)
-        mediaItemView.commentsView.alpha = 0
-        mediaItemView.backgroundView.alpha = 0
-    }
-    
-    func viewTransformationForPresentation(from imageFrame:CGRect) -> CGAffineTransform {
-        
-        let imageViewSize = mediaItemView.calculateImageViewSize()
-        
-        let scale: CGFloat
-        if imageViewSize.height < imageViewSize.width {
-            scale = imageFrame.height / imageViewSize.height
-        } else {
-            scale = imageFrame.width / imageViewSize.width
-        }
-        
-        let originXAfterScale = view.originX + ((view.width - (view.width * scale)) * 0.5)
-        let originYAfterScale = view.originY + ((view.height - (view.height * scale)) * 0.5)
-        
-        let centerXAfterScale = originXAfterScale + (imageViewSize.width * scale * 0.5)
-        let centerYAfterScale = originYAfterScale + (imageViewSize.height * scale * 0.5)
-
-        let imageCenterX = imageFrame.origin.x + (imageFrame.width * 0.5)
-        let imageCenterY = imageFrame.origin.y + (imageFrame.height * 0.5)
-        
-        let offsetX = imageCenterX - centerXAfterScale
-        let offsetY = imageCenterY - centerYAfterScale
-        
-        return CGAffineTransform(scaleX: scale, y: scale)
-            .translatedBy(x: offsetX / scale,
-                          y: offsetY / scale)
-    }
-    
-    func performTransition(with duration: TimeInterval,
-                           direction: MediaItemViewTransitioningDirection,
-                           completion: @escaping ()->()) {
-        
-        if direction == .present {
-            
-            performOpeningBounceAnimation(duration, completion: completion)
-
-            if let cachedDisplayImage = getDisplayImageFromCache() {
-                crossDisolveImageView(to: cachedDisplayImage, duration: duration)
-            }
-            
-        } else {
-            
-            if self.gotFullResolutionImage {
-                self.mediaItemView.backgroundView.alpha = 0
-            }
-            
-            let cachedThumbnail = getThumbnailFromCache()!
-            crossDisolveImageView(to: cachedThumbnail, duration: duration)
-            performDismissalAnimation(duration, completion: completion)
-        }
-    }
-    
-    private func crossDisolveImageView(to image: UIImage, duration: TimeInterval) {
-        UIView.transition(with: self.mediaItemView.imageView,
-                          duration: duration,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            self.mediaItemView.imageView.image = image
-        }, completion: nil)
-    }
-    
-    private func performOpeningBounceAnimation(_ duration: TimeInterval, completion: @escaping ()->()) {
-        UIView.animate(withDuration: duration,
-                       delay: 0,
-                       usingSpringWithDamping: 0.6,
-                       initialSpringVelocity: 0,
-                       options: .curveEaseOut,
-                       animations: {
-                        
-                        self.view.transform = .identity
-                        self.mediaItemView.commentsView.alpha = 1
-                        self.mediaItemView.backgroundView.alpha = 1
-                        
-        }, completion: { _ in
-            completion()
-        })
-    }
-    
-    private func performDismissalAnimation(_ duration: TimeInterval, completion: @escaping ()->()) {
-        UIView.animate(withDuration: duration,
-                       delay: 0,
-                       options: .curveEaseInOut,
-                       animations: {
-                        
-                        self.view.transform = self.viewTransformationForPresentation(from: self.originalImageFrame!)
-                        self.mediaItemView.commentsView.alpha = 0
-                        self.mediaItemView.backgroundView.alpha = 0
-                        
-        }, completion: { _ in
-            completion()
-        })
-    }
-    
-    private func getThumbnailFromCache() -> UIImage? {
+    func getThumbnailFromCache() -> UIImage? {
         return self.getImageFromCache(mediaItem.thumbnail)
     }
     
-    private func getDisplayImageFromCache() -> UIImage? {
+    func getDisplayImageFromCache() -> UIImage? {
         return self.getImageFromCache(mediaItem.display)
     }
     
@@ -192,5 +104,4 @@ class MediaItemViewController: UIViewController {
         }
         return cachedImage
     }
-    
 }

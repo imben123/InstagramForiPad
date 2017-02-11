@@ -32,38 +32,98 @@ func proportionalSize(_ size: CGSize, thatFits constrainingSize: CGSize) -> CGSi
 
 class MediaItemView: UIView {
     
+    weak var dismissalDelegate: MediaItemViewDismissalDelegate?
+    
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var commentsView: MediaCommentsView!
     @IBOutlet var commentsViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewHeightConstraint: NSLayoutConstraint!
     
     var mediaItem: MediaItem? {
         didSet {
             if let newValue = mediaItem {
                 commentsView.setComments(newValue)
+                updateImageViewHeightConstraint()
             }
         }
     }
     
+    var image: UIImage? {
+        get {
+            return imageView.image
+        }
+        set {
+            imageView.image = newValue
+        }
+    }
+    
+    override var frame: CGRect {
+        didSet {
+            updateImageViewHeightConstraint()
+        }
+    }
+    
+    func updateImageViewHeightConstraint() {
+        imageViewHeightConstraint?.constant = calculateImageViewHeight()
+    }
+    
+    func calculateImageViewHeight() -> CGFloat {
+        if let mediaItem = mediaItem {
+            return mediaItem.dimensions.height * (width / mediaItem.dimensions.width)
+        }
+        return 0
+    }
+    
+    private var commentsViewWidth: CGFloat {
+        if traitCollection.horizontalSizeClass != .compact {
+            return commentsViewWidthConstraint.constant
+        }
+        return 0
+    }
+    
     func calculateImageViewSize() -> CGSize {
-        return CGSize(width: width - commentsViewWidthConstraint.constant, height: height)
+        if traitCollection.horizontalSizeClass == .regular {
+            return CGSize(width: width - commentsViewWidth, height: height)
+        } else {
+            let imageHeight = calculateImageViewHeight()
+            return CGSize(width: width, height: imageHeight)
+        }
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         
+        frame = CGRect(x: originX, y: originY, width: size.width, height: size.height)
+        
         if let mediaItem = mediaItem {
             
             let imageSize = proportionalSize(mediaItem.dimensions,
-                                             thatFits: CGSize(width: size.width - commentsView.width,
+                                             thatFits: CGSize(width: size.width - commentsViewWidth,
                                                               height: size.height))
             
-            let preferredSize = CGSize(width: imageSize.width + commentsView.width,
-                                       height: imageSize.height)
-            
-            return preferredSize
+            if traitCollection.horizontalSizeClass == .compact {
+                
+                return CGSize(width: imageSize.width, height: size.height)
+
+            } else {
+                
+                return CGSize(width: imageSize.width + commentsViewWidth,
+                              height: imageSize.height)
+
+            }
         }
         
         return .zero
     }
     
+}
+
+protocol MediaItemViewDismissalDelegate: class {
+    func handlePanGesture(_ sender: UIPanGestureRecognizer)
+}
+
+extension MediaItemView {
+    @IBAction func handlePanGesture(_ sender: UIPanGestureRecognizer) {
+        self.dismissalDelegate?.handlePanGesture(sender)
+    }
 }

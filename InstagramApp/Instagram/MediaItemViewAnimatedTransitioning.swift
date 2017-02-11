@@ -45,8 +45,8 @@ class MediaItemViewAnimatedTransitioning: NSObject, UIViewControllerAnimatedTran
         }
         
         let duration = transitionDuration(using: transitionContext)
-        mediaItemViewController.performTransition(with: duration, direction: direction) {
-            transitionContext.completeTransition(true)
+        mediaItemViewController.performTransition(with: duration, direction: direction) { completed in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
     }
 }

@@ -31,6 +31,9 @@
 		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
 		B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */; };
 		B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */; };
+		B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */; };
+		B5B097B91E4F6F69003250BE /* MediaItemViewControllerTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */; };
+		B5B097BB1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097BA1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift */; };
 		B5B53D301E3E45D400620238 /* MediaItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */; };
 		B5B53D321E3E460D00620238 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B53D311E3E460D00620238 /* MediaItemView.swift */; };
 		B5B53D341E3E466500620238 /* MediaItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B53D331E3E466500620238 /* MediaItemView.xib */; };
@@ -110,6 +113,9 @@
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaGridViewCell.xib; sourceTree = "<group>"; };
 		B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCommentsViewDataSource.swift; sourceTree = "<group>"; };
+		B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerTransitioningDelegate.swift; sourceTree = "<group>"; };
+		B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerTransitions.swift; sourceTree = "<group>"; };
+		B5B097BA1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerInteractiveDismissal.swift; sourceTree = "<group>"; };
 		B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewController.swift; sourceTree = "<group>"; };
 		B5B53D311E3E460D00620238 /* MediaItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
 		B5B53D331E3E466500620238 /* MediaItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaItemView.xib; sourceTree = "<group>"; };
@@ -195,6 +201,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B5B097B61E4F6C3E003250BE /* Custom transition */ = {
+			isa = PBXGroup;
+			children = (
+				B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */,
+				B51D5C871E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift */,
+				B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */,
+			);
+			name = "Custom transition";
+			sourceTree = "<group>";
+		};
+		B5B097B71E4F6DF3003250BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5B53D311E3E460D00620238 /* MediaItemView.swift */,
+				B5B53D331E3E466500620238 /* MediaItemView.xib */,
+				B51D5C891E429FE400EE44BD /* MediaCommentsView.swift */,
+				B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */,
+				B51D5C8B1E42A01300EE44BD /* MediaCommentsViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		B5B53D2A1E3E457900620238 /* Media Grid View */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,13 +254,10 @@
 			isa = PBXGroup;
 			children = (
 				B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */,
-				B5B53D311E3E460D00620238 /* MediaItemView.swift */,
-				B5B53D331E3E466500620238 /* MediaItemView.xib */,
-				B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */,
-				B51D5C871E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift */,
-				B51D5C891E429FE400EE44BD /* MediaCommentsView.swift */,
-				B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */,
-				B51D5C8B1E42A01300EE44BD /* MediaCommentsViewCell.xib */,
+				B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */,
+				B5B097BA1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift */,
+				B5B097B61E4F6C3E003250BE /* Custom transition */,
+				B5B097B71E4F6DF3003250BE /* View */,
 			);
 			name = "Media Item view controller";
 			sourceTree = "<group>";
@@ -405,8 +430,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B51D5C851E4286E700EE44BD /* MediaItemViewPresentationController.swift in Sources */,
+				B5B097BB1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift in Sources */,
 				B536932D1E148BCE000246A7 /* FeedViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
+				B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */,
 				B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */,
 				B51D5C8A1E429FE400EE44BD /* MediaCommentsView.swift in Sources */,
 				B5BEC8F91E17CC51000C3870 /* InstagramFeedDataSource.swift in Sources */,
@@ -416,6 +443,7 @@
 				B53693381E155645000246A7 /* LoginViewController.swift in Sources */,
 				B51D5C881E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift in Sources */,
 				B5B53D301E3E45D400620238 /* MediaItemViewController.swift in Sources */,
+				B5B097B91E4F6F69003250BE /* MediaItemViewControllerTransitions.swift in Sources */,
 				B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +579,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.bendavisapps.Instagram;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -565,6 +594,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.bendavisapps.Instagram;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

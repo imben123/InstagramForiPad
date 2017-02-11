@@ -20,30 +20,14 @@ class MediaItemViewPresentationController: UIPresentationController {
         return false
     }
     
-    override var frameOfPresentedViewInContainerView: CGRect {
-        let frameOfPresentingViewController = presentingViewController.view.frame
-        let boundingSize = CGSize(width: frameOfPresentingViewController.size.width - 44,
-                                  height: frameOfPresentingViewController.size.height - 44)
-        let size = mediaItemViewController.preferredSize(thatFits: boundingSize)
-        let result = CGRect(x: frameOfPresentingViewController.width*0.5 - size.width*0.5,
-                            y: frameOfPresentingViewController.height*0.5 - size.height*0.5,
-                            width: size.width,
-                            height: size.height)
-        return result
-    }
-    
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
-        super.init(presentedViewController: presentedViewController, presenting: presentedViewController)
+        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         setupDimmingView()
+        setupSizeClasses()
     }
     
-    func setupDimmingView() {
-        dimmingView = UIView()
-        dimmingView.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
-        dimmingView.alpha = 0.0
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
-        dimmingView.addGestureRecognizer(recognizer)
+    override var frameOfPresentedViewInContainerView: CGRect {
+        return calculateFrameOfPresentedViewInContainerView()
     }
     
     override func presentationTransitionWillBegin() {
@@ -71,14 +55,58 @@ class MediaItemViewPresentationController: UIPresentationController {
         })
     }
     
-    dynamic func handleTap(recognizer: UITapGestureRecognizer) {
-        presentingViewController.dismiss(animated: true)
-    }
-    
     override func containerViewWillLayoutSubviews() {
         super.containerViewWillLayoutSubviews()
         presentedView?.frame = frameOfPresentedViewInContainerView
         dimmingView.frame = containerView!.bounds
+    }
+    
+}
+
+extension MediaItemViewPresentationController {
+    
+    func setupDimmingView() {
+        dimmingView = UIView()
+        dimmingView.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        dimmingView.alpha = 0.0
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+        dimmingView.addGestureRecognizer(recognizer)
+    }
+    
+    dynamic func handleTap(recognizer: UITapGestureRecognizer) {
+        presentingViewController.dismiss(animated: true)
+    }
+    
+    func setupSizeClasses() {
+        let boundingSize = boundingSizeOfMediaItemViewController()
+        if boundingSize.width < boundingSize.height {
+            overrideTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
+        }
+    }
+    
+    func calculateFrameOfPresentedViewInContainerView() -> CGRect {
+        let frameOfPresentingViewController = presentingViewController.view.frame
+        let boundingSize = boundingSizeOfMediaItemViewController()
+        let size = mediaItemViewController.preferredSize(thatFits: boundingSize)
+        let result = CGRect(x: frameOfPresentingViewController.width*0.5 - size.width*0.5,
+                            y: frameOfPresentingViewController.height*0.5 - size.height*0.5,
+                            width: size.width,
+                            height: size.height)
+        return result
+    }
+    
+    func boundingSizeOfMediaItemViewController() -> CGSize {
+        let frameOfPresentingViewController = presentingViewController.view.frame
+        
+        let minWidth: CGFloat = 375
+        let minHeight: CGFloat = 667
+        let preferredMargin: CGFloat = 44
+        
+        let boundingWidth = max(frameOfPresentingViewController.size.width - preferredMargin, minWidth)
+        let boundingHeight = max(frameOfPresentingViewController.size.height - preferredMargin, minHeight)
+        
+        return CGSize(width: boundingWidth, height: boundingHeight)
     }
     
 }

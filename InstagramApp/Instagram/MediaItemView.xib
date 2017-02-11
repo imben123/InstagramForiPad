@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="ipad9_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -12,53 +12,93 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="iN0-l3-epB" customClass="MediaItemView" customModule="Instagram" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="795" height="831"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3b-PU-Iiq">
-                    <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
-                    <rect key="frame" x="0.0" y="0.0" width="515" height="831"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="QCH-SI-ArM"/>
+                    </constraints>
                 </imageView>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3S-Ff-P9J" customClass="MediaCommentsView" customModule="Instagram" customModuleProvider="target">
-                    <rect key="frame" x="515" y="0.0" width="280" height="831"/>
+                    <rect key="frame" x="0.0" y="300" width="414" height="436"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZzF-Aq-k7Y">
-                        <rect key="frame" x="0.0" y="0.0" width="280" height="831"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <constraints>
                         <constraint firstAttribute="width" constant="280" id="z8g-SS-RN3"/>
                     </constraints>
                     <blurEffect style="extraLight"/>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="z8g-SS-RN3"/>
+                        </mask>
+                    </variation>
                 </visualEffectView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="jeT-ka-9RO" secondAttribute="bottom" id="39S-N1-8Se"/>
-                <constraint firstItem="M3S-Ff-P9J" firstAttribute="leading" secondItem="jeT-ka-9RO" secondAttribute="trailing" id="3bW-xn-Rwa"/>
-                <constraint firstItem="M3S-Ff-P9J" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9PZ-5u-hdM"/>
-                <constraint firstAttribute="bottom" secondItem="M3S-Ff-P9J" secondAttribute="bottom" id="Nps-Ef-fS6"/>
-                <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerY" secondItem="jeT-ka-9RO" secondAttribute="centerY" id="R8p-QX-54s"/>
-                <constraint firstItem="o3b-PU-Iiq" firstAttribute="height" secondItem="jeT-ka-9RO" secondAttribute="height" id="Zlq-md-BKn"/>
-                <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerX" secondItem="jeT-ka-9RO" secondAttribute="centerX" id="jU0-N9-pMI"/>
-                <constraint firstAttribute="trailing" secondItem="M3S-Ff-P9J" secondAttribute="trailing" id="mK6-9f-S25"/>
-                <constraint firstItem="o3b-PU-Iiq" firstAttribute="width" secondItem="jeT-ka-9RO" secondAttribute="width" id="qjk-YZ-9sL"/>
-                <constraint firstItem="jeT-ka-9RO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="u1B-pK-Mvd"/>
-                <constraint firstItem="jeT-ka-9RO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uae-fa-4ye"/>
+                <constraint firstAttribute="bottom" secondItem="jeT-ka-9RO" secondAttribute="bottom" id="39S-N1-8Se" userLabel="Image touches bottom"/>
+                <constraint firstItem="M3S-Ff-P9J" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9PZ-5u-hdM" userLabel="Comments touches top"/>
+                <constraint firstItem="M3S-Ff-P9J" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="CxZ-y1-pT7" userLabel="Comments touches left"/>
+                <constraint firstAttribute="trailing" secondItem="jeT-ka-9RO" secondAttribute="trailing" id="Hb1-d4-3Ul" userLabel="Image touches right"/>
+                <constraint firstAttribute="bottom" secondItem="M3S-Ff-P9J" secondAttribute="bottom" id="Nps-Ef-fS6" userLabel="Comments touches bottom"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerY" secondItem="jeT-ka-9RO" secondAttribute="centerY" id="R8p-QX-54s" userLabel="Background centerY"/>
+                <constraint firstItem="M3S-Ff-P9J" firstAttribute="top" secondItem="jeT-ka-9RO" secondAttribute="bottom" id="RgO-qR-aNo" userLabel="Comments under Image"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="height" secondItem="jeT-ka-9RO" secondAttribute="height" id="Zlq-md-BKn" userLabel="Background Height"/>
+                <constraint firstItem="M3S-Ff-P9J" firstAttribute="leading" secondItem="jeT-ka-9RO" secondAttribute="trailing" identifier="Image next to comment" id="dkd-Wp-cQX" userLabel="Comments right of Image"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="centerX" secondItem="jeT-ka-9RO" secondAttribute="centerX" id="jU0-N9-pMI" userLabel="Background centerX"/>
+                <constraint firstAttribute="trailing" secondItem="M3S-Ff-P9J" secondAttribute="trailing" id="mK6-9f-S25" userLabel="Comments touches right"/>
+                <constraint firstItem="o3b-PU-Iiq" firstAttribute="width" secondItem="jeT-ka-9RO" secondAttribute="width" id="qjk-YZ-9sL" userLabel="Background Width"/>
+                <constraint firstItem="jeT-ka-9RO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="u1B-pK-Mvd" userLabel="Image touches left"/>
+                <constraint firstItem="jeT-ka-9RO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uae-fa-4ye" userLabel="Image touches top"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Hb1-d4-3Ul"/>
+                    <exclude reference="CxZ-y1-pT7"/>
+                    <exclude reference="RgO-qR-aNo"/>
+                    <exclude reference="dkd-Wp-cQX"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="constraints">
+                    <exclude reference="39S-N1-8Se"/>
+                    <include reference="Hb1-d4-3Ul"/>
+                    <exclude reference="9PZ-5u-hdM"/>
+                    <include reference="CxZ-y1-pT7"/>
+                    <include reference="RgO-qR-aNo"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=regular">
+                <mask key="constraints">
+                    <include reference="dkd-Wp-cQX"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="backgroundView" destination="o3b-PU-Iiq" id="zJg-Nv-MIT"/>
                 <outlet property="commentsView" destination="M3S-Ff-P9J" id="fmG-NO-Fej"/>
                 <outlet property="commentsViewWidthConstraint" destination="z8g-SS-RN3" id="Qst-cL-eti"/>
                 <outlet property="imageView" destination="jeT-ka-9RO" id="Bvk-r3-IgE"/>
+                <outlet property="imageViewHeightConstraint" destination="QCH-SI-ArM" id="Jvi-9o-4GM"/>
+                <outletCollection property="gestureRecognizers" destination="dAp-2m-utc" appends="YES" id="tg1-uo-FnZ"/>
             </connections>
-            <point key="canvasLocation" x="47.5" y="-41.5"/>
+            <point key="canvasLocation" x="96" y="-41.5"/>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="dAp-2m-utc">
+            <connections>
+                <action selector="handlePanGesture:" destination="iN0-l3-epB" id="1x3-pK-j6Z"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>

@@ -23,7 +23,6 @@ class MediaItemViewPresentationController: UIPresentationController {
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         setupDimmingView()
-        setupSizeClasses()
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
@@ -76,13 +75,6 @@ extension MediaItemViewPresentationController {
     
     dynamic func handleTap(recognizer: UITapGestureRecognizer) {
         presentingViewController.dismiss(animated: true)
-    }
-    
-    func setupSizeClasses() {
-        let boundingSize = boundingSizeOfMediaItemViewController()
-        if boundingSize.width < boundingSize.height {
-            overrideTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        }
     }
     
     func calculateFrameOfPresentedViewInContainerView() -> CGRect {

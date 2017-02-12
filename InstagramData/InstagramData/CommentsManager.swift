@@ -65,7 +65,13 @@ public class CommentsManager {
             return captionComment()
         }
         
-        let commentId = commentsList.itemIDsBeforeFirstGap[index-1]
+        let commentId: String
+        if hasCaption {
+            commentId = commentsList.itemIDsBeforeFirstGap[index-1]
+        } else {
+            commentId = commentsList.itemIDsBeforeFirstGap[index]
+        }
+        
         return comment(with: commentId)
     }
     

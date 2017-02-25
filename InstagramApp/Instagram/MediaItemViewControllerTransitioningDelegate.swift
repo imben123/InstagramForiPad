@@ -8,6 +8,10 @@
 
 import UIKit
 
+class PercentDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition {
+    var hasStarted = false
+}
+
 class MediaItemViewControllerTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
     var imageViewToTransision: (()->UIImageView?)? = nil

@@ -30,6 +30,10 @@ func proportionalSize(_ size: CGSize, thatFits constrainingSize: CGSize) -> CGSi
                   height: size.height * ratio)
 }
 
+protocol MediaItemViewDismissalDelegate: class {
+    func handlePanGesture(_ sender: UIPanGestureRecognizer)
+}
+
 class MediaItemView: UIView {
     
     weak var dismissalDelegate: MediaItemViewDismissalDelegate?
@@ -116,10 +120,6 @@ class MediaItemView: UIView {
         return .zero
     }
     
-}
-
-protocol MediaItemViewDismissalDelegate: class {
-    func handlePanGesture(_ sender: UIPanGestureRecognizer)
 }
 
 extension MediaItemView {

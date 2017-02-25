@@ -37,9 +37,18 @@ extension MediaItemViewController: MediaItemViewDismissalDelegate {
             interactor.cancel()
         case .ended:
             interactor.hasStarted = false
-            interactor.percentComplete > percentThreshold
-                ? interactor.finish()
-                : interactor.cancel()
+            if interactor.percentComplete > percentThreshold {
+                interactor.finish()
+            } else {
+                if let displayImage = getDisplayImageFromCache() {
+                    crossDisolveImageView(to: displayImage, duration: 0.2)
+                }
+                
+                // The dispatch is needed so that it doesn't interrupt the image cross-disolve
+                DispatchQueue.main.async {
+                    interactor.cancel()
+                }
+            }
         default:
             break
         }

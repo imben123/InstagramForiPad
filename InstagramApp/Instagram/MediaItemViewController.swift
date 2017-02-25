@@ -10,10 +10,6 @@ import UIKit
 import InstagramData
 import SDWebImage
 
-class PercentDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition {
-    var hasStarted = false
-}
-
 enum MediaItemViewTransitioningDirection {
     case present
     case dismiss

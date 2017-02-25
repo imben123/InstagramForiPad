@@ -140,9 +140,23 @@ extension MediaGridView {
 extension MediaGridView: UICollectionViewDelegateFlowLayout {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.height {
+        if touchingEnd(of: scrollView) {
             mediaGridViewDataSource?.mediaGridViewNeedsMoreMedia(self)
         }
+    }
+    
+    private func touchingEnd(of scrollView: UIScrollView) -> Bool {
+        if flowLayout.scrollDirection == .horizontal {
+            if scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.width {
+                return true
+            }
+        } else {
+            if scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.height {
+                return true
+            }
+        }
+        
+        return false
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

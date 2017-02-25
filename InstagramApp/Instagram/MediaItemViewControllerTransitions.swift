@@ -59,27 +59,22 @@ extension MediaItemViewController {
             
         } else {
             
-            if self.gotFullResolutionImage {
-                self.mediaItemView.backgroundView.alpha = 0
+            if gotFullResolutionImage {
+                mediaItemView.backgroundView.alpha = 0
             }
             
-            let cachedThumbnail = getThumbnailFromCache()!
-            crossDisolveImageView(to: cachedThumbnail, duration: duration)
-            performDismissalAnimation(duration, fromFrame: fromFrame, completion: { (completed) in
-                
-                // Put this back incase the animation was cancelled
-                let displayImage = self.getDisplayImageFromCache()!
-                self.crossDisolveImageView(to: displayImage, duration: 0.2)
-                
-                completion(completed)
-            })
+            if let cachedThumbnail = getThumbnailFromCache() {
+                crossDisolveImageView(to: cachedThumbnail, duration: duration)
+            }
+            
+            performDismissalAnimation(duration, fromFrame: fromFrame, completion: completion)
         }
     }
     
     func crossDisolveImageView(to image: UIImage, duration: TimeInterval) {
         UIView.transition(with: self.mediaItemView.imageView,
                           duration: duration,
-                          options: .transitionCrossDissolve,
+                          options: [.transitionCrossDissolve, .allowAnimatedContent],
                           animations: {
                             self.mediaItemView.image = image
         }, completion: nil)

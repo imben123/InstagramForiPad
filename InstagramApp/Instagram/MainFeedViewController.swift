@@ -38,9 +38,9 @@ class MainFeedViewController: MediaFeedViewController {
     }
 }
 
-extension MainFeedViewController: MediaFeedDataSourceUserActionDelegate {
+extension MainFeedViewController: MediaFeedGridViewDataSourceUserActionDelegate {
     
-    func mediaFeedDataSource(_ sender: MediaFeedDataSource, userPressOwnerOfMediaItem mediaItem: MediaItem) {
+    func mediaGridViewDataSource(_ sender: MediaFeedGridViewDataSource, userPressOwnerOfMediaItem mediaItem: MediaItem) {
         let user = mediaItem.owner
         let viewController = UserMediaFeedViewController(userId: user.id, username: user.username)
         navigationController?.pushViewController(viewController, animated: true)

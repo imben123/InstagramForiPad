@@ -13,7 +13,9 @@ import SDWebImage
 class MediaFeedViewController: UIViewController {
     
     private var mediaFeed: MediaFeed
-    var dataSource: MediaFeedDataSource!
+    var dataSource: MediaFeedGridViewDataSource!
+    var prefetchingDelegate: MediaFeedPrefetchingDelegate!
+
     fileprivate var mediaGridView: MediaGridView!
     fileprivate var statusLabel: UILabel!
     
@@ -50,9 +52,15 @@ class MediaFeedViewController: UIViewController {
         return result
     }
     
-    func createMediaDataSource(for gridView: MediaGridView) -> MediaFeedDataSource {
-        dataSource = MediaFeedDataSource(mediaFeed: mediaFeed, mediaGridView: gridView)
+    func createMediaDataSource(for gridView: MediaGridView) -> MediaFeedGridViewDataSource {
+        
+        dataSource = MediaFeedGridViewDataSource(mediaFeed: mediaFeed, mediaGridView: gridView)
         dataSource.observer = self
+        
+        prefetchingDelegate = MediaGridViewPrefetchingDelegate(mediaGridView: gridView,
+                                                                     dataSource: dataSource)
+        mediaFeed.prefetchingDelegate = prefetchingDelegate
+
         return dataSource
     }
     
@@ -124,9 +132,9 @@ class MediaFeedViewController: UIViewController {
     }
 }
 
-extension MediaFeedViewController: MediaFeedDataSourceObserver {
+extension MediaFeedViewController: MediaFeedGridViewDataSourceObserver {
     
-    func mediaFeedDataSource(_ sender: MediaFeedDataSource, mediaFeedUpdated itemCount: Int) {
+    func mediaGridViewDataSource(_ sender: MediaFeedGridViewDataSource, mediaFeedUpdated itemCount: Int) {
         
         if itemCount == 0 {
             statusLabel.text = "No media to display"

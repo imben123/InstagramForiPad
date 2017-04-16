@@ -46,8 +46,7 @@ class MediaItemView: UIView {
     
     var mediaItem: MediaItem? {
         didSet {
-            if let newValue = mediaItem {
-                commentsView.setComments(newValue)
+            if mediaItem != nil {
                 updateImageViewHeightConstraint()
             }
         }

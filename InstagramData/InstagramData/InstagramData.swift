@@ -13,7 +13,7 @@ import RealmSwift
 fileprivate class MediaDataStoreObserverDistribution: NSObject, MediaDataStoreObserver {
     
     func mediaDataStore(_ sender: MediaDataStore, didArchiveNewMedia newMedia: [MediaItem]) {
-        InstagramData.shared.feedManager.mediaDataStore(sender, didArchiveNewMedia: newMedia)
+        InstagramData.shared.userFeedMediaFeed.mediaDataStore(sender, didArchiveNewMedia: newMedia)
     }
     
 }
@@ -27,7 +27,7 @@ public class InstagramData {
     private let mediaDataStore: MediaDataStore
     
     public let authManager: AuthManager
-    public let feedManager: FeedManager
+    public let userFeedMediaFeed: FeedManager
     public let likeReqestsManager: LikeReqestsManager
     public let mediaManager: MediaManager
     
@@ -36,7 +36,7 @@ public class InstagramData {
         mediaDataStoreObserver = MediaDataStoreObserverDistribution()
         mediaDataStore = MediaDataStore()
         authManager = AuthManager(communicator: communicator)
-        feedManager = FeedManager(communicator: communicator, mediaDataStore: mediaDataStore)
+        userFeedMediaFeed = FeedManager(communicator: communicator, mediaDataStore: mediaDataStore)
         likeReqestsManager = LikeReqestsManager(communicator: communicator, mediaDataStore: mediaDataStore)
         mediaManager = MediaManager(communicator: communicator, mediaDataStore: mediaDataStore)
         
@@ -45,6 +45,10 @@ public class InstagramData {
     
     public func createCommentsManager(for mediaItem: MediaItem) -> CommentsManager {
         return CommentsManager(mediaItem: mediaItem, communicator: communicator)
+    }
+    
+    public func createUserProfileMediaFeed(for userId: String) -> UserProfileMediaFeed {
+        return UserProfileMediaFeed(userId: userId, communicator: communicator, mediaDataStore: mediaDataStore)
     }
     
     public func logout() {

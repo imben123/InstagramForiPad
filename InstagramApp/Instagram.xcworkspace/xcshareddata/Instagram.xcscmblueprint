@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "341B6BAB2E455C8A1A11E8DC0E402C37743B9AA5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "341B6BAB2E455C8A1A11E8DC0E402C37743B9AA5" : 9223372036854775807,
+    "BE50E385BCC66CBA3CD4F2CD1B852546D25416F0" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5DA4033C-31F9-48D3-B1B7-CAB3B2DC4D64",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "341B6BAB2E455C8A1A11E8DC0E402C37743B9AA5" : "Instagram\/",
+    "BE50E385BCC66CBA3CD4F2CD1B852546D25416F0" : "Instagram\/Submodules\/SwiftToolbox\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Instagram",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "InstagramApp\/Instagram.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:imben123\/InstagramForiPad.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "341B6BAB2E455C8A1A11E8DC0E402C37743B9AA5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:imben123\/SwiftToolbox.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BE50E385BCC66CBA3CD4F2CD1B852546D25416F0"
+    }
+  ]
+}

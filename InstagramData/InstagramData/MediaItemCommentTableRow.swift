@@ -29,7 +29,7 @@ extension MediaItemCommentTableRow {
         
         self.id = mediaItem.id
         self.text = mediaItem.text
-        self.userId = mediaItem.text
+        self.userId = mediaItem.userId
         self.userName = mediaItem.userName
         self.profilePicture = mediaItem.profilePicture.absoluteString
     }

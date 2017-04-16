@@ -9,17 +9,22 @@
 import UIKit
 import InstagramData
 
+protocol MediaCommentsViewDelegate {
+    
+    func commentsView(_ sender: MediaCommentsView, tableViewNeedsDataSource tableView: UITableView)
+}
+
 class MediaCommentsView: UIVisualEffectView {
     
+    var delegate: MediaCommentsViewDelegate?
+    
     fileprivate var tableView: UITableView?
-    private let dataSource: MediaCommentsViewDataSource
     
     fileprivate struct Constants {
         static let minCellHeight: CGFloat = 48
     }
     
     required init?(coder aDecoder: NSCoder) {
-        dataSource = MediaCommentsViewDataSource()
         super.init(coder: aDecoder)
     }
     
@@ -30,28 +35,23 @@ class MediaCommentsView: UIVisualEffectView {
     
     func setComments(_ mediaItem: MediaItem) {
         
-        dataSource.setComments(mediaItem)
-        createTableViewIfNeeded(mediaItem)
-    }
-    
-    private func createTableViewIfNeeded(_ mediaItem: MediaItem) {
         if tableView == nil {
-            
-            tableView = UITableView(frame: .zero, style: .plain)
-            let nib = UINib(nibName: "MediaCommentsViewCell", bundle: nil)
-            tableView!.register(nib, forCellReuseIdentifier: MediaCommentsViewDataSource.cellReuseIdentifier)
-            tableView!.delegate = dataSource
-            tableView!.dataSource = dataSource
-            tableView!.rowHeight = UITableViewAutomaticDimension
-            tableView!.estimatedRowHeight = 140
-            tableView!.tableFooterView = UIView()
-            tableView!.backgroundColor = .clear
-            contentView.addSubview(tableView!)
-            
+            createTableView()
         } else {
-            
             tableView!.reloadData()
         }
+    }
+    
+    private func createTableView() {
+        tableView = UITableView(frame: .zero, style: .plain)
+        let nib = UINib(nibName: "MediaCommentsViewCell", bundle: nil)
+        tableView!.register(nib, forCellReuseIdentifier: MediaCommentsViewDataSource.cellReuseIdentifier)
+        delegate?.commentsView(self, tableViewNeedsDataSource: tableView!)
+        tableView!.rowHeight = UITableViewAutomaticDimension
+        tableView!.estimatedRowHeight = 140
+        tableView!.tableFooterView = UIView()
+        tableView!.backgroundColor = .clear
+        contentView.addSubview(tableView!)
     }
 }
 
@@ -60,6 +60,8 @@ class MediaCommentsViewCell: UITableViewCell {
     @IBOutlet var profilePicture: UIImageView!
     @IBOutlet var label: UILabel!
     
+    var onProfilePictureTapped: (()->Void)?
+    
     var profilePictureURL: URL?
     
     override func layoutSubviews() {
@@ -67,6 +69,18 @@ class MediaCommentsViewCell: UITableViewCell {
         profilePicture.layer.cornerRadius = profilePicture.width * 0.5
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profilePicture.image = nil
+        label.text = nil
+        onProfilePictureTapped = nil
+    }
+    
+    @IBAction func profilePictureTapped(_ sender: UIButton) {
+        if let onProfilePictureTapped = onProfilePictureTapped {
+            onProfilePictureTapped()
+        }
+    }
 }
 
 class MediaCommentsViewLoadMoreCommentsCell: UITableViewCell {

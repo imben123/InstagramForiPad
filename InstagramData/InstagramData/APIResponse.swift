@@ -36,7 +36,7 @@ struct APIResponse: Equatable {
 extension APIResponse: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        return "APIResponse; code: \(responseCode); body: \(responseBody)"
+        return "APIResponse; code: \(responseCode); body: \(String(describing: responseBody))"
     }
     
 }

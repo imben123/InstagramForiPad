@@ -11,7 +11,6 @@ import Foundation
 class CommentsList: GappedList {
     
     private let commentDataStore: CommentsDataStore
-    private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.CommentsListQueue")
     
     init(name: String, commentDataStore: CommentsDataStore, listDataStore: GappedListDataStore) {
         self.commentDataStore = commentDataStore
@@ -23,21 +22,17 @@ class CommentsList: GappedList {
     }
     
     func appendMoreComments(_ newComments: [MediaItemComment], from startCursor: String, to newEndCursor: String?) {
-        lockQueue.sync() {
-            if indexOfGap(withCursor: startCursor) != nil {
-                commentDataStore.archiveComments(newComments)
-            }
+        if indexOfGap(withCursor: startCursor) != nil {
+            commentDataStore.archiveComments(newComments)
         }
         
-        let newCommentsIds: [String] = newComments.map({ $0.id }).reversed()
+        let newCommentsIds: [String] = newComments.map({ $0.id })
         super.appendMoreItems(newCommentsIds, from: startCursor, to: newEndCursor)
     }
     
     func addNewComments(_ newComments: [MediaItemComment], with newEndCursor: String?) {
-        lockQueue.sync() {
-            commentDataStore.archiveComments(newComments)
-        }
-        let newCommentsIds: [String] = newComments.map({ $0.id }).reversed()
+        commentDataStore.archiveComments(newComments)
+        let newCommentsIds: [String] = newComments.map({ $0.id })
         super.addNewItems(newCommentsIds, with: newEndCursor)
     }
 }

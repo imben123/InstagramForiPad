@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let rootViewController: UIViewController
         if InstagramData.shared.authManager.authenticated {
-            rootViewController = FeedViewController()
+            rootViewController = MainFeedViewController()
         } else {
             rootViewController = LoginViewController()
         }

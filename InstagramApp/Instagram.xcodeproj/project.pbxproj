@@ -20,7 +20,7 @@
 		B53693251E143F6C000246A7 /* SwiftToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B53693241E143F6C000246A7 /* SwiftToolbox.framework */; };
 		B53693261E143F6C000246A7 /* SwiftToolbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B53693241E143F6C000246A7 /* SwiftToolbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932A1E148BC6000246A7 /* MediaGridView.swift */; };
-		B536932D1E148BCE000246A7 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932C1E148BCE000246A7 /* FeedViewController.swift */; };
+		B536932D1E148BCE000246A7 /* MediaFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932C1E148BCE000246A7 /* MediaFeedViewController.swift */; };
 		B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */; };
 		B53693381E155645000246A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693371E155645000246A7 /* LoginViewController.swift */; };
 		B546DE061E1DC078002F889D /* heart-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE011E1DC078002F889D /* heart-white.png */; };
@@ -30,6 +30,7 @@
 		B546DE0A1E1DC078002F889D /* heart-black.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE051E1DC078002F889D /* heart-black.png */; };
 		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
 		B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */; };
+		B574ADF41E68D85F009080F6 /* UserMediaFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574ADF31E68D85F009080F6 /* UserMediaFeedViewController.swift */; };
 		B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */; };
 		B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */; };
 		B5B097B91E4F6F69003250BE /* MediaItemViewControllerTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */; };
@@ -37,7 +38,8 @@
 		B5B53D301E3E45D400620238 /* MediaItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */; };
 		B5B53D321E3E460D00620238 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B53D311E3E460D00620238 /* MediaItemView.swift */; };
 		B5B53D341E3E466500620238 /* MediaItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5B53D331E3E466500620238 /* MediaItemView.xib */; };
-		B5BEC8F91E17CC51000C3870 /* InstagramFeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8F81E17CC51000C3870 /* InstagramFeedDataSource.swift */; };
+		B5BEC8F91E17CC51000C3870 /* MediaFeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8F81E17CC51000C3870 /* MediaFeedDataSource.swift */; };
+		B5EB5E391E632ACC001E44AA /* MainFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EB5E381E632ACC001E44AA /* MainFeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +104,7 @@
 		B53693061E143ED6000246A7 /* InstagramData.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = InstagramData.xcodeproj; path = ../InstagramData/InstagramData.xcodeproj; sourceTree = "<group>"; };
 		B53693241E143F6C000246A7 /* SwiftToolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftToolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B536932A1E148BC6000246A7 /* MediaGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridView.swift; sourceTree = "<group>"; };
-		B536932C1E148BCE000246A7 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		B536932C1E148BCE000246A7 /* MediaFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaFeedViewController.swift; sourceTree = "<group>"; };
 		B536932E1E1492D3000246A7 /* MediaGridViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaGridViewCell.swift; sourceTree = "<group>"; };
 		B53693371E155645000246A7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B546DE011E1DC078002F889D /* heart-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-white.png"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 		B546DE051E1DC078002F889D /* heart-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-black.png"; sourceTree = "<group>"; };
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaGridViewCell.xib; sourceTree = "<group>"; };
+		B574ADF31E68D85F009080F6 /* UserMediaFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMediaFeedViewController.swift; sourceTree = "<group>"; };
 		B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCommentsViewDataSource.swift; sourceTree = "<group>"; };
 		B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerTransitioningDelegate.swift; sourceTree = "<group>"; };
 		B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerTransitions.swift; sourceTree = "<group>"; };
@@ -119,7 +122,8 @@
 		B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewController.swift; sourceTree = "<group>"; };
 		B5B53D311E3E460D00620238 /* MediaItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
 		B5B53D331E3E466500620238 /* MediaItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaItemView.xib; sourceTree = "<group>"; };
-		B5BEC8F81E17CC51000C3870 /* InstagramFeedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramFeedDataSource.swift; sourceTree = "<group>"; };
+		B5BEC8F81E17CC51000C3870 /* MediaFeedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaFeedDataSource.swift; sourceTree = "<group>"; };
+		B5EB5E381E632ACC001E44AA /* MainFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */,
+				B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */,
+				B5B097BA1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift */,
 				B51D5C871E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift */,
 				B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */,
 			);
@@ -236,8 +242,10 @@
 		B5B53D2B1E3E458700620238 /* Feed view controller */ = {
 			isa = PBXGroup;
 			children = (
-				B536932C1E148BCE000246A7 /* FeedViewController.swift */,
-				B5BEC8F81E17CC51000C3870 /* InstagramFeedDataSource.swift */,
+				B536932C1E148BCE000246A7 /* MediaFeedViewController.swift */,
+				B5BEC8F81E17CC51000C3870 /* MediaFeedDataSource.swift */,
+				B5EB5E381E632ACC001E44AA /* MainFeedViewController.swift */,
+				B574ADF31E68D85F009080F6 /* UserMediaFeedViewController.swift */,
 			);
 			name = "Feed view controller";
 			sourceTree = "<group>";
@@ -254,8 +262,6 @@
 			isa = PBXGroup;
 			children = (
 				B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */,
-				B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */,
-				B5B097BA1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift */,
 				B5B097B61E4F6C3E003250BE /* Custom transition */,
 				B5B097B71E4F6DF3003250BE /* View */,
 			);
@@ -431,12 +437,14 @@
 			files = (
 				B51D5C851E4286E700EE44BD /* MediaItemViewPresentationController.swift in Sources */,
 				B5B097BB1E4F7048003250BE /* MediaItemViewControllerInteractiveDismissal.swift in Sources */,
-				B536932D1E148BCE000246A7 /* FeedViewController.swift in Sources */,
+				B536932D1E148BCE000246A7 /* MediaFeedViewController.swift in Sources */,
+				B5EB5E391E632ACC001E44AA /* MainFeedViewController.swift in Sources */,
+				B574ADF41E68D85F009080F6 /* UserMediaFeedViewController.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
 				B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */,
 				B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */,
 				B51D5C8A1E429FE400EE44BD /* MediaCommentsView.swift in Sources */,
-				B5BEC8F91E17CC51000C3870 /* InstagramFeedDataSource.swift in Sources */,
+				B5BEC8F91E17CC51000C3870 /* MediaFeedDataSource.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,
 				B54EBEA51E16711C001BB53C /* Styles.swift in Sources */,
 				B5B53D321E3E460D00620238 /* MediaItemView.swift in Sources */,

@@ -50,8 +50,10 @@ extension GappedListItemTableRow {
 
 extension GappedListItem {
     init(_ mediaListItemTableRow: GappedListItemTableRow) {
-        id = mediaListItemTableRow.id
-        isGap = mediaListItemTableRow.isGap
-        gapCursor = mediaListItemTableRow.gapCursor
+        if mediaListItemTableRow.isGap {
+            self = .gap(gapCursor: mediaListItemTableRow.gapCursor)
+        } else {
+            self = .item(id: mediaListItemTableRow.id!)
+        }
     }
 }

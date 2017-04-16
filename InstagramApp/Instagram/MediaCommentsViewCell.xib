@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NdX-xc-jsI" id="fPq-Li-NsA">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="52.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc9-j1-fvr">
@@ -34,15 +34,25 @@
                             <constraint firstAttribute="width" constant="32" id="egr-gY-Ff1"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0k-iS-3jr">
+                        <rect key="frame" x="-2" y="-6" width="52" height="52"/>
+                        <connections>
+                            <action selector="profilePictureTapped:" destination="NdX-xc-jsI" eventType="touchUpInside" id="zhh-Ej-HhH"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="fc9-j1-fvr" secondAttribute="bottom" constant="4" id="6Mh-hu-5JU"/>
                     <constraint firstItem="qIg-Vo-8Ng" firstAttribute="leading" secondItem="fPq-Li-NsA" secondAttribute="leading" constant="8" id="73L-qK-Rjs"/>
                     <constraint firstAttribute="trailingMargin" secondItem="fc9-j1-fvr" secondAttribute="trailing" constant="8" id="HMc-Xz-lcn"/>
+                    <constraint firstItem="e0k-iS-3jr" firstAttribute="centerY" secondItem="qIg-Vo-8Ng" secondAttribute="centerY" id="PdW-HT-e9w"/>
+                    <constraint firstItem="e0k-iS-3jr" firstAttribute="centerX" secondItem="qIg-Vo-8Ng" secondAttribute="centerX" id="QVq-3F-yrd"/>
                     <constraint firstItem="qIg-Vo-8Ng" firstAttribute="baseline" secondItem="fc9-j1-fvr" secondAttribute="firstBaseline" constant="8.5" id="bO2-s0-azC"/>
+                    <constraint firstItem="e0k-iS-3jr" firstAttribute="width" secondItem="qIg-Vo-8Ng" secondAttribute="width" constant="20" id="bUk-a5-o5X"/>
                     <constraint firstItem="fc9-j1-fvr" firstAttribute="top" secondItem="fPq-Li-NsA" secondAttribute="topMargin" constant="4" id="mPK-hT-rq4"/>
                     <constraint firstItem="fc9-j1-fvr" firstAttribute="leading" secondItem="qIg-Vo-8Ng" secondAttribute="trailing" constant="8" id="o28-Qk-CAi"/>
+                    <constraint firstItem="e0k-iS-3jr" firstAttribute="height" secondItem="qIg-Vo-8Ng" secondAttribute="height" constant="20" id="yGb-KH-WWS"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

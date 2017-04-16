@@ -51,7 +51,7 @@ public struct MediaItem: Equatable {
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
         commentsStartCursor = json["comments"]["page_info"]["start_cursor"].string
-        comments = json["comments"]["nodes"].arrayValue.map({ (json) -> MediaItemComment in
+        comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
             return MediaItemComment(jsonDictionary: json)
         })
         likesCount = json["likes"]["count"].intValue
@@ -78,7 +78,7 @@ public struct MediaItem: Equatable {
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
         commentsStartCursor = json["comments"]["page_info"]["start_cursor"].string
-        comments = json["comments"]["nodes"].arrayValue.map({ (json) -> MediaItemComment in
+        comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
             return MediaItemComment(jsonDictionary: json)
         })
         likesCount = json["likes"]["count"].intValue
@@ -105,7 +105,7 @@ public struct MediaItem: Equatable {
         self.commentsDisabled = json["comments_disabled"].boolValue
         self.commentsCount = json["comments"]["count"].intValue
         self.commentsStartCursor = json["comments"]["start_cursor"].string
-        self.comments = json["comments"]["nodes"].arrayValue.map({ (json) -> MediaItemComment in
+        self.comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
             return MediaItemComment(jsonDictionary: json)
         })
         self.likesCount = json["likes"]["count"].intValue

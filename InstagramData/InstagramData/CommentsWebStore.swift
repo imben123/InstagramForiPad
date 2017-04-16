@@ -12,7 +12,7 @@ import SwiftyJSON
 class CommentsWebStore {
     
     let communicator: APICommunicator
-    var numberOfPostsToFetch = 20
+    var numberOfPostsToFetch = 10
     
     init(communicator: APICommunicator) {
         self.communicator = communicator
@@ -52,7 +52,7 @@ class CommentsWebStore {
         
         var result: [MediaItemComment] = []
 
-        let commentsDictionaries = json["comments"]["nodes"].arrayValue
+        let commentsDictionaries = json["comments"]["nodes"].arrayValue.reversed()
         for commentDictionary in commentsDictionaries {
             let comment = MediaItemComment(jsonDictionary: commentDictionary)
             result.append(comment)

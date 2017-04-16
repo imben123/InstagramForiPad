@@ -14,11 +14,17 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
 
     static let cellReuseIdentifier: String = "MediaCommentsViewCell"
 
+    var onProfilePictureTapped: ( (_ userId: String, _ username: String) -> (()->Void)? )?
+    
     fileprivate var commentsManager: CommentsManager!
     fileprivate var mediaItem: MediaItem!
     
     fileprivate var numberOfAvailableComments: Int {
         return commentsManager.numberOfAvailableComments
+    }
+    
+    private var shouldShowLoadMoreComments: Bool {
+        return numberOfAvailableComments < mediaItem.commentsCount
     }
     
     func setComments(_ mediaItem: MediaItem) {
@@ -32,33 +38,76 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if numberOfAvailableComments < mediaItem.commentsCount {
-            return numberOfAvailableComments + 1
-        } else {
-            return numberOfAvailableComments
+        var result = numberOfAvailableComments
+        if shouldShowLoadMoreComments {
+            result += 1
         }
+        if commentsManager.hasCaption {
+            result += 1
+        }
+        
+        return result
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row < numberOfAvailableComments {
+        if indexPathIsLoadMoreCommentsRow(indexPath) {
             
+            return MediaCommentsViewLoadMoreCommentsCell(style: .default, reuseIdentifier: "Load more cell")
+            
+        } else {
+    
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaCommentsViewDataSource.cellReuseIdentifier,
                                                      for: indexPath) as! MediaCommentsViewCell
             
-            let comment = commentsManager.comment(at: indexPath.row)!
-            setProfilePicture(for: cell, url: comment.profilePicture)
-            cell.label.attributedText = attributedString(comment: comment)
-            
-            if indexPath.row == 0 && mediaItem.caption != nil {
+            let comment: MediaItemComment
+            if indexPathIsCaptionRow(indexPath) {
                 cell.separatorInset = .zero
+                comment = commentsManager.captionComment()!
+            } else {
+                let commentIndex = self.commentIndex(from: indexPath)
+                comment = commentsManager.comment(at: commentIndex)!
             }
             
-            return cell
+            setProfilePicture(for: cell, url: comment.profilePicture)
+            cell.label.attributedText = attributedString(comment: comment)
+            cell.onProfilePictureTapped = self.onProfilePictureTapped?(comment.userId, comment.userName)
             
-        } else {
-            return MediaCommentsViewLoadMoreCommentsCell(style: .default, reuseIdentifier: "Load more cell")
+            return cell
         }
+    }
+    
+    func indexPathIsLoadMoreCommentsRow(_ indexPath: IndexPath) -> Bool {
+        guard shouldShowLoadMoreComments else {
+            return false
+        }
+        
+        if commentsManager.hasCaption {
+            return indexPath.row == 1
+        } else {
+            return indexPath.row == 0
+        }
+    }
+    
+    func indexPathIsCaptionRow(_ indexPath: IndexPath) -> Bool {
+        guard commentsManager.hasCaption else {
+            return false
+        }
+        return indexPath.row == 0
+    }
+    
+    func commentIndex(from indexPath: IndexPath) -> Int {
+        var row = indexPath.row
+        
+        if shouldShowLoadMoreComments {
+            row -= 1
+        }
+        
+        if commentsManager.hasCaption {
+            row -= 1
+        }
+        
+        return (numberOfAvailableComments - 1) - row
     }
     
     func setProfilePicture(for cell: MediaCommentsViewCell, url: URL) {
@@ -91,7 +140,7 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.selectRow(at: nil, animated: false, scrollPosition: .none)
-        if indexPath.row == numberOfAvailableComments {
+        if indexPathIsLoadMoreCommentsRow(indexPath) {
             commentsManager.fetchMoreComments({ 
                 tableView.reloadData()
             })

@@ -33,15 +33,13 @@ class LoginViewController: UIViewController {
     
     class func createEmailField() -> UITextField {
         let result = createTextField()
-        result.keyboardType = .emailAddress
-        result.placeholder = "email"
+        result.placeholder = "username"
         return result
     }
     
     class func createPasswordField() -> UITextField {
         let result = createTextField()
         result.isSecureTextEntry = true
-        result.keyboardType = .default
         result.placeholder = "password"
         return result
     }
@@ -102,7 +100,7 @@ class LoginViewController: UIViewController {
             password: self.passwordField.text!,
             completion: { [weak self] in
                 self?.setInteractionEnabled(true)
-                self?.navigationController?.setViewControllers([FeedViewController()], animated: true)
+                self?.navigationController?.setViewControllers([MainFeedViewController()], animated: true)
             }, failure:  { [weak self] in
                 self?.setInteractionEnabled(true)
                 self?.showAlert(withTitle: "Login Failed", message: "Please try again")

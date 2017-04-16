@@ -18,11 +18,14 @@ enum MediaItemViewTransitioningDirection {
 class MediaItemViewController: UIViewController {
     
     var dismissalInteractionController: PercentDrivenInteractiveTransition?
-
+    var onProfilePictureTapped: ((_ userId: String, _ username: String)->Void)?
+    
     let mediaItem: MediaItem
 
     var mediaItemView: MediaItemView!
     var gotFullResolutionImage = false
+    
+    fileprivate let commentsDataSource = MediaCommentsViewDataSource()
     
     init(mediaItem: MediaItem, dismissalInteractionController: PercentDrivenInteractiveTransition?) {
         self.dismissalInteractionController = dismissalInteractionController
@@ -39,7 +42,10 @@ class MediaItemViewController: UIViewController {
         
         let nib = Bundle.main.loadNibNamed("MediaItemView", owner: nil, options: [:])!
         mediaItemView = nib.first as! MediaItemView
+        mediaItemView.commentsView.delegate = self
         mediaItemView.mediaItem = mediaItem
+        commentsDataSource.setComments(mediaItem)
+        mediaItemView.commentsView.setComments(mediaItem)
         mediaItemView.dismissalDelegate = self
         view = mediaItemView
     }
@@ -65,6 +71,20 @@ class MediaItemViewController: UIViewController {
         return mediaItemView.sizeThatFits(boundingSize)
     }
     
+}
+
+extension MediaItemViewController: MediaCommentsViewDelegate {
+    
+    func commentsView(_ sender: MediaCommentsView, tableViewNeedsDataSource tableView: UITableView) {
+        
+        commentsDataSource.onProfilePictureTapped = { [weak self] (userId, username) in
+            return {
+                self?.onProfilePictureTapped?(userId, username)
+            }
+        }
+        tableView.delegate = commentsDataSource
+        tableView.dataSource = commentsDataSource
+    }
 }
 
 extension MediaItemViewController {

@@ -8,28 +8,6 @@
 
 import Foundation
 
-public struct GappedListItem: Equatable {
-    public let id: String?
-    public let isGap: Bool
-    public let gapCursor: String?
-    
-    public static func ==(_ lhs: GappedListItem, rhs: GappedListItem) -> Bool {
-        return (lhs.id == rhs.id && lhs.isGap == rhs.isGap && lhs.gapCursor == rhs.gapCursor)
-    }
-    
-    init(id: String) {
-        self.id = id
-        self.isGap = false
-        self.gapCursor = nil
-    }
-    
-    init(gapCursor: String?) {
-        self.id = nil
-        self.isGap = true
-        self.gapCursor = gapCursor
-    }
-}
-
 class GappedList {
     
     private let name: String
@@ -74,7 +52,7 @@ class GappedList {
     
     private func calculatelistItemsBeforeFirstGap() -> [GappedListItem] {
         guard let firstGap = listItems.filter({ $0.isGap }).first else {
-            return []
+            return listItems
         }
         let gapIndex = listItems.index(of: firstGap)!
         return Array(listItems[0..<gapIndex])
@@ -123,7 +101,11 @@ class GappedList {
                 let indexOfOverlap = itemIds.index(of: firstOlderItem.id!) {
                 listItemsToAdd = itemIds[0..<indexOfOverlap].map(createGappedListItem)
             } else {
-                listItemsToAdd = itemIds.map(createGappedListItem) + [GappedListItem(gapCursor: newEndCursor)]
+                if let newEndCursor = newEndCursor {
+                    listItemsToAdd = itemIds.map(createGappedListItem) + [.gap(gapCursor: newEndCursor)]
+                } else {
+                    listItemsToAdd = itemIds.map(createGappedListItem)
+                }
             }
             
             privateListItems = newerItems + listItemsToAdd + olderItems
@@ -133,18 +115,24 @@ class GappedList {
     }
     
     private func createGappedListItem(from itemId: String) -> GappedListItem {
-        return GappedListItem(id: itemId)
+        return .item(id: itemId)
     }
     
     func addNewItems(_ itemIds: [String], with newEndCursor: String?) {
         lockQueue.sync() {
             
-            if newEndCursor == nil {
-                privateListItems = []
+            guard itemIds.count > 0 else {
+                return
+            }
+            
+            guard let newEndCursor = newEndCursor else {
+                privateListItems = itemIds.map(createGappedListItem)
+                listDataStore.saveItemList(privateListItems, with: name)
+                return
             }
             
             guard let currentHead = privateListItems.first else {
-                privateListItems = itemIds.map(createGappedListItem) + [ GappedListItem(gapCursor: newEndCursor) ]
+                privateListItems = itemIds.map(createGappedListItem) + [ .gap(gapCursor: newEndCursor) ]
                 listDataStore.saveItemList(privateListItems, with: name)
                 return
             }
@@ -160,7 +148,7 @@ class GappedList {
             }
             
             if !foundMatch {
-                result.append(GappedListItem(gapCursor: newEndCursor))
+                result.append(.gap(gapCursor: newEndCursor))
             }
             result.append(contentsOf: listItems)
             

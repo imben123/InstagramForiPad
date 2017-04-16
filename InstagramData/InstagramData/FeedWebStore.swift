@@ -12,9 +12,9 @@ import SwiftToolbox
 
 class FeedWebStore: MediaListWebStore {
     
-    let communicator: APICommunicator
-    let taskDispatcher: TaskDispatcher
-    var numberOfPostsToFetch = 30
+    private let communicator: APICommunicator
+    private let taskDispatcher: TaskDispatcher
+    var numberOfPostsToFetch = 50
     
     convenience init(communicator: APICommunicator) {
         let taskDispatcher = TaskDispatcher(queue: DispatchQueue(label: "FeedWebStore.queue"))
@@ -63,23 +63,6 @@ class FeedWebStore: MediaListWebStore {
                 
                 self.taskDispatcher.asyncOnMainQueue {
                     completion?(newMedia, newEndCursor)
-                }
-            } else {
-                self.taskDispatcher.asyncOnMainQueue {
-                    failure?()
-                }
-            }
-        }
-    }
-    
-    func fetchUpdatedMediaItem(for code: String, completion: @escaping (MediaItem)->(), failure: (()->())?) {
-        taskDispatcher.async {
-            let response = self.communicator.getPost(with: code)
-            if response.succeeded {
-                let mediaDictionary = response.responseBody!["media"] as! [String: Any]
-                let mediaItem = MediaItem(jsonDictionary: mediaDictionary)
-                self.taskDispatcher.asyncOnMainQueue {
-                    completion(mediaItem)
                 }
             } else {
                 self.taskDispatcher.asyncOnMainQueue {

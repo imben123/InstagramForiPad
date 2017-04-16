@@ -1,5 +1,5 @@
 //
-//  FeedManagerTests.swift
+//  MediaFeedTests.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 30/12/2016.
@@ -10,7 +10,7 @@ import XCTest
 @testable import InstagramData
 import SwiftToolbox
 
-class FeedManagerTestsExamples: ResourceLoader {
+class MediaFeedTestsExamples: ResourceLoader {
     
     static let rawFeedJson: [String:Any] = getObject(with: "Feed.json")
     static let rawFeedPage2Json: [String:Any] = getObject(with: "FeedPage2.json")
@@ -33,9 +33,9 @@ class FeedManagerTestsExamples: ResourceLoader {
     
 }
 
-class FeedManagerTests: XCTestCase {
+class MediaFeedTests: XCTestCase {
     
-    var sut: FeedManager!
+    var sut: MediaFeed!
     var mockTaskDispatcher: MockTaskDispatcher!
     var mockCommunicator: MockAPICommunicator!
     var feedWebStore: FeedWebStore!
@@ -54,10 +54,10 @@ class FeedManagerTests: XCTestCase {
         mockMediaDataStore = MockMediaDataStore()
         mockGappedListDataStore = MockGappedListDataStore()
         mediaList = ScrollingMediaList(name: "feed",
-                                       pageSize: 50,
                                        mediaDataStore: mockMediaDataStore,
                                        listDataStore: mockGappedListDataStore)
-        sut = FeedManager(feedWebStore: feedWebStore, mediaList: mediaList, mediaDataStore: mockMediaDataStore)
+        
+        sut = MediaFeed(mediaList: mediaList, feedWebStore: feedWebStore)
     }
     
     func testMediaIsEmptyOnCreate() {
@@ -68,7 +68,7 @@ class FeedManagerTests: XCTestCase {
     func testFetchMoreMediaCompletionCalledOnSuccess() {
         
         // Given
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         let expectation = self.expectation(description: "Completion/Failure called")
@@ -115,7 +115,7 @@ class FeedManagerTests: XCTestCase {
     func testMediaAddedAfterFetch() {
         
         // Given
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         let expectation = self.expectation(description: "Completion called")
@@ -134,7 +134,7 @@ class FeedManagerTests: XCTestCase {
     func testCallingFetchManyTimesDoesntCauseDuplicates() {
         
         // Given
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         let expectation1 = self.expectation(description: "Completion 1 called")
         sut.fetchNewestMedia({
@@ -164,7 +164,7 @@ class FeedManagerTests: XCTestCase {
     
     func testMoreMediaAddedToEndOfArray() {
         
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         var originalMediaItem: String? = nil
@@ -172,7 +172,7 @@ class FeedManagerTests: XCTestCase {
         sut.fetchNewestMedia({
             XCTAssertEqual(self.sut.mediaCount, 1)
             originalMediaItem = self.sut.mediaIDs.first!
-            self.mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
+            self.mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMoreMediaSuccessResponse
             self.sut.fetchMoreMedia({
                 expectation.fulfill()
             })
@@ -186,7 +186,7 @@ class FeedManagerTests: XCTestCase {
     
     func testNewMediaAddedToBeginningOfArray() {
         
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         var originalMediaItem: String? = nil
@@ -194,7 +194,7 @@ class FeedManagerTests: XCTestCase {
         sut.fetchNewestMedia({
             XCTAssertEqual(self.sut.mediaCount, 1)
             originalMediaItem = self.sut.mediaIDs.first!
-            self.mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchNewMediaWithOverlapSuccessResponse
+            self.mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchNewMediaWithOverlapSuccessResponse
             self.sut.fetchNewestMedia({
                 expectation.fulfill()
             })
@@ -208,7 +208,7 @@ class FeedManagerTests: XCTestCase {
     
     func testOldMediaDroppedIfNewMediaDoesNotOverlapOldMedia() {
         
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         var originalMediaItem: String? = nil
@@ -216,7 +216,7 @@ class FeedManagerTests: XCTestCase {
         sut.fetchNewestMedia({
             XCTAssertEqual(self.sut.mediaCount, 1)
             originalMediaItem = self.sut.mediaIDs.first!
-            self.mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMoreMediaSuccessResponse
+            self.mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMoreMediaSuccessResponse
             self.sut.fetchNewestMedia({
                 expectation.fulfill()
             })
@@ -231,7 +231,7 @@ class FeedManagerTests: XCTestCase {
         
         // Given
         XCTAssertEqual(sut.mediaCount, 0)
-        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
         
         // When
         let expectation = self.expectation(description: "Completion called")
@@ -246,23 +246,23 @@ class FeedManagerTests: XCTestCase {
     
     func testPrefetchingDelegate() {
         
-        class FakePrefetchingDelegate: FeedManagerPrefetchingDelegate {
+        class FakePrefetchingDelegate: MediaFeedPrefetchingDelegate {
             
             var prefetchDelegateMethodCalled = false
-            var prefetchDelegateMethodParam1: FeedManager? = nil
+            var prefetchDelegateMethodParam1: MediaFeed? = nil
             var prefetchDelegateMethodParam2: [MediaItem]? = nil
             
-            func feedManager(_ feedManager: FeedManager, prefetchDataFor mediaItems: [MediaItem]) {
+            func mediaFeed(_ mediaFeed: MediaFeed, prefetchDataFor mediaItems: [MediaItem]) {
                 prefetchDelegateMethodCalled = true
-                prefetchDelegateMethodParam1 = feedManager
+                prefetchDelegateMethodParam1 = mediaFeed
                 prefetchDelegateMethodParam2 = mediaItems
             }
             
-            func feedManager(_ feedManager: FeedManager, removeCachedDataFor mediaItems: [MediaItem]) {
+            func mediaFeed(_ mediaFeed: MediaFeed, removeCachedDataFor mediaItems: [MediaItem]) {
 
             }
             
-            func feedManager(_ feedManager: FeedManager, updatedMediaItems mediaItems: [MediaItem]) {
+            func mediaFeed(_ mediaFeed: MediaFeed, updatedMediaItems mediaItems: [MediaItem]) {
                 
             }
         }
@@ -287,7 +287,7 @@ class FeedManagerTests: XCTestCase {
 //        
 //        // Given
 //        mockTaskDispatcher.forceSynchronous = true
-//        mockCommunicator.testResponse = FeedManagerTestsExamples.exampleFetchMediaSuccessResponse
+//        mockCommunicator.testResponse = MediaFeedTestsExamples.exampleFetchMediaSuccessResponse
 //        sut.fetchMoreMedia(nil)
 //        let exampleUpdateMediaItem = MediaItem(id: "1416818863685651136")
 //        

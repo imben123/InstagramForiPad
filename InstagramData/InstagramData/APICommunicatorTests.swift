@@ -60,6 +60,26 @@ class APICommunicatorTests: XCTestCase {
         XCTAssertEqual(response, expectedResponse)
     }
     
+    func testGetUserFeed() {
+        let response = sut.getUserFeed(userId: "48567354", numberOfPosts: 1, from: nil)
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains(".first(1)"))
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains("48567354"))
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
+    func testGetMoreUserFeed() {
+        let response = sut.getUserFeed(userId: "48567354", numberOfPosts: 1, from: "foobar")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains(".after(foobar,1)"))
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains("48567354"))
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
     func testLikePost() {
         let response = sut.likePost(with: "12345")
         XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)

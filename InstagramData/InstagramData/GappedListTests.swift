@@ -47,10 +47,10 @@ class GappedListTests: XCTestCase {
         let items = exampleIDs(in: 1..<4)
         sut.addNewItems(items, with: endCursor)
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(gapCursor: endCursor)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .gap(gapCursor: endCursor)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
         XCTAssertEqual(sut.firstGapCursor, endCursor)
@@ -63,12 +63,12 @@ class GappedListTests: XCTestCase {
         sut.addNewItems(exampleIDs(in: 1..<4), with: endCursor2)
 
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(id: "4"),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(gapCursor: endCursor1)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .item(id: "4"),
+                                                   .item(id: "5"),
+                                                   .gap(gapCursor: endCursor1)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
         XCTAssertEqual(sut.firstGapCursor, endCursor1)
@@ -91,14 +91,14 @@ class GappedListTests: XCTestCase {
         sut.addNewItems(exampleIDs(in: 5..<8), with: endCursor1)
         sut.addNewItems(exampleIDs(in: 1..<4), with: endCursor2)
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(gapCursor: endCursor2),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(id: "6"),
-                                 GappedListItem(id: "7"),
-                                 GappedListItem(gapCursor: endCursor1)
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .gap(gapCursor: endCursor2),
+                                                   .item(id: "5"),
+                                                   .item(id: "6"),
+                                                   .item(id: "7"),
+                                                   .gap(gapCursor: endCursor1)
         ]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
@@ -111,9 +111,9 @@ class GappedListTests: XCTestCase {
         sut.addNewItems(exampleIDs(in: 5..<8), with: endCursor1)
         sut.addNewItems(exampleIDs(in: 1..<4), with: endCursor2)
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3")]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3")]
         XCTAssertEqual(sut.listItemsBeforeFirstGap, expectedListItems)
     }
     
@@ -125,13 +125,13 @@ class GappedListTests: XCTestCase {
         sut.appendMoreItems(exampleIDs(in: 4..<7), from: endCursor1, to: endCursor2)
         
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(id: "4"),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(id: "6"),
-                                 GappedListItem(gapCursor: endCursor2)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .item(id: "4"),
+                                                   .item(id: "5"),
+                                                   .item(id: "6"),
+                                                   .gap(gapCursor: endCursor2)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
     }
@@ -145,16 +145,16 @@ class GappedListTests: XCTestCase {
         sut.addNewItems(exampleIDs(in: 1..<4), with: endCursor2)
         sut.appendMoreItems(exampleIDs(in: 4..<7), from: endCursor2, to: endCursor3)
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(id: "4"),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(id: "6"),
-                                 GappedListItem(gapCursor: endCursor3),
-                                 GappedListItem(id: "8"),
-                                 GappedListItem(id: "9"),
-                                 GappedListItem(gapCursor: endCursor1)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .item(id: "4"),
+                                                   .item(id: "5"),
+                                                   .item(id: "6"),
+                                                   .gap(gapCursor: endCursor3),
+                                                   .item(id: "8"),
+                                                   .item(id: "9"),
+                                                   .gap(gapCursor: endCursor1)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
         
@@ -169,16 +169,16 @@ class GappedListTests: XCTestCase {
         sut.addNewItems(exampleIDs([1,2,3]), with: endCursor2)
         sut.appendMoreItems(exampleIDs([4,5,6,7,8]), from: endCursor2, to: endCursor3)
         
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(id: "4"),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(id: "6"),
-                                 GappedListItem(id: "7"),
-                                 GappedListItem(id: "8"),
-                                 GappedListItem(id: "9"),
-                                 GappedListItem(gapCursor: endCursor1)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .item(id: "4"),
+                                                   .item(id: "5"),
+                                                   .item(id: "6"),
+                                                   .item(id: "7"),
+                                                   .item(id: "8"),
+                                                   .item(id: "9"),
+                                                   .gap(gapCursor: endCursor1)]
         
         XCTAssertEqual(sut.listItems, expectedListItems)
         
@@ -190,10 +190,10 @@ class GappedListTests: XCTestCase {
         let endCursor = "endCursor"
         
         sut.addNewItems(exampleIDs([1,2,3]), with: endCursor)
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(gapCursor: endCursor)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .gap(gapCursor: endCursor)]
         
         XCTAssertNotNil(mockListDataStore.savedItemList)
         XCTAssertEqual(mockListDataStore.savedItemList!.listItems, expectedListItems)
@@ -206,14 +206,14 @@ class GappedListTests: XCTestCase {
         
         sut.addNewItems(exampleIDs([4,5,6]), with: endCursor2)
         sut.addNewItems(exampleIDs([1,2,3]), with: endCursor1)
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(gapCursor: endCursor1),
-                                 GappedListItem(id: "4"),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(id: "6"),
-                                 GappedListItem(gapCursor: endCursor2)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .gap(gapCursor: endCursor1),
+                                                   .item(id: "4"),
+                                                   .item(id: "5"),
+                                                   .item(id: "6"),
+                                                   .gap(gapCursor: endCursor2)]
         
         XCTAssertNotNil(mockListDataStore.savedItemList)
         XCTAssertEqual(mockListDataStore.savedItemList!.listItems, expectedListItems)
@@ -226,13 +226,13 @@ class GappedListTests: XCTestCase {
         
         sut.addNewItems(exampleIDs([1,2,3]), with: endCursor1)
         sut.appendMoreItems(exampleIDs([4,5,6]), from: endCursor1, to: endCursor2)
-        let expectedListItems = [GappedListItem(id: "1"),
-                                 GappedListItem(id: "2"),
-                                 GappedListItem(id: "3"),
-                                 GappedListItem(id: "4"),
-                                 GappedListItem(id: "5"),
-                                 GappedListItem(id: "6"),
-                                 GappedListItem(gapCursor: endCursor2)]
+        let expectedListItems: [GappedListItem] = [.item(id: "1"),
+                                                   .item(id: "2"),
+                                                   .item(id: "3"),
+                                                   .item(id: "4"),
+                                                   .item(id: "5"),
+                                                   .item(id: "6"),
+                                                   .gap(gapCursor: endCursor2)]
         
         XCTAssertNotNil(mockListDataStore.savedItemList)
         XCTAssertEqual(mockListDataStore.savedItemList!.listItems, expectedListItems)
@@ -272,8 +272,8 @@ class GappedListTests: XCTestCase {
         sut.addNewItems(exampleIDs([4,5,6]), with: endCursor2)
         sut.addNewItems(exampleIDs([1,2,3]), with: endCursor1)
         
-        XCTAssertEqual(sut.listItemsBeforeFirstGap, [GappedListItem(id: "1"),
-                                                     GappedListItem(id: "2"),
-                                                     GappedListItem(id: "3"),])
+        XCTAssertEqual(sut.listItemsBeforeFirstGap, [.item(id: "1"),
+                                                     .item(id: "2"),
+                                                     .item(id: "3"),])
     }
 }

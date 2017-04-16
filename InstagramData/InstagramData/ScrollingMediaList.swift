@@ -49,7 +49,7 @@ class ScrollingMediaList {
         return mediaList.itemCount
     }
     
-    init(name: String, pageSize: Int, mediaDataStore: MediaDataStore, listDataStore: GappedListDataStore) {
+    init(name: String, pageSize: Int = 50, mediaDataStore: MediaDataStore, listDataStore: GappedListDataStore) {
         self.mediaList = MediaList(name: name, mediaDataStore: mediaDataStore, listDataStore: listDataStore)
         self.pageSize = pageSize
     }
@@ -66,9 +66,9 @@ class ScrollingMediaList {
         }
     }
     
-    private func mediaItemFromCache(for id: String) -> MediaItem? {
+    func mediaItemFromCache(for id: String) -> MediaItem? {
         
-        if let index = middlePage.index(where: { $0.id == id }) { // Media most likly to be in middle pages
+        if let index = middlePage.index(where: { $0.id == id }) { // Media most likely to be in middle pages
             
             return middlePage[index]
             
@@ -119,8 +119,9 @@ class ScrollingMediaList {
         } else if firstPage.contains(where: { $0.id == id }) {
             moveBufferDown()
         } else {
-            let index = listItemsBeforeFirstGap.index(where: { $0.id == id })!
-            reloadAllBuffers(around: index)
+            if let index = listItemsBeforeFirstGap.index(where: { $0.id == id }) {
+                reloadAllBuffers(around: index)
+            }
         }
         
         populatingMedia = false

@@ -52,6 +52,23 @@ class APICommunicator {
         return response
     }
     
+    func getUserFeed(userId: String, numberOfPosts: Int, from previousIndex: String? = nil) -> APIResponse {
+        
+        let positionIndicator: String
+        if let previousIndex = previousIndex {
+            positionIndicator = "after(\(previousIndex),\(numberOfPosts))"
+        } else {
+            positionIndicator = "first(\(numberOfPosts))"
+        }
+        
+        let payload = [
+            "q": "ig_user(\(userId)){media.\(positionIndicator){count,nodes{caption,code,comments.last(4){count,nodes{id,created_at,text,user{id,profile_pic_url,username}},page_info},comments_disabled,date,dimensions{height,width},display_src,id,is_video,likes{count},owner{id,blocked_by_viewer,followed_by_viewer,full_name,has_blocked_viewer,is_private,profile_pic_url,requested_by_viewer,username},thumbnail_src,video_views},page_info}}"
+        ]
+        
+        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+        return response
+    }
+    
     func getPost(with code: String) -> APIResponse {
         let response = self.connection.makeRequest(path: "/p/\(code)/?__a=1", payload: nil)
         return response

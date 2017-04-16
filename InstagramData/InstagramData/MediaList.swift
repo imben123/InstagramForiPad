@@ -11,7 +11,6 @@ import Foundation
 class MediaList: GappedList {
     
     private let mediaDataStore: MediaDataStore
-    private let lockQueue = DispatchQueue(label: "uk.co.bendavisapp.MediaListQueue")
 
     init(name: String, mediaDataStore: MediaDataStore, listDataStore: GappedListDataStore) {
         self.mediaDataStore = mediaDataStore
@@ -27,22 +26,22 @@ class MediaList: GappedList {
     }
     
     func appendMoreMedia(_ newMedia: [MediaItem], from startCursor: String, to newEndCursor: String?) {
-        lockQueue.sync() {
-            if indexOfGap(withCursor: startCursor) != nil {
-                mediaDataStore.archiveMedia(newMedia)
-            }
+        if indexOfGap(withCursor: startCursor) != nil {
+            mediaDataStore.archiveMedia(newMedia)
         }
         super.appendMoreItems(newMedia.map() { $0.id }, from: startCursor, to: newEndCursor)
     }
     
     func addNewMedia(_ newMedia: [MediaItem], with newEndCursor: String?) {
-        lockQueue.sync() {
-            if newEndCursor == nil {
-                print("Latest media had no end cursor. Cannot link up with previous cached media so deleting all.")
-                mediaDataStore.deleteAllMedia()
-            }
-            mediaDataStore.archiveMedia(newMedia)
+        
+        guard let newEndCursor = newEndCursor else {
+            print("Latest media had no end cursor. Cannot link up with previous cached media so deleting all.")
+            mediaDataStore.deleteAllMedia()
+            return
         }
+        
+        mediaDataStore.archiveMedia(newMedia)
+        
         super.addNewItems(newMedia.map() { $0.id }, with: newEndCursor)
     }
 }

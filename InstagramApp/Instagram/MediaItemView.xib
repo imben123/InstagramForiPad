@@ -22,11 +22,16 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="jeT-ka-9RO">
                     <rect key="frame" x="0.0" y="0.0" width="744" height="768"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="300" id="QCH-SI-ArM"/>
+                        <constraint firstAttribute="height" constant="300" id="lk2-Cs-GOO"/>
                     </constraints>
-                    <variation key="widthClass=regular">
+                    <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="QCH-SI-ArM"/>
+                            <exclude reference="lk2-Cs-GOO"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="lk2-Cs-GOO"/>
                         </mask>
                     </variation>
                 </imageView>
@@ -95,7 +100,7 @@
                 <outlet property="commentsView" destination="M3S-Ff-P9J" id="fmG-NO-Fej"/>
                 <outlet property="commentsViewWidthConstraint" destination="z8g-SS-RN3" id="Qst-cL-eti"/>
                 <outlet property="imageView" destination="jeT-ka-9RO" id="Bvk-r3-IgE"/>
-                <outlet property="imageViewHeightConstraint" destination="QCH-SI-ArM" id="Jvi-9o-4GM"/>
+                <outlet property="imageViewHeightConstraint" destination="lk2-Cs-GOO" id="ed6-sM-K3F"/>
                 <outletCollection property="gestureRecognizers" destination="dAp-2m-utc" appends="YES" id="tg1-uo-FnZ"/>
             </connections>
             <point key="canvasLocation" x="96" y="-41.5"/>

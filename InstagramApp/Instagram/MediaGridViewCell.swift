@@ -12,12 +12,13 @@ protocol MediaGridViewCellDelegate: class {
     func mediaGridViewCellWillPrepareForReuse(_ mediaGridViewCell: MediaGridViewCell)
 }
 
-protocol MediaGridViewCellLikeDelegate: class {
+protocol MediaGridViewCellUserActionDelegate: class {
     func mediaGridViewCellLikePressed(_ mediaGridViewCell: MediaGridViewCell)
     func mediaGridViewCellUnlikePressed(_ mediaGridViewCell: MediaGridViewCell)
+    func mediaGridViewCellOwnerPressed(_ mediaGridViewCell: MediaGridViewCell)
 }
 
-@IBDesignable class GradientView: UIView {
+class GradientView: UIView {
     
     var gradientLayer = CAGradientLayer()
 
@@ -47,7 +48,7 @@ class MediaGridViewCell: UICollectionViewCell {
     var currentItem: MediaGridViewItem? = nil
     
     weak var delegate: MediaGridViewCellDelegate? = nil
-    weak var likeDelegate: MediaGridViewCellLikeDelegate? = nil
+    weak var userActionDelegate: MediaGridViewCellUserActionDelegate? = nil
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var profilePicture: UIImageView!
@@ -89,10 +90,14 @@ class MediaGridViewCell: UICollectionViewCell {
     @IBAction func likePressed(_ sender: UIButton) {
         liked = !liked
         if liked {
-            likeDelegate?.mediaGridViewCellLikePressed(self)
+            userActionDelegate?.mediaGridViewCellLikePressed(self)
         } else {
-            likeDelegate?.mediaGridViewCellUnlikePressed(self)
+            userActionDelegate?.mediaGridViewCellUnlikePressed(self)
         }
+    }
+    
+    @IBAction func ownerPressed(_ sender: UIButton) {
+        userActionDelegate?.mediaGridViewCellOwnerPressed(self)
     }
     
 }

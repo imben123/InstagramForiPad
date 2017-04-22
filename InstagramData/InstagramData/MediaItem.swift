@@ -58,7 +58,11 @@ public struct MediaItem: Equatable {
         viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
     
-    init(jsonDictionary: [String: Any], original: MediaItem) {
+    init?(jsonDictionary: [String: Any]?, original: MediaItem) {
+        
+        guard let jsonDictionary = jsonDictionary else {
+            return nil
+        }
         
         let json = JSON(jsonDictionary)
         
@@ -72,8 +76,8 @@ public struct MediaItem: Equatable {
         
         caption = json["caption"].string
         
-        display = json["display_src"].URLWithoutEscaping!
-        thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : original.thumbnail
+        display = json["display_src"].URLWithoutEscaping ?? json["display_url"].URLWithoutEscaping!
+        thumbnail = json["thumbnail_src"].URLWithoutEscaping ?? original.thumbnail
         
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue

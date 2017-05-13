@@ -18,9 +18,9 @@ on iPad, and I wanted to build an app with lots of great media for iPad.
 - Like/Unlike pictures
 - View the picture big on your iPad
 - View comments on a picture
+- View a specific users pictures
 
 ## Planned features
-- View a specific users pictures
 - View pictures you have liked
 - Placeholder profile pictures
 - Loading UI when you hit the bottom of the list and more images are being fetched

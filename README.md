@@ -11,7 +11,7 @@ on iPad, and I wanted to build an app with lots of great media for iPad.
 
 ![Demo GIF](/../master/Assets/InstagramDemo.gif?raw=true)
 
-##Current features
+## Current features
 - View you instagram feed
 - Pictures cached on device so works well offline
 - Pre-fetches lots of pictures so scrolling through your feed is seemless
@@ -19,7 +19,7 @@ on iPad, and I wanted to build an app with lots of great media for iPad.
 - View the picture big on your iPad
 - View comments on a picture
 
-##Planned features
+## Planned features
 - View a specific users pictures
 - View pictures you have liked
 - Placeholder profile pictures
@@ -28,7 +28,7 @@ on iPad, and I wanted to build an app with lots of great media for iPad.
 - Location information of a picture
 - Share button to share the picture
 
-##Someday features
+## Someday features
 - View likes on a picture
 - Blur missing edges of images when only the thumbnail has been downloaded
 - Support videos

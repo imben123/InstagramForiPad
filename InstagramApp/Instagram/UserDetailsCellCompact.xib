@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserDetailsCellCompact" id="VMK-RQ-9Tc" customClass="UserDetailsCellCompact" customModule="Instagram" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="475" height="183"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="475" height="183"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hCK-3Z-LML">
+                        <rect key="frame" x="16" y="16" width="150" height="150"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="3m5-SH-8aL"/>
+                            <constraint firstAttribute="height" constant="150" id="eW0-nt-V0M"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="George Davis" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMf-ib-RLb">
+                        <rect key="frame" x="182" y="16" width="277" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Jux-wz-Kci">
+                        <rect key="frame" x="174" y="44" width="277" height="35"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RQ3-Wa-Haq">
+                                <rect key="frame" x="0.0" y="0.0" width="92.5" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="123" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frB-na-0qJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="92.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sfz-h8-bLu">
+                                        <rect key="frame" x="0.0" y="20.5" width="92.5" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6bQ-gG-eAL">
+                                <rect key="frame" x="92.5" y="0.0" width="92" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="456" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGR-R0-GZ8">
+                                        <rect key="frame" x="0.0" y="0.0" width="92" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Cb-15-Oog">
+                                        <rect key="frame" x="0.0" y="20.5" width="92" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9O6-4u-hwP">
+                                <rect key="frame" x="184.5" y="0.0" width="92.5" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="789" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrd-ZW-kKK">
+                                        <rect key="frame" x="0.0" y="0.0" width="92.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfr-cS-EOp">
+                                        <rect key="frame" x="0.0" y="20.5" width="92.5" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56Y-ta-bHG">
+                        <rect key="frame" x="182" y="87" width="261" height="30"/>
+                        <state key="normal" title="Follow"/>
+                    </button>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uz7-pB-4as">
+                        <rect key="frame" x="302" y="92" width="20" height="20"/>
+                    </activityIndicatorView>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yA-rA-C5Y">
+                        <rect key="frame" x="174" y="121" width="277" height="54"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                    </textView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="56Y-ta-bHG" firstAttribute="top" secondItem="Jux-wz-Kci" secondAttribute="bottom" constant="8" id="0fc-aT-PQP"/>
+                <constraint firstItem="8yA-rA-C5Y" firstAttribute="width" secondItem="Jux-wz-Kci" secondAttribute="width" id="2M6-Xb-G52"/>
+                <constraint firstItem="56Y-ta-bHG" firstAttribute="width" secondItem="Jux-wz-Kci" secondAttribute="width" constant="-16" id="CoW-mc-MuX"/>
+                <constraint firstItem="uz7-pB-4as" firstAttribute="centerX" secondItem="56Y-ta-bHG" secondAttribute="centerX" id="EKf-9g-brB"/>
+                <constraint firstItem="uz7-pB-4as" firstAttribute="centerY" secondItem="56Y-ta-bHG" secondAttribute="centerY" id="Edw-rv-j3u"/>
+                <constraint firstAttribute="bottom" secondItem="8yA-rA-C5Y" secondAttribute="bottom" constant="8" id="U5g-GV-dRi"/>
+                <constraint firstItem="Jux-wz-Kci" firstAttribute="top" secondItem="LMf-ib-RLb" secondAttribute="bottom" constant="8" id="UTA-w6-Bwi"/>
+                <constraint firstItem="56Y-ta-bHG" firstAttribute="centerX" secondItem="Jux-wz-Kci" secondAttribute="centerX" id="ZDB-gq-dcg"/>
+                <constraint firstItem="hCK-3Z-LML" firstAttribute="top" secondItem="VMK-RQ-9Tc" secondAttribute="top" constant="16" id="ZEv-he-kLa"/>
+                <constraint firstItem="LMf-ib-RLb" firstAttribute="top" secondItem="hCK-3Z-LML" secondAttribute="top" id="aDm-c2-nkJ"/>
+                <constraint firstItem="Jux-wz-Kci" firstAttribute="leading" secondItem="hCK-3Z-LML" secondAttribute="trailing" constant="8" id="aHH-Qr-yee"/>
+                <constraint firstItem="Jux-wz-Kci" firstAttribute="width" secondItem="LMf-ib-RLb" secondAttribute="width" id="dA8-nk-MlW"/>
+                <constraint firstItem="LMf-ib-RLb" firstAttribute="leading" secondItem="hCK-3Z-LML" secondAttribute="trailing" constant="16" id="hru-CV-gOO"/>
+                <constraint firstItem="hCK-3Z-LML" firstAttribute="leading" secondItem="VMK-RQ-9Tc" secondAttribute="leading" constant="16" id="iMz-P8-doO"/>
+                <constraint firstItem="8yA-rA-C5Y" firstAttribute="centerX" secondItem="56Y-ta-bHG" secondAttribute="centerX" id="iYD-mW-ekw"/>
+                <constraint firstAttribute="trailing" secondItem="LMf-ib-RLb" secondAttribute="trailing" constant="16" id="qaL-Fd-P2t"/>
+                <constraint firstItem="8yA-rA-C5Y" firstAttribute="top" secondItem="56Y-ta-bHG" secondAttribute="bottom" constant="4" id="zWH-JP-DYI"/>
+            </constraints>
+            <size key="customSize" width="438" height="252"/>
+            <connections>
+                <outlet property="bioTextView" destination="8yA-rA-C5Y" id="Ckq-cz-XM3"/>
+                <outlet property="followButton" destination="56Y-ta-bHG" id="IkO-8H-uMM"/>
+                <outlet property="followButtonSpinner" destination="uz7-pB-4as" id="fcW-w0-yUk"/>
+                <outlet property="followersLabel" destination="AGR-R0-GZ8" id="LSq-Jh-9MV"/>
+                <outlet property="followingLabel" destination="Mrd-ZW-kKK" id="m8d-rG-Cgz"/>
+                <outlet property="postsLabel" destination="frB-na-0qJ" id="655-te-bvZ"/>
+                <outlet property="profilePictureView" destination="hCK-3Z-LML" id="XQt-R9-aSv"/>
+                <outlet property="usernameLabel" destination="LMf-ib-RLb" id="Lpl-nM-K53"/>
+            </connections>
+            <point key="canvasLocation" x="-111.5" y="-582.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

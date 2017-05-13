@@ -80,6 +80,15 @@ class APICommunicatorTests: XCTestCase {
         XCTAssertEqual(response, expectedResponse)
     }
     
+    func testGetPost() {
+        let response = sut.getPost(with: "post-id")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains("ig_shortcode(post-id)"))
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
     func testLikePost() {
         let response = sut.likePost(with: "12345")
         XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
@@ -104,6 +113,33 @@ class APICommunicatorTests: XCTestCase {
         XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
         XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
         XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains("ig_shortcode(mediaCode){comments.before(foobar,123)"))
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
+    func testGetUser() {
+        let response = sut.getUser(for: "user-id")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/query/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload?["q"])
+        XCTAssert(mockConnection.makeRequestCalls.first!.payload!["q"]!.contains("ig_user(user-id)"))
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
+    func testFollorUser() {
+        let response = sut.followUser(withId: "12345")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/web/friendships/12345/follow/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.payload?.count, 0)
+        XCTAssertEqual(response, expectedResponse)
+    }
+    
+    func testUnfollorUser() {
+        let response = sut.unfollowUser(withId: "12345")
+        XCTAssertEqual(mockConnection.makeRequestCalls.count, 1)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.path, "/web/friendships/12345/unfollow/")
+        XCTAssertNotNil(mockConnection.makeRequestCalls.first!.payload)
+        XCTAssertEqual(mockConnection.makeRequestCalls.first!.payload?.count, 0)
         XCTAssertEqual(response, expectedResponse)
     }
 }

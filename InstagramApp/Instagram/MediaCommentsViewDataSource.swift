@@ -14,7 +14,7 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
 
     static let cellReuseIdentifier: String = "MediaCommentsViewCell"
 
-    var onProfilePictureTapped: ( (_ userId: String, _ username: String) -> (()->Void)? )?
+    var onProfilePictureTapped: ( (_ user: User) -> (()->Void)? )?
     
     fileprivate var commentsManager: CommentsManager!
     fileprivate var mediaItem: MediaItem!
@@ -69,9 +69,9 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
                 comment = commentsManager.comment(at: commentIndex)!
             }
             
-            setProfilePicture(for: cell, url: comment.profilePicture)
+            setProfilePicture(for: cell, url: comment.user.profilePictureURL)
             cell.label.attributedText = attributedString(comment: comment)
-            cell.onProfilePictureTapped = self.onProfilePictureTapped?(comment.userId, comment.userName)
+            cell.onProfilePictureTapped = self.onProfilePictureTapped?(comment.user)
             
             return cell
         }
@@ -122,7 +122,7 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     }
     
     func attributedString(comment: MediaItemComment) -> NSAttributedString {
-        return attributedString(username: comment.userName, commentText: comment.text)
+        return attributedString(username: comment.user.username, commentText: comment.text)
     }
     
     func attributedString(username: String, commentText: String) -> NSAttributedString {

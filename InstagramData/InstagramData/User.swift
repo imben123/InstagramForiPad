@@ -25,41 +25,37 @@ public struct User: Equatable {
     public let profilePictureURL: URL
     public let fullName: String
     public let username: String
-    public let biography: String?
+    public let biography: String
     public let externalURL: URL?
 
-    public let totalNumberOfMediaItems: Int?
-    public var media: [MediaItem]?
+    public let mediaCount: Int
+    public let followedByCount: Int
+    public let followsCount: Int
+    
+    public var followedByViewer: Bool
+    public let followsViewer: Bool
 
     init(jsonDictionary: [String: Any]) {
-        
         let json = JSON(jsonDictionary)
+        self.init(json: json)
+    }
+    
+    init(json: JSON) {
         
         id = json["id"].stringValue
 
         profilePictureURL = json["profile_pic_url"].URLWithoutEscaping!.bySettingScheme(to: "https")
         fullName = json["full_name"].stringValue
         username = json["username"].stringValue
-        biography = json["biography"].string
+        biography = json["biography"].stringValue
         externalURL = json["external_url"].URLWithoutEscaping
         
-        totalNumberOfMediaItems = json["media"]["count"].int
-        media = parseMediaItems(json)
-    }
-    
-    private func parseMediaItems(_ json: JSON) -> [MediaItem]? {
+        mediaCount = json["media"]["count"].intValue
+        followedByCount = json["followed_by"]["count"].intValue
+        followsCount = json["follows"]["count"].intValue
         
-        let mediaJson = json["media"]
-        guard mediaJson.exists() else {
-            return nil
-        }
-        
-        let mediaNodes = mediaJson["nodes"].arrayObject as! [ [String: Any] ]
-        var result: [MediaItem] = []
-        for node in mediaNodes {
-            result.append(MediaItem(jsonDictionary: node as [String: Any], owner:self))
-        }
-        return result
+        followedByViewer = json["followed_by_viewer"].boolValue
+        followsViewer = json["follows_viewer"].boolValue
     }
     
     public static func ==(lhs: User, rhs: User) -> Bool {
@@ -70,7 +66,11 @@ public struct User: Equatable {
             lhs.username == rhs.username &&
             lhs.biography == rhs.biography &&
             lhs.externalURL == rhs.externalURL &&
-            lhs.totalNumberOfMediaItems == rhs.totalNumberOfMediaItems
+            lhs.mediaCount == rhs.mediaCount &&
+            lhs.followedByCount == rhs.followedByCount &&
+            lhs.followsCount == rhs.followsCount &&
+            lhs.followedByViewer == rhs.followedByViewer &&
+            lhs.followsViewer == rhs.followsViewer
         )
     }
 }

@@ -14,9 +14,16 @@ class UserTableRow: Object {
     dynamic var profilePictureURL: String = ""
     dynamic var fullName: String = ""
     dynamic var username: String = ""
-    dynamic var biography: String?
+    dynamic var biography: String = ""
     dynamic var externalURL: String?
     
+    dynamic var mediaCount: Int = 0
+    dynamic var followedByCount: Int = 0
+    dynamic var followsCount: Int = 0
+
+    dynamic var followedByViewer = false
+    dynamic var followsViewer = false
+
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -31,6 +38,11 @@ extension UserTableRow {
         self.username = user.username
         self.biography = user.biography
         self.externalURL = user.externalURL?.absoluteString
+        self.mediaCount = user.mediaCount
+        self.followsCount = user.followsCount
+        self.followedByCount = user.followedByCount
+        self.followedByViewer = user.followedByViewer
+        self.followsViewer = user.followsViewer
     }
 }
 
@@ -47,8 +59,11 @@ extension User {
         } else {
             self.externalURL = nil
         }
-        self.media = nil
-        self.totalNumberOfMediaItems = nil
+        self.mediaCount = userTableRow.mediaCount
+        self.followsCount = userTableRow.followsCount
+        self.followedByCount = userTableRow.followedByCount
+        self.followedByViewer = userTableRow.followedByViewer
+        self.followsViewer = userTableRow.followsViewer
     }
 }
 

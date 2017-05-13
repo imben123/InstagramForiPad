@@ -22,6 +22,10 @@ class MediaFeedGridViewDataSource: NSObject {
     
     let mediaGridView: MediaGridView
     let mediaFeed: MediaFeed
+    
+    fileprivate var mediaIDs: [String]
+    
+    var section: Int = 0
 
     weak var userActionDelegate: MediaFeedGridViewDataSourceUserActionDelegate?
     weak var observer: MediaFeedGridViewDataSourceObserver?
@@ -32,8 +36,14 @@ class MediaFeedGridViewDataSource: NSObject {
     init(mediaFeed: MediaFeed, mediaGridView: MediaGridView) {
         self.mediaGridView = mediaGridView
         self.mediaFeed = mediaFeed
+        self.mediaIDs = mediaFeed.mediaIDs
         super.init()
         mediaGridView.dataSource = self
+    }
+    
+    func reloadGridViewContent() {
+        mediaIDs = mediaFeed.mediaIDs
+        mediaGridView.reloadData()
     }
     
     func updateLatestMedia() {
@@ -50,15 +60,15 @@ class MediaFeedGridViewDataSource: NSObject {
                     return
             }
             
+            strongself.reloadGridViewContent()
             strongself.observer?.mediaGridViewDataSource(strongself, mediaFeedUpdated: newMediaCount)
-            strongself.mediaGridView.reloadData()
             
         })
     }
     
     private func refreshMostRecentPosts() {
         
-        let numberOfPosts = mediaFeed.mediaIDs.count
+        let numberOfPosts = mediaIDs.count
         
         // Update 20 most recent
         for index in 0..<min(20, numberOfPosts) {
@@ -75,7 +85,7 @@ class MediaFeedGridViewDataSource: NSObject {
         
         fetchingMoreMedia = true
         mediaFeed.fetchMoreMedia({ [weak self] in
-            self?.mediaGridView.reloadData()
+            self?.reloadGridViewContent()
             self?.fetchingMoreMedia = false
             }, failure: { [weak self] in
                 self?.fetchingMoreMedia = false
@@ -83,10 +93,12 @@ class MediaFeedGridViewDataSource: NSObject {
     }
     
     func reloadCell(for item: MediaGridViewItem) {
-        guard let index = index(of: item) else {
+        guard let index = index(of: item),
+            mediaGridView.numberOfSections > section,
+            mediaGridView.numberOfItems(inSection: section) > index else {
             return
         }
-        let indexPath = IndexPath(item: index, section: 0)
+        let indexPath = IndexPath(item: index, section: section)
         mediaGridView.reloadItems(at: [indexPath])
     }
 }
@@ -120,15 +132,18 @@ extension MediaFeedGridViewDataSource: MediaGridViewDataSource {
         return mediaItem(at: index)
     }
     
-    func mediaGridView(_ sender: MediaGridView, indexOfItemWith id: String) -> Int? {
-        return indexOfItem(with: id)
+    func mediaGridView(_ sender: MediaGridView, indexPathOfItemWith id: String) -> IndexPath? {
+        if let index = indexOfItem(with: id) {
+            return IndexPath(item: index, section: section)
+        }
+        return nil
     }
 }
 
 extension MediaFeedGridViewDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mediaFeed.mediaCount
+        return mediaIDs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -154,7 +169,7 @@ extension MediaFeedGridViewDataSource: UICollectionViewDataSource {
 extension MediaFeedGridViewDataSource {
     
     func mediaItem(at index: Int) -> MediaItem {
-        let mediaID = mediaFeed.mediaIDs[index]
+        let mediaID = mediaIDs[index]
         
         var mediaItem: MediaItem!
         let sema = DispatchSemaphore(value: 0)
@@ -171,7 +186,7 @@ extension MediaFeedGridViewDataSource {
     }
     
     func indexOfItem(with id: String) -> Int? {
-        return mediaFeed.mediaIDs.index(of: id)
+        return mediaIDs.index(of: id)
     }
     
     func item(at index: Int) -> MediaGridViewItem {

@@ -1,8 +1,8 @@
 //
-//  LikeReqestsManagerTests.swift
+//  ReliableRequestManagerTests.swift
 //  InstagramData
 //
-//  Created by Ben Davis on 28/01/2017.
+//  Created by Ben Davis on 07/05/2017.
 //  Copyright © 2017 bendavisapps. All rights reserved.
 //
 
@@ -11,15 +11,15 @@ import XCTest
 import SwiftToolbox
 import RealmSwift
 
-class LikeReqestsManagerTests: XCTestCase {
+class ReliableRequestManagerTests: XCTestCase {
     
     var reachability: MockReachability!
     var taskDispatcher: MockTaskDispatcher!
     var reliableNetworkTaskManager: MockReliableNetworkTaskManager!
     var mockCommunicator: MockAPICommunicator!
-    var mediaDataStore: MockMediaDataStore!
-    var sut: LikeReqestsManager!
+    var sut: ReliableSwitchRequestsManager!
     
+
     override func setUp() {
         try? FileManager.default.removeItem(at: Realm.Configuration.defaultConfiguration.fileURL!)
         
@@ -27,46 +27,62 @@ class LikeReqestsManagerTests: XCTestCase {
         taskDispatcher = MockTaskDispatcher()
         reliableNetworkTaskManager = MockReliableNetworkTaskManager(reachability: reachability,
                                                                     taskDispatcher: taskDispatcher)
+        
         mockCommunicator = MockAPICommunicator()
-        mediaDataStore = MockMediaDataStore()
-        sut = LikeReqestsManager(communicator: mockCommunicator,
-                                 mediaDataStore: mediaDataStore,
-                                 taskDispatcher: taskDispatcher,
-                                 reliableNetworkTaskManager: reliableNetworkTaskManager)
+        
+        sut = ReliableSwitchRequestsManager(taskDispatcher: taskDispatcher,
+                                            reliableNetworkTaskManager: reliableNetworkTaskManager,
+                                            switchOnCall: mockCommunicator.likePost(with:),
+                                            switchOffCall: mockCommunicator.unlikePost(with:))
         
         mockCommunicator.testResponse = APIResponse(responseCode: 200,
                                                     responseBody: [:],
                                                     urlResponse: nil)
+
     }
     
-    func testCanLikePost() {
+    func testPostSwitchOn() {
         let postId = "12345"
-        sut.likePost(with: postId)
+        sut.switchOn(for: postId)
         XCTAssertEqual(mockCommunicator.likePostCallCount, 1)
         XCTAssertEqual(mockCommunicator.likePostParameter, postId)
     }
     
-    func testCanUnlikePost() {
+    func testSwitchOnCompletion() {
+        var completionCalled = false
+        sut.switchOn(for: "12345") {
+            completionCalled = true
+        }
+        XCTAssert(completionCalled)
+    }
+    
+    func testPostSwitchOff() {
         let postId = "12345"
-        sut.unlikePost(with: postId)
+        sut.switchOff(for: postId)
         XCTAssertEqual(mockCommunicator.unlikePostCallCount, 1)
         XCTAssertEqual(mockCommunicator.unlikePostParameter, postId)
     }
     
+    func testSwitchOffCompletion() {
+        var completionCalled = false
+        sut.switchOff(for: "12345") {
+            completionCalled = true
+        }
+        XCTAssert(completionCalled)
+    }
+    
     func testUsesReliableNetworkTask() {
-
+        
         reliableNetworkTaskManager.performTaskCalled = false
-        sut.likePost(with: "12345")
+        sut.switchOn(for: "12345")
         XCTAssert(reliableNetworkTaskManager.performTaskCalled)
         
         reliableNetworkTaskManager.performTaskCalled = false
-        sut.unlikePost(with: "12345")
+        sut.switchOff(for: "12345")
         XCTAssert(reliableNetworkTaskManager.performTaskCalled)
     }
     
     func testRetriesLikeIfFails() {
-        
-        taskDispatcher.forceSynchronous = false
         
         class _MockAPICommunicator: MockAPICommunicator {
             
@@ -78,8 +94,8 @@ class LikeReqestsManagerTests: XCTestCase {
                 }
                 let result = super.likePost(with: id)
                 testResponse = APIResponse(responseCode: 200,
-                                          responseBody: [:],
-                                          urlResponse: nil)
+                                           responseBody: [:],
+                                           urlResponse: nil)
                 return result
             }
             
@@ -88,22 +104,24 @@ class LikeReqestsManagerTests: XCTestCase {
         // Recreate sut
         let mockCommunicator = _MockAPICommunicator()
         mockCommunicator.expectation = self.expectation(description: "Like retried")
-        sut = LikeReqestsManager(communicator: mockCommunicator,
-                                 mediaDataStore: mediaDataStore,
-                                 taskDispatcher: taskDispatcher,
-                                 reliableNetworkTaskManager: reliableNetworkTaskManager)
+        sut = ReliableSwitchRequestsManager(taskDispatcher: taskDispatcher,
+                                            reliableNetworkTaskManager: reliableNetworkTaskManager,
+                                            switchOnCall: mockCommunicator.likePost(with:),
+                                            switchOffCall: mockCommunicator.unlikePost(with:))
         
         let postId = "12345"
-        sut.likePost(with: postId)
+        var completionCallCount = 0
+        sut.switchOn(for: postId) {
+            completionCallCount += 1
+        }
         
         waitForExpectations(timeout: 0.01)
         XCTAssertEqual(mockCommunicator.likePostCallCount, 2)
+        XCTAssertEqual(completionCallCount, 1)
     }
     
     func testRetriesUnlikeIfFails() {
-        
-        taskDispatcher.forceSynchronous = false
-        
+                
         class _MockAPICommunicator: MockAPICommunicator {
             
             var expectation: XCTestExpectation?
@@ -114,8 +132,8 @@ class LikeReqestsManagerTests: XCTestCase {
                 }
                 let result = super.unlikePost(with: id)
                 testResponse = APIResponse(responseCode: 200,
-                                          responseBody: [:],
-                                          urlResponse: nil)
+                                           responseBody: [:],
+                                           urlResponse: nil)
                 return result
             }
             
@@ -124,24 +142,28 @@ class LikeReqestsManagerTests: XCTestCase {
         // Recreate sut
         let mockCommunicator = _MockAPICommunicator()
         mockCommunicator.expectation = self.expectation(description: "Unlike retried")
-        sut = LikeReqestsManager(communicator: mockCommunicator,
-                                 mediaDataStore: mediaDataStore,
-                                 taskDispatcher: taskDispatcher,
-                                 reliableNetworkTaskManager: reliableNetworkTaskManager)
+        sut = ReliableSwitchRequestsManager(taskDispatcher: taskDispatcher,
+                                            reliableNetworkTaskManager: reliableNetworkTaskManager,
+                                            switchOnCall: mockCommunicator.likePost(with:),
+                                            switchOffCall: mockCommunicator.unlikePost(with:))
         
         let postId = "12345"
-        sut.unlikePost(with: postId)
+        var completionCallCount = 0
+        sut.switchOff(for: postId) {
+            completionCallCount += 1
+        }
         
         waitForExpectations(timeout: 0.01)
         XCTAssertEqual(mockCommunicator.unlikePostCallCount, 2)
+        XCTAssertEqual(completionCallCount, 1)
     }
     
-    func testLikeCancelledIfUnlikeCalledAfter() {
+    func testSwitchOnCancelledIfSwitchOffCalledAfter() {
         reachability.testReachability = .NotReachable
         
         let postId = "12345"
-        sut.likePost(with: postId)
-        sut.unlikePost(with: postId)
+        sut.switchOn(for: postId)
+        sut.switchOff(for: postId)
         
         reachability.testReachability = .ReachableViaWiFi
         reachability.reachableBlock?(nil)
@@ -150,12 +172,12 @@ class LikeReqestsManagerTests: XCTestCase {
         XCTAssertEqual(mockCommunicator.unlikePostCallCount, 1)
     }
     
-    func testUnlikeCancelledIfLikeCalledAfter() {
+    func testSwitchOffCancelledIfSwitchOnCalledAfter() {
         reachability.testReachability = .NotReachable
         
         let postId = "12345"
-        sut.unlikePost(with: postId)
-        sut.likePost(with: postId)
+        sut.switchOff(for: postId)
+        sut.switchOn(for: postId)
         
         reachability.testReachability = .ReachableViaWiFi
         reachability.reachableBlock?(nil)
@@ -164,12 +186,12 @@ class LikeReqestsManagerTests: XCTestCase {
         XCTAssertEqual(mockCommunicator.unlikePostCallCount, 0)
     }
     
-    func testCanLikeAndUnlikePostMultipleTimes() {
+    func testCanSwitchOnAndOffMultipleTimes() {
         let postId = "12345"
-        sut.likePost(with: postId)
-        sut.unlikePost(with: postId)
-        sut.likePost(with: postId)
-        sut.unlikePost(with: postId)
+        sut.switchOn(for: postId)
+        sut.switchOff(for: postId)
+        sut.switchOn(for: postId)
+        sut.switchOff(for: postId)
         XCTAssertEqual(mockCommunicator.likePostCallCount, 2)
         XCTAssertEqual(mockCommunicator.unlikePostCallCount, 2)
     }

@@ -18,7 +18,7 @@ enum MediaItemViewTransitioningDirection {
 class MediaItemViewController: UIViewController {
     
     var dismissalInteractionController: PercentDrivenInteractiveTransition?
-    var onProfilePictureTapped: ((_ userId: String, _ username: String)->Void)?
+    var onProfilePictureTapped: ((_ user: User)->Void)?
     
     let mediaItem: MediaItem
 
@@ -77,9 +77,9 @@ extension MediaItemViewController: MediaCommentsViewDelegate {
     
     func commentsView(_ sender: MediaCommentsView, tableViewNeedsDataSource tableView: UITableView) {
         
-        commentsDataSource.onProfilePictureTapped = { [weak self] (userId, username) in
+        commentsDataSource.onProfilePictureTapped = { [weak self] (user) in
             return {
-                self?.onProfilePictureTapped?(userId, username)
+                self?.onProfilePictureTapped?(user)
             }
         }
         tableView.delegate = commentsDataSource

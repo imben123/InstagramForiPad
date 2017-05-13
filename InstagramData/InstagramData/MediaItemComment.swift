@@ -12,17 +12,13 @@ public struct MediaItemComment: Equatable {
     
     public let id: String
     public let text: String
-    public let userId: String
-    public let userName: String
-    public let profilePicture: URL
+    public let user: User
     
     public static func ==(lhs: MediaItemComment, rhs: MediaItemComment) -> Bool {
         return (
             lhs.id == rhs.id &&
             lhs.text == rhs.text &&
-            lhs.userId == rhs.userId &&
-            lhs.userName == rhs.userName &&
-            lhs.profilePicture == rhs.profilePicture
+            lhs.user == rhs.user
         )
     }
 
@@ -30,21 +26,15 @@ public struct MediaItemComment: Equatable {
                 
         self.id = json["id"].stringValue
         self.text = json["text"].stringValue
-        self.userId = json["user"]["id"].stringValue
-        self.userName = json["user"]["username"].stringValue
-        self.profilePicture = json["user"]["profile_pic_url"].URLWithoutEscaping!.bySettingScheme(to: "https")
+        self.user = User(json: json["user"])
 
     }
     
     public init(_ id: String,
                 text: String,
-                userId: String,
-                userName: String,
-                profilePicture: URL) {
+                user: User) {
         self.id = id
         self.text = text
-        self.userId = userId
-        self.userName = userName
-        self.profilePicture = profilePicture
+        self.user = user
     }
 }

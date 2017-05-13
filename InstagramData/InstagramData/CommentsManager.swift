@@ -21,9 +21,7 @@ public class CommentsManager {
         if let caption = mediaItem.caption {
             return MediaItemComment(captionItemId,
                                     text: caption,
-                                    userId: mediaItem.owner.id,
-                                    userName: mediaItem.owner.username,
-                                    profilePicture: mediaItem.owner.profilePictureURL)
+                                    user: mediaItem.owner)
         }
         return nil
     }

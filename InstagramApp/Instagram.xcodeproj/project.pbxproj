@@ -11,6 +11,8 @@
 		B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AD9C31E119CBC00F46119 /* AppDelegate.swift */; };
 		B50AD9C61E119CBC00F46119 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50AD9C51E119CBC00F46119 /* Assets.xcassets */; };
 		B50AD9C91E119CBC00F46119 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50AD9C71E119CBC00F46119 /* LaunchScreen.storyboard */; };
+		B5157B2D1EBE3CF50084F255 /* profilePicturePlaceholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5157B2C1EBE3CF50084F255 /* profilePicturePlaceholder.jpg */; };
+		B5157B2F1EBE3F100084F255 /* UserDetailsCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5157B2E1EBE3F100084F255 /* UserDetailsCellConfigurator.swift */; };
 		B51D5C851E4286E700EE44BD /* MediaItemViewPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */; };
 		B51D5C881E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D5C871E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift */; };
 		B51D5C8A1E429FE400EE44BD /* MediaCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D5C891E429FE400EE44BD /* MediaCommentsView.swift */; };
@@ -33,7 +35,13 @@
 		B546DE0A1E1DC078002F889D /* heart-black.png in Resources */ = {isa = PBXBuildFile; fileRef = B546DE051E1DC078002F889D /* heart-black.png */; };
 		B54EBEA51E16711C001BB53C /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA41E16711C001BB53C /* Styles.swift */; };
 		B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */; };
+		B55B6B321EBF556500DD7467 /* UserDetailsCellCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = B55B6B311EBF556500DD7467 /* UserDetailsCellCompact.xib */; };
+		B55B6B341EBF570200DD7467 /* UserDetailsCellCompact.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B6B331EBF570200DD7467 /* UserDetailsCellCompact.swift */; };
+		B55B6B361EBF5C4A00DD7467 /* UserDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55B6B351EBF5C4A00DD7467 /* UserDetailsCell.swift */; };
 		B574ADF41E68D85F009080F6 /* UserMediaFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574ADF31E68D85F009080F6 /* UserMediaFeedViewController.swift */; };
+		B58A83B21EA3E2C1000E7A5C /* UserDetailsCellDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A83B11EA3E2C1000E7A5C /* UserDetailsCellDefault.swift */; };
+		B58A83B41EA3E3A4000E7A5C /* UserDetailsCellDefault.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58A83B31EA3E3A4000E7A5C /* UserDetailsCellDefault.xib */; };
+		B58A83B81EA3E564000E7A5C /* UserDetailsCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A83B71EA3E564000E7A5C /* UserDetailsCellDataSource.swift */; };
 		B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */; };
 		B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */; };
 		B5B097B91E4F6F69003250BE /* MediaItemViewControllerTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */; };
@@ -100,6 +108,8 @@
 		B50AD9C51E119CBC00F46119 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B50AD9C81E119CBC00F46119 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B50AD9CA1E119CBC00F46119 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5157B2C1EBE3CF50084F255 /* profilePicturePlaceholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profilePicturePlaceholder.jpg; sourceTree = "<group>"; };
+		B5157B2E1EBE3F100084F255 /* UserDetailsCellConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsCellConfigurator.swift; sourceTree = "<group>"; };
 		B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewPresentationController.swift; sourceTree = "<group>"; };
 		B51D5C871E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		B51D5C891E429FE400EE44BD /* MediaCommentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCommentsView.swift; sourceTree = "<group>"; };
@@ -120,7 +130,13 @@
 		B546DE051E1DC078002F889D /* heart-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart-black.png"; sourceTree = "<group>"; };
 		B54EBEA41E16711C001BB53C /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		B559CD7B1E1D809A00745859 /* MediaGridViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaGridViewCell.xib; sourceTree = "<group>"; };
+		B55B6B311EBF556500DD7467 /* UserDetailsCellCompact.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailsCellCompact.xib; sourceTree = "<group>"; };
+		B55B6B331EBF570200DD7467 /* UserDetailsCellCompact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsCellCompact.swift; sourceTree = "<group>"; };
+		B55B6B351EBF5C4A00DD7467 /* UserDetailsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsCell.swift; sourceTree = "<group>"; };
 		B574ADF31E68D85F009080F6 /* UserMediaFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMediaFeedViewController.swift; sourceTree = "<group>"; };
+		B58A83B11EA3E2C1000E7A5C /* UserDetailsCellDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsCellDefault.swift; sourceTree = "<group>"; };
+		B58A83B31EA3E3A4000E7A5C /* UserDetailsCellDefault.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailsCellDefault.xib; sourceTree = "<group>"; };
+		B58A83B71EA3E564000E7A5C /* UserDetailsCellDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsCellDataSource.swift; sourceTree = "<group>"; };
 		B58AC0141E45FDC400A01783 /* MediaCommentsViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaCommentsViewDataSource.swift; sourceTree = "<group>"; };
 		B5B097B31E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerTransitioningDelegate.swift; sourceTree = "<group>"; };
 		B5B097B81E4F6F69003250BE /* MediaItemViewControllerTransitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewControllerTransitions.swift; sourceTree = "<group>"; };
@@ -184,9 +200,10 @@
 				B50AD9C31E119CBC00F46119 /* AppDelegate.swift */,
 				B54EBEA41E16711C001BB53C /* Styles.swift */,
 				B5B53D2C1E3E459C00620238 /* Login view controller */,
-				B5B53D2B1E3E458700620238 /* Feed view controller */,
+				B5B53D2B1E3E458700620238 /* Feed view controllers */,
 				B541EAB51EA3C6B500613859 /* Media Feed Data Source */,
 				B5B53D2A1E3E457900620238 /* Media Grid View */,
+				B58A83B01EA3E2A4000E7A5C /* User Details View */,
 				B5B53D2E1E3E45C300620238 /* Media Item view controller */,
 				B50AD9C51E119CBC00F46119 /* Assets.xcassets */,
 				B50AD9C71E119CBC00F46119 /* LaunchScreen.storyboard */,
@@ -223,6 +240,21 @@
 			name = "Media Feed Data Source";
 			sourceTree = "<group>";
 		};
+		B58A83B01EA3E2A4000E7A5C /* User Details View */ = {
+			isa = PBXGroup;
+			children = (
+				B5157B2C1EBE3CF50084F255 /* profilePicturePlaceholder.jpg */,
+				B55B6B351EBF5C4A00DD7467 /* UserDetailsCell.swift */,
+				B58A83B11EA3E2C1000E7A5C /* UserDetailsCellDefault.swift */,
+				B55B6B331EBF570200DD7467 /* UserDetailsCellCompact.swift */,
+				B5157B2E1EBE3F100084F255 /* UserDetailsCellConfigurator.swift */,
+				B58A83B31EA3E3A4000E7A5C /* UserDetailsCellDefault.xib */,
+				B55B6B311EBF556500DD7467 /* UserDetailsCellCompact.xib */,
+				B58A83B71EA3E564000E7A5C /* UserDetailsCellDataSource.swift */,
+			);
+			name = "User Details View";
+			sourceTree = "<group>";
+		};
 		B5B097B61E4F6C3E003250BE /* Custom transition */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,14 +289,14 @@
 			name = "Media Grid View";
 			sourceTree = "<group>";
 		};
-		B5B53D2B1E3E458700620238 /* Feed view controller */ = {
+		B5B53D2B1E3E458700620238 /* Feed view controllers */ = {
 			isa = PBXGroup;
 			children = (
 				B536932C1E148BCE000246A7 /* MediaFeedViewController.swift */,
 				B5EB5E381E632ACC001E44AA /* MainFeedViewController.swift */,
 				B574ADF31E68D85F009080F6 /* UserMediaFeedViewController.swift */,
 			);
-			name = "Feed view controller";
+			name = "Feed view controllers";
 			sourceTree = "<group>";
 		};
 		B5B53D2C1E3E459C00620238 /* Login view controller */ = {
@@ -385,12 +417,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B546DE0A1E1DC078002F889D /* heart-black.png in Resources */,
+				B58A83B41EA3E3A4000E7A5C /* UserDetailsCellDefault.xib in Resources */,
 				B546DE061E1DC078002F889D /* heart-white.png in Resources */,
 				B546DE091E1DC078002F889D /* heart-outline-black.png in Resources */,
 				B5B53D341E3E466500620238 /* MediaItemView.xib in Resources */,
 				B559CD7C1E1D809A00745859 /* MediaGridViewCell.xib in Resources */,
 				B50AD9C61E119CBC00F46119 /* Assets.xcassets in Resources */,
 				B546DE081E1DC078002F889D /* heart-outline-white.png in Resources */,
+				B5157B2D1EBE3CF50084F255 /* profilePicturePlaceholder.jpg in Resources */,
+				B55B6B321EBF556500DD7467 /* UserDetailsCellCompact.xib in Resources */,
 				B50AD9C91E119CBC00F46119 /* LaunchScreen.storyboard in Resources */,
 				B546DE071E1DC078002F889D /* heart-red.png in Resources */,
 				B51D5C8C1E42A01300EE44BD /* MediaCommentsViewCell.xib in Resources */,
@@ -459,17 +494,22 @@
 				B541EAB81EA3C6F900613859 /* MediaFeedPrefetchingDelegate.swift in Sources */,
 				B5EB5E391E632ACC001E44AA /* MainFeedViewController.swift in Sources */,
 				B574ADF41E68D85F009080F6 /* UserMediaFeedViewController.swift in Sources */,
+				B55B6B361EBF5C4A00DD7467 /* UserDetailsCell.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
 				B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */,
 				B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */,
 				B51D5C8A1E429FE400EE44BD /* MediaCommentsView.swift in Sources */,
 				B5BEC8F91E17CC51000C3870 /* MediaGridCollectionViewDataSource.swift in Sources */,
+				B58A83B21EA3E2C1000E7A5C /* UserDetailsCellDefault.swift in Sources */,
 				B536932B1E148BC6000246A7 /* MediaGridView.swift in Sources */,
+				B58A83B81EA3E564000E7A5C /* UserDetailsCellDataSource.swift in Sources */,
 				B54EBEA51E16711C001BB53C /* Styles.swift in Sources */,
 				B5B53D321E3E460D00620238 /* MediaItemView.swift in Sources */,
 				B53693381E155645000246A7 /* LoginViewController.swift in Sources */,
 				B51D5C881E4287C900EE44BD /* MediaItemViewAnimatedTransitioning.swift in Sources */,
+				B5157B2F1EBE3F100084F255 /* UserDetailsCellConfigurator.swift in Sources */,
 				B5B53D301E3E45D400620238 /* MediaItemViewController.swift in Sources */,
+				B55B6B341EBF570200DD7467 /* UserDetailsCellCompact.swift in Sources */,
 				B541EABA1EA3CAF400613859 /* MediaGridViewCellConfigurator.swift in Sources */,
 				B5B097B91E4F6F69003250BE /* MediaItemViewControllerTransitions.swift in Sources */,
 				B536932F1E1492D3000246A7 /* MediaGridViewCell.swift in Sources */,

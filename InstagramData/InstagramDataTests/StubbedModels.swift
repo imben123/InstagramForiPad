@@ -17,8 +17,11 @@ extension User {
         self.username = "username"
         self.biography = "This is a user biography"
         self.externalURL = URL(string: "https://google.com")!
-        self.media = []
-        self.totalNumberOfMediaItems = 0
+        self.mediaCount = 123
+        self.followedByCount = 456
+        self.followsCount = 789
+        self.followedByViewer = true
+        self.followsViewer = true
     }
 }
 

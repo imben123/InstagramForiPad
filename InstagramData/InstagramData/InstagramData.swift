@@ -23,21 +23,25 @@ public class InstagramData {
     public static let shared: InstagramData = InstagramData()
     
     private let communicator: APICommunicator
+    public let usersDataStore: UsersDataStore
     private let mediaDataStoreObserver: MediaDataStoreObserverDistribution
     private let mediaDataStore: MediaDataStore
     
     public let authManager: AuthManager
     public let userFeedMediaFeed: FeedManager
     public let likeReqestsManager: LikeReqestsManager
+    public let followRequestsManager: FollowRequestsManager
     public let mediaManager: MediaManager
     
     init() {
         communicator = APICommunicator()
         mediaDataStoreObserver = MediaDataStoreObserverDistribution()
         mediaDataStore = MediaDataStore()
+        usersDataStore = UsersDataStore(communicator: communicator)
         authManager = AuthManager(communicator: communicator)
         userFeedMediaFeed = FeedManager(communicator: communicator, mediaDataStore: mediaDataStore)
         likeReqestsManager = LikeReqestsManager(communicator: communicator, mediaDataStore: mediaDataStore)
+        followRequestsManager = FollowRequestsManager(communicator: communicator)
         mediaManager = MediaManager(communicator: communicator, mediaDataStore: mediaDataStore)
         
         mediaDataStore.observer = mediaDataStoreObserver

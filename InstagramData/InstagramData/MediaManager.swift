@@ -33,15 +33,9 @@ public class MediaManager {
             let response = self.communicator.getPost(with: originalMediaItem.code)
             if response.succeeded {
                 
-                var mediaDictionary = response.responseBody?["media"] as? [String: Any]
-                
-                if mediaDictionary == nil {
-                    let graphql = response.responseBody?["graphql"] as? [String:Any]
-                    mediaDictionary = graphql?["shortcode_media"] as? [String: Any]
-                }
+                let mediaDictionary = response.responseBody
                 
                 guard let mediaItem = MediaItem(jsonDictionary: mediaDictionary, original: originalMediaItem) else {
-                    print("Update media item endpoint format changed")
                     
                     DispatchQueue.main.async {
                         completion?(originalMediaItem)

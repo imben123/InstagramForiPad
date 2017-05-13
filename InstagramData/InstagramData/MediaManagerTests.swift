@@ -52,13 +52,13 @@ class MediaManagerTests: XCTestCase {
         let expectation = self.expectation(description: "Completion closure called")
         
         // When
-        let exampleMediaItem = MediaItem(id: "1437230250416969754", code: "BPyEUxIjJga")
+        let exampleMediaItem = MediaItem(id: "1509549928887982131", code: "BTy_6mSFZgz")
         sut.updateMediaItem(exampleMediaItem) { mediaItem in
             
             // Then
             expectation.fulfill()
-            XCTAssertEqual(mediaItem.code, "BPyEUxIjJga")
-            XCTAssertEqual(mediaItem.id, "1437230250416969754")
+            XCTAssertEqual(mediaItem.code, "BTy_6mSFZgz")
+            XCTAssertEqual(mediaItem.id, "1509549928887982131")
         }
         
         waitForExpectations(timeout: 0.1)
@@ -71,13 +71,13 @@ class MediaManagerTests: XCTestCase {
                                                          urlResponse: nil)
         
         // When
-        let exampleMediaItem = MediaItem(id: "1437230250416969754", code: "BPyEUxIjJga")
+        let exampleMediaItem = MediaItem(id: "1509549928887982131", code: "BTy_6mSFZgz")
         sut.updateMediaItem(exampleMediaItem)
 
         // Then
         XCTAssertEqual(mediaDataStore.archivedMediaList?.count, 1)
-        XCTAssertEqual(mediaDataStore.archivedMediaList?.first?.code, "BPyEUxIjJga")
-        XCTAssertEqual(mediaDataStore.archivedMediaList?.first?.id, "1437230250416969754")
+        XCTAssertEqual(mediaDataStore.archivedMediaList?.first?.code, "BTy_6mSFZgz")
+        XCTAssertEqual(mediaDataStore.archivedMediaList?.first?.id, "1509549928887982131")
     }
     
 }

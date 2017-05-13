@@ -14,7 +14,7 @@ class UserTests: XCTestCase {
     
     let rawJson: [String:Any] = UserTests.getUserObject()
     
-    private class func getUserObject() -> [String:Any] {
+    class func getUserObject() -> [String:Any] {
         let bundle = Bundle(for: self)
         let filePath = bundle.bundlePath + "/User.json"
         let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
@@ -23,14 +23,13 @@ class UserTests: XCTestCase {
     
     func testParsingUser() {
         let user = User(jsonDictionary: rawJson)
-        XCTAssertEqual(user.id, "200122996")
+        XCTAssertEqual(user.id, "1417593507")
         
-        XCTAssertEqual(user.profilePictureURL, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-19/s150x150/12317796_454000608132252_715718301_a.jpg"))
-        XCTAssertEqual(user.fullName, "Ben Davis")
-        XCTAssertEqual(user.username, "imben123")
-        XCTAssertEqual(user.biography, nil)
-        XCTAssertEqual(user.externalURL, nil)
-        XCTAssertEqual(user.media!.count, 1)
-        XCTAssertEqual(user.totalNumberOfMediaItems!, 1)
+        XCTAssertEqual(user.profilePictureURL, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-19/s150x150/18298380_307218413048910_6040080428977618944_a.jpg"))
+        XCTAssertEqual(user.fullName, "Liza D")
+        XCTAssertEqual(user.username, "lizadegtiarenko")
+        XCTAssertEqual(user.biography, "All the travels🚌")
+        XCTAssertEqual(user.externalURL, URL(string:"http://sustain.life/"))
+        XCTAssertEqual(user.mediaCount, 507)
     }
 }

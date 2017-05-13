@@ -22,15 +22,13 @@ class MediaTests: XCTestCase {
         XCTAssertEqual(mediaItem.date, Date(timeIntervalSince1970: 1485551218))
         XCTAssertEqual(mediaItem.dimensions, CGSize(width: 1080, height: 1347))
 
-        //XCTAssertEqual(mediaItem.ownerId, "200122996")
         XCTAssertEqual(mediaItem.owner.id, "186622962")
         XCTAssertEqual(mediaItem.owner.profilePictureURL, URL(string: "https://scontent-lhr3-1.cdninstagram.com/t51.2885-19/s150x150/13561734_210464792681658_976264848_a.jpg")!)
         XCTAssertEqual(mediaItem.owner.fullName, "Lindsey Stirling")
         XCTAssertEqual(mediaItem.owner.username, "lindseystirling")
-        XCTAssertNil(mediaItem.owner.biography)
+        XCTAssertEqual(mediaItem.owner.biography, "")
         XCTAssertNil(mediaItem.owner.externalURL)
-        XCTAssertNil(mediaItem.owner.media)
-        XCTAssertNil(mediaItem.owner.totalNumberOfMediaItems)
+        XCTAssertEqual(mediaItem.owner.mediaCount, 0)
 
         XCTAssertEqual(mediaItem.code, "BPyEUxIjJga")
         XCTAssertEqual(mediaItem.isVideo, false)

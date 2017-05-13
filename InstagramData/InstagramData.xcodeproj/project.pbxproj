@@ -20,6 +20,7 @@
 		B50AD9A71E119C9D00F46119 /* InstagramData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50AD99D1E119C9D00F46119 /* InstagramData.framework */; };
 		B50AD9AE1E119C9D00F46119 /* InstagramData.h in Headers */ = {isa = PBXBuildFile; fileRef = B50AD9A01E119C9D00F46119 /* InstagramData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B50AD9E51E14123A00F46119 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AD9E41E14123A00F46119 /* User.swift */; };
+		B5157B331EBE41A90084F255 /* UsersDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5157B321EBE41A90084F255 /* UsersDataStore.swift */; };
 		B51D7B2D1E15E5B000DF5599 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B2C1E15E5B000DF5599 /* APIResponse.swift */; };
 		B51D7B301E15E5D200DF5599 /* HTTPConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B2F1E15E5D200DF5599 /* HTTPConnection.swift */; };
 		B51D7B321E15E5F100DF5599 /* APIConnectionRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B311E15E5F100DF5599 /* APIConnectionRequestBuilder.swift */; };
@@ -27,11 +28,14 @@
 		B51D7B381E15E66E00DF5599 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B371E15E66E00DF5599 /* AuthManager.swift */; };
 		B51D7B3A1E15E6A800DF5599 /* InstagramData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B391E15E6A800DF5599 /* InstagramData.swift */; };
 		B51D7B401E15F04200DF5599 /* FeedManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D7B3F1E15F04200DF5599 /* FeedManager.swift */; };
+		B51FBBC21EBF905F00697659 /* ReliableSwitchRequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBBC11EBF905F00697659 /* ReliableSwitchRequestsManager.swift */; };
+		B51FBBC41EBF906C00697659 /* ReliableSwitchRequestsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51FBBC31EBF906C00697659 /* ReliableSwitchRequestsManagerTests.swift */; };
 		B53693281E144637000246A7 /* UserFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693271E144637000246A7 /* UserFetcher.swift */; };
 		B53693331E15502D000246A7 /* APICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53693321E15502D000246A7 /* APICommunicator.swift */; };
 		B53800F91E45F42900C132F2 /* GappedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53800F81E45F42900C132F2 /* GappedList.swift */; };
 		B53800FD1E45F51600C132F2 /* GappedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53800FB1E45F51300C132F2 /* GappedListTests.swift */; };
 		B53800FF1E45F59F00C132F2 /* StubbedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53800FE1E45F59F00C132F2 /* StubbedModels.swift */; };
+		B54564241EBE43590020B009 /* UsersDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54564231EBE43590020B009 /* UsersDataStoreTests.swift */; };
 		B54EBEA81E167D4E001BB53C /* SwiftyJSONDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */; };
 		B54EBEAB1E168110001BB53C /* SwiftyJSONDimensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */; };
 		B54EBEAD1E168554001BB53C /* SwiftyJSONURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */; };
@@ -66,6 +70,8 @@
 		B5A923A71E17354000C36D9C /* MediaDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A923A61E17354000C36D9C /* MediaDataStore.swift */; };
 		B5AC74CF1E14359E0042D21D /* MediaItem.json in Resources */ = {isa = PBXBuildFile; fileRef = B5AC74CE1E14359E0042D21D /* MediaItem.json */; };
 		B5B097C01E4FBA6D003250BE /* MediaFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B097BF1E4FBA6D003250BE /* MediaFeed.swift */; };
+		B5B4EEAB1EC051CE00B9ADDB /* FollowRequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4EEAA1EC051CE00B9ADDB /* FollowRequestsManager.swift */; };
+		B5B4EEAD1EC051E000B9ADDB /* FollowRequestsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4EEAC1EC051E000B9ADDB /* FollowRequestsManagerTests.swift */; };
 		B5BEC8FF1E17CF63000C3870 /* MockMediaDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */; };
 		B5BEC9031E17DF80000C3870 /* MediaListWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */; };
 		B5BEC9051E17DFFD000C3870 /* FeedWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEC9041E17DFFD000C3870 /* FeedWebStore.swift */; };
@@ -130,6 +136,7 @@
 		B50AD9A61E119C9D00F46119 /* InstagramDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstagramDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50AD9AD1E119C9D00F46119 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B50AD9E41E14123A00F46119 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B5157B321EBE41A90084F255 /* UsersDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersDataStore.swift; sourceTree = "<group>"; };
 		B51D7B2C1E15E5B000DF5599 /* APIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		B51D7B2F1E15E5D200DF5599 /* HTTPConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPConnection.swift; sourceTree = "<group>"; };
 		B51D7B311E15E5F100DF5599 /* APIConnectionRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConnectionRequestBuilder.swift; sourceTree = "<group>"; };
@@ -137,12 +144,15 @@
 		B51D7B371E15E66E00DF5599 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		B51D7B391E15E6A800DF5599 /* InstagramData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramData.swift; sourceTree = "<group>"; };
 		B51D7B3F1E15F04200DF5599 /* FeedManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedManager.swift; sourceTree = "<group>"; };
+		B51FBBC11EBF905F00697659 /* ReliableSwitchRequestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReliableSwitchRequestsManager.swift; sourceTree = "<group>"; };
+		B51FBBC31EBF906C00697659 /* ReliableSwitchRequestsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReliableSwitchRequestsManagerTests.swift; sourceTree = "<group>"; };
 		B53692F91E1438E0000246A7 /* SwiftToolbox.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftToolbox.xcodeproj; path = "/Users/ben/PersonalDocuments/iPhone Dev/Instagram/InstagramApp/../Submodules/SwiftToolbox/SwiftToolbox.xcodeproj"; sourceTree = "<absolute>"; };
 		B53693271E144637000246A7 /* UserFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFetcher.swift; sourceTree = "<group>"; };
 		B53693321E15502D000246A7 /* APICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICommunicator.swift; sourceTree = "<group>"; };
 		B53800F81E45F42900C132F2 /* GappedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GappedList.swift; sourceTree = "<group>"; };
 		B53800FB1E45F51300C132F2 /* GappedListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GappedListTests.swift; sourceTree = "<group>"; };
 		B53800FE1E45F59F00C132F2 /* StubbedModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StubbedModels.swift; sourceTree = "<group>"; };
+		B54564231EBE43590020B009 /* UsersDataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersDataStoreTests.swift; sourceTree = "<group>"; };
 		B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDateTests.swift; sourceTree = "<group>"; };
 		B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDimensionsTests.swift; sourceTree = "<group>"; };
 		B54EBEAC1E168554001BB53C /* SwiftyJSONURLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONURLTests.swift; sourceTree = "<group>"; };
@@ -176,6 +186,8 @@
 		B5A923A61E17354000C36D9C /* MediaDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaDataStore.swift; sourceTree = "<group>"; };
 		B5AC74CE1E14359E0042D21D /* MediaItem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MediaItem.json; sourceTree = "<group>"; };
 		B5B097BF1E4FBA6D003250BE /* MediaFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaFeed.swift; sourceTree = "<group>"; };
+		B5B4EEAA1EC051CE00B9ADDB /* FollowRequestsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowRequestsManager.swift; sourceTree = "<group>"; };
+		B5B4EEAC1EC051E000B9ADDB /* FollowRequestsManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowRequestsManagerTests.swift; sourceTree = "<group>"; };
 		B5BEC8FB1E17CEA4000C3870 /* MediaListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListTests.swift; sourceTree = "<group>"; };
 		B5BEC8FD1E17CF5F000C3870 /* MockMediaDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMediaDataStore.swift; sourceTree = "<group>"; };
 		B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaListWebStore.swift; sourceTree = "<group>"; };
@@ -288,9 +300,19 @@
 			path = InstagramDataTests;
 			sourceTree = "<group>";
 		};
+		B5157B301EBE419A0084F255 /* Users Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B5157B321EBE41A90084F255 /* UsersDataStore.swift */,
+				B54564231EBE43590020B009 /* UsersDataStoreTests.swift */,
+			);
+			name = "Users Manager";
+			sourceTree = "<group>";
+		};
 		B51D7B351E15E61900DF5599 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B51FBBBF1EBF905100697659 /* ReliableRequestManager */,
 				B5A923841E16C78400C36D9C /* APICommunicator */,
 				B5A923851E16C78B00C36D9C /* APIConnection */,
 				B5A923861E16C79200C36D9C /* APIConnectionRequestBuilder */,
@@ -303,6 +325,8 @@
 		B51D7B361E15E63C00DF5599 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B5B4EEA81EC051B500B9ADDB /* FollowRequestsManager */,
+				B5157B301EBE419A0084F255 /* Users Manager */,
 				B5B097C91E4FD268003250BE /* MediaList */,
 				B57FE3631E4A717A00555CD5 /* Media Manager */,
 				B58AC0171E45FF1F00A01783 /* CommentsManger */,
@@ -328,6 +352,15 @@
 				B5D32CB11E43E7CE00BA7DF8 /* MediaItemComment.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		B51FBBBF1EBF905100697659 /* ReliableRequestManager */ = {
+			isa = PBXGroup;
+			children = (
+				B51FBBC11EBF905F00697659 /* ReliableSwitchRequestsManager.swift */,
+				B51FBBC31EBF906C00697659 /* ReliableSwitchRequestsManagerTests.swift */,
+			);
+			name = ReliableRequestManager;
 			sourceTree = "<group>";
 		};
 		B53692F81E1438D3000246A7 /* Subprojects */ = {
@@ -468,6 +501,15 @@
 				B5BEC9021E17DF80000C3870 /* MediaListWebStore.swift */,
 			);
 			name = MediaList;
+			sourceTree = "<group>";
+		};
+		B5B4EEA81EC051B500B9ADDB /* FollowRequestsManager */ = {
+			isa = PBXGroup;
+			children = (
+				B5B4EEAA1EC051CE00B9ADDB /* FollowRequestsManager.swift */,
+				B5B4EEAC1EC051E000B9ADDB /* FollowRequestsManagerTests.swift */,
+			);
+			name = FollowRequestsManager;
 			sourceTree = "<group>";
 		};
 		B5BEC9001E17D666000C3870 /* MediaList */ = {
@@ -740,13 +782,16 @@
 			files = (
 				B5BEC9051E17DFFD000C3870 /* FeedWebStore.swift in Sources */,
 				B506A0941E142B1400EEA147 /* SwiftyJSONDate.swift in Sources */,
+				B5B4EEAB1EC051CE00B9ADDB /* FollowRequestsManager.swift in Sources */,
 				B5DF5B621E3CFD9500FA6FF4 /* LikeReqestsManager.swift in Sources */,
 				B58AC0211E462F3400A01783 /* CommentsList.swift in Sources */,
 				B51D7B381E15E66E00DF5599 /* AuthManager.swift in Sources */,
 				B53693331E15502D000246A7 /* APICommunicator.swift in Sources */,
+				B5157B331EBE41A90084F255 /* UsersDataStore.swift in Sources */,
 				B5BEC90D1E1816F3000C3870 /* MediaListTableRow.swift in Sources */,
 				B559CD7F1E1DAC1400745859 /* UserTableRow.swift in Sources */,
 				B57FE3661E4A718800555CD5 /* MediaManager.swift in Sources */,
+				B51FBBC21EBF905F00697659 /* ReliableSwitchRequestsManager.swift in Sources */,
 				B506A08E1E14291600EEA147 /* MediaItem.swift in Sources */,
 				B506A0961E142D6300EEA147 /* SwiftyJSONDimensions.swift in Sources */,
 				B50AD9E51E14123A00F46119 /* User.swift in Sources */,
@@ -780,8 +825,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B4EEAD1EC051E000B9ADDB /* FollowRequestsManagerTests.swift in Sources */,
+				B54564241EBE43590020B009 /* UsersDataStoreTests.swift in Sources */,
 				B54EBEAD1E168554001BB53C /* SwiftyJSONURLTests.swift in Sources */,
 				B54EBEC81E16BEDE001BB53C /* AuthManagerLogoutTests.swift in Sources */,
+				B51FBBC41EBF906C00697659 /* ReliableSwitchRequestsManagerTests.swift in Sources */,
 				B54EBEA81E167D4E001BB53C /* SwiftyJSONDateTests.swift in Sources */,
 				B54EBEC31E16BC02001BB53C /* MockAPICommunicator.swift in Sources */,
 				B54EBEBC1E16B660001BB53C /* MockAPIConnection.swift in Sources */,

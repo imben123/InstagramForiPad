@@ -34,7 +34,9 @@ extension MediaFeedGridViewDataSource: MediaGridViewCellUserActionDelegate {
     
     func mediaGridViewCellOwnerPressed(_ mediaGridViewCell: MediaGridViewCell) {
         let mediaId = mediaGridViewCell.currentItem!.id
-        let mediaItem = self.mediaItem(at: indexOfItem(with: mediaId)!)
-        userActionDelegate?.mediaGridViewDataSource(self, userPressOwnerOfMediaItem: mediaItem)
+        if let index = indexOfItem(with: mediaId) {
+            let mediaItem = self.mediaItem(at: index)
+            userActionDelegate?.mediaGridViewDataSource(self, userPressOwnerOfMediaItem: mediaItem)
+        }
     }
 }

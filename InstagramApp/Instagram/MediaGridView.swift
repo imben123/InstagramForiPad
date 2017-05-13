@@ -8,6 +8,7 @@
 
 import UIKit
 import InstagramData
+import SwiftToolbox
 
 struct MediaGridViewItem: Equatable {
     let id: String
@@ -27,28 +28,29 @@ protocol MediaGridViewDataSource: UICollectionViewDataSource {
     func mediaGridViewNeedsMoreMedia(_ sender: MediaGridView)
     func mediaGridViewNeedsUpdateVisibleCells(_ sender: MediaGridView)
     func mediaGridView(_ sender: MediaGridView, mediaItemAt index: Int) -> MediaItem
-    func mediaGridView(_ sender: MediaGridView, indexOfItemWith id: String) -> Int?
+    func mediaGridView(_ sender: MediaGridView, indexPathOfItemWith id: String) -> IndexPath?
 }
 
 protocol MediaGridViewDelegate: class {
     func mediaGridView(_ sender: MediaGridView, userTappedCellForItem mediaItem: MediaItem, imageView: UIImageView)
+    func mediaGridView(_ sender: MediaGridView,
+                       layout collectionViewLayout: UICollectionViewLayout,
+                       sizeForItemAt indexPath: IndexPath) -> CGSize
 }
 
 class MediaGridView: UICollectionView {
 
     static let reuseIdentifier = "cell"
+
     static let preferreredMinimumItemSize: CGFloat = 300
     var minItemSize: CGFloat {
         return min(width, min(height, MediaGridView.preferreredMinimumItemSize))
     }
     
     weak var mediaGridViewDelegate: MediaGridViewDelegate?
-    
-    var mediaGridViewDataSource: MediaGridViewDataSource? {
-        return dataSource as? MediaGridViewDataSource
-    }
+    weak var mediaGridViewDataSource: MediaGridViewDataSource?
 
-    fileprivate var flowLayout: UICollectionViewFlowLayout {
+    var flowLayout: UICollectionViewFlowLayout {
         return self.collectionViewLayout as! UICollectionViewFlowLayout
     }
     
@@ -59,7 +61,10 @@ class MediaGridView: UICollectionView {
         layout.minimumInteritemSpacing = 2.0
         layout.minimumLineSpacing = 2.0
         super.init(frame: .zero, collectionViewLayout: layout)
-        self.register(UINib(nibName: "MediaGridViewCell", bundle: nil), forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
+        
+        self.register(UINib(nibName: "MediaGridViewCell", bundle: nil),
+                      forCellWithReuseIdentifier: MediaGridView.reuseIdentifier)
+        
         self.delegate = self
     }
     
@@ -68,8 +73,8 @@ class MediaGridView: UICollectionView {
     }
     
     func imageViewForMediaItem(_ mediaItem: MediaItem) -> UIImageView? {
-        if let index = mediaGridViewDataSource?.mediaGridView(self, indexOfItemWith: mediaItem.id) {
-            let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? MediaGridViewCell
+        if let indexPath = mediaGridViewDataSource?.mediaGridView(self, indexPathOfItemWith: mediaItem.id) {
+            let cell = cellForItem(at: indexPath) as? MediaGridViewCell
             return cell?.imageView
         }
         return nil
@@ -87,7 +92,9 @@ extension MediaGridView {
     }
     
     func resetScrollPosition(to indexPath: IndexPath?, animated: Bool = false) {
-        guard let indexPath = indexPath else { return }
+        guard let indexPath = indexPath,
+            numberOfSections > indexPath.section,
+            numberOfItems(inSection: indexPath.section) > indexPath.item else { return }
         
         if flowLayout.scrollDirection == .horizontal {
             scrollToItem(at: indexPath, at: .left, animated: animated)
@@ -99,7 +106,8 @@ extension MediaGridView {
     func firstVisibleIndexPath() -> IndexPath? {
         var firstIndexPath = indexPathsForVisibleItems.first
         for indexPath in indexPathsForVisibleItems {
-            if indexPath.row < firstIndexPath!.row {
+            if indexPath.section < firstIndexPath!.section ||
+                indexPath.row < firstIndexPath!.row {
                 firstIndexPath = indexPath
             }
         }
@@ -111,8 +119,10 @@ extension MediaGridView {
             if position + itemSize < contentInset.top {
                 let numberOfItemsInRow = Int((width / itemSize).rounded(.down))
                 let newItemIndex = firstIndexPath.item + numberOfItemsInRow
-                if newItemIndex < numberOfItems(inSection: 0) {
+                if newItemIndex < numberOfItems(inSection: firstIndexPath.section) {
                     return IndexPath(item: newItemIndex, section: firstIndexPath.section)
+                } else if firstIndexPath.section + 1 < numberOfSections {
+                    return IndexPath(item: 0, section: firstIndexPath.section + 1)
                 }
             }
         }
@@ -174,8 +184,20 @@ extension MediaGridView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let mediaItem = mediaGridViewDataSource!.mediaGridView(self, mediaItemAt: indexPath.item)
-        let cell = collectionView.cellForItem(at: indexPath) as! MediaGridViewCell
-        mediaGridViewDelegate?.mediaGridView(self, userTappedCellForItem: mediaItem, imageView:cell.imageView)
+        if let cell = collectionView.cellForItem(at: indexPath) as? MediaGridViewCell {
+            mediaGridViewDelegate?.mediaGridView(self, userTappedCellForItem: mediaItem, imageView:cell.imageView)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if let mediaGridViewDelegate = mediaGridViewDelegate {
+            return mediaGridViewDelegate.mediaGridView(self, layout: collectionViewLayout, sizeForItemAt: indexPath)
+        }
+        
+        return flowLayout.itemSize
     }
     
 }

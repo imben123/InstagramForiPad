@@ -39,7 +39,7 @@ public struct MediaItem: Equatable {
         
         date = json["date"].dateValue
         dimensions = json["dimensions"].sizeValue
-        owner = User(jsonDictionary: json["owner"].dictionaryObject!)
+        owner = User(json: json["owner"])
         code = json["code"].stringValue
         isVideo = json["is_video"].boolValue
         
@@ -60,7 +60,7 @@ public struct MediaItem: Equatable {
     
     init?(jsonDictionary: [String: Any]?, original: MediaItem) {
         
-        guard let jsonDictionary = jsonDictionary else {
+        guard let jsonDictionary = jsonDictionary, jsonDictionary.count > 1 else {
             return nil
         }
         
@@ -70,7 +70,7 @@ public struct MediaItem: Equatable {
         
         date = json["date"].dateValue
         dimensions = json["dimensions"].sizeValue
-        owner = User(jsonDictionary: json["owner"].dictionaryObject!)
+        owner = User(json: json["owner"])
         code = json["code"].stringValue
         isVideo = json["is_video"].boolValue
         

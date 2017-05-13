@@ -50,7 +50,19 @@ class APIConnection {
         guard let result = connection.makeSynchronousRequest(request) else {
             return .noInternetResponse
         }
+        
+        if result.responseCode != 200 {
+            logError(forRequestTo: path, response: result)
+        }
+        
         return result
+    }
+    
+    private func logError(forRequestTo path: String, response: APIResponse) {
+        print()
+        print("Failed web request to path: \(path)")
+        print("Response: \(response)")
+        print()
     }
     
     private func bootstrapIfNeeded() -> APIResponse? {

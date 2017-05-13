@@ -42,7 +42,7 @@ extension MainFeedViewController: MediaFeedGridViewDataSourceUserActionDelegate 
     
     func mediaGridViewDataSource(_ sender: MediaFeedGridViewDataSource, userPressOwnerOfMediaItem mediaItem: MediaItem) {
         let user = mediaItem.owner
-        let viewController = UserMediaFeedViewController(userId: user.id, username: user.username)
+        let viewController = UserMediaFeedViewController(user: user)
         navigationController?.pushViewController(viewController, animated: true)
     }
     

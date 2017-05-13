@@ -10,12 +10,10 @@ import Foundation
 import SwiftToolbox
 import Reachability
 
-public class LikeReqestsManager {
+public class LikeReqestsManager: ReliableSwitchRequestsManager {
     
     let communicator: APICommunicator
     let mediaDataStore: MediaDataStore
-    let reliableNetworkTaskManager: ReliableNetworkTaskManager
-    var pendingTasks: [String:Bool] = [:] // Map of id's to like/unlike request
     
     convenience init(communicator: APICommunicator, mediaDataStore: MediaDataStore) {
         let queue = DispatchQueue(label: "LikeReqestsManagerQueue")
@@ -25,32 +23,26 @@ public class LikeReqestsManager {
                                                                     taskDispatcher: taskDispatcher)
         self.init(communicator: communicator,
                   mediaDataStore: mediaDataStore,
+                  taskDispatcher: taskDispatcher,
                   reliableNetworkTaskManager: reliableNetworkTaskManager)
     }
     
-    init(communicator: APICommunicator, mediaDataStore: MediaDataStore, reliableNetworkTaskManager: ReliableNetworkTaskManager) {
+    init(communicator: APICommunicator,
+         mediaDataStore: MediaDataStore,
+         taskDispatcher: TaskDispatcher,
+         reliableNetworkTaskManager: ReliableNetworkTaskManager) {
+        
         self.communicator = communicator
-        self.reliableNetworkTaskManager = reliableNetworkTaskManager
         self.mediaDataStore = mediaDataStore
+        super.init(taskDispatcher: taskDispatcher,
+                   reliableNetworkTaskManager: reliableNetworkTaskManager,
+                   switchOnCall: communicator.likePost(with:),
+                   switchOffCall: communicator.unlikePost(with:))
     }
     
     public func likePost(with id: String, completion: (()->())? = nil) {
         
-        pendingTasks[id] = true
-        
-        reliableNetworkTaskManager.performTask { (failure) in
-            
-            guard self.pendingTasks[id] == true else {
-                return
-            }
-            
-            let response = self.communicator.likePost(with: id)
-            guard response.succeeded else {
-                return failure()
-            }
-            
-            self.pendingTasks.removeValue(forKey: id)
-            
+        super.switchOn(for: id) { 
             self.mediaDataStore.loadMediaItem(with: id, completion: { (mediaItem) in
                 if let mediaItem = mediaItem {
                     var mediaItem = mediaItem
@@ -63,21 +55,7 @@ public class LikeReqestsManager {
     
     public func unlikePost(with id: String, completion: (()->())? = nil) {
         
-        pendingTasks[id] = false
-        
-        reliableNetworkTaskManager.performTask { (failure) in
-            
-            guard self.pendingTasks[id] == false else {
-                return
-            }
-            
-            let response = self.communicator.unlikePost(with: id)
-            guard response.succeeded else {
-                return failure()
-            }
-            
-            self.pendingTasks.removeValue(forKey: id)
-            
+        super.switchOff(for: id) { 
             self.mediaDataStore.loadMediaItem(with: id, completion: { (mediaItem) in
                 if let mediaItem = mediaItem {
                     var mediaItem = mediaItem

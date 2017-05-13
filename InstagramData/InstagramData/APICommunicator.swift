@@ -10,6 +10,20 @@ import Foundation
 
 class APICommunicator {
     
+    static let fullUserProperties = "id,profile_pic_url,full_name,username,biography,external_url," +
+                                    "followed_by{count},follows{count},followed_by_viewer,follows_viewer,media{count}"
+    
+    static let fullCommentProperties: String = "id,text,user{\(fullUserProperties)}"
+
+    static let fullMediaProperties = "id,date,dimensions{height,width},owner{\(fullUserProperties)}," +
+                                     "code,is_video,caption,display_src,thumbnail_src,comments_disabled," +
+                                     "comments.last(4){count,nodes{\(fullCommentProperties)},page_info}," +
+                                     "likes{count,viewer_has_liked}"
+    
+    let fullUserProperties: String = APICommunicator.fullUserProperties
+    let fullMediaProperties: String = APICommunicator.fullMediaProperties
+    let fullCommentProperties: String = APICommunicator.fullCommentProperties
+    
     private let connection: APIConnection
     
     convenience init() {
@@ -45,7 +59,7 @@ class APICommunicator {
         }
         
         let payload = [
-            "q": "ig_me(){feed{media.\(positionIndicator){nodes{id,attribution,caption,code,comments.last(4){count,nodes{id,created_at,text,user{id,profile_pic_url,username}},page_info},comments_disabled,date,dimensions{height,width},display_src,thumbnail_src,is_video,likes{count,nodes{user{id,profile_pic_url,username}},viewer_has_liked},location{id,has_public_page,name,slug},owner{id,blocked_by_viewer,followed_by_viewer,full_name,has_blocked_viewer,is_private,profile_pic_url,requested_by_viewer,username},usertags{nodes{user{username},x,y}},video_url,video_views},page_info}},id,profile_pic_url,username}"
+            "q": "ig_me(){feed{media.\(positionIndicator){nodes{\(fullMediaProperties)},page_info}},id,profile_pic_url,username}"
         ]
         
         let response = self.connection.makeRequest(path: "/query/", payload: payload)
@@ -62,7 +76,7 @@ class APICommunicator {
         }
         
         let payload = [
-            "q": "ig_user(\(userId)){media.\(positionIndicator){count,nodes{caption,code,comments.last(4){count,nodes{id,created_at,text,user{id,profile_pic_url,username}},page_info},comments_disabled,date,dimensions{height,width},display_src,id,is_video,likes{count},owner{id,blocked_by_viewer,followed_by_viewer,full_name,has_blocked_viewer,is_private,profile_pic_url,requested_by_viewer,username},thumbnail_src,video_views},page_info}}"
+            "q": "ig_user(\(userId)){media.\(positionIndicator){count,nodes{\(fullMediaProperties)},page_info}}"
         ]
         
         let response = self.connection.makeRequest(path: "/query/", payload: payload)
@@ -70,7 +84,12 @@ class APICommunicator {
     }
     
     func getPost(with code: String) -> APIResponse {
-        let response = self.connection.makeRequest(path: "/p/\(code)/?__a=1", payload: nil)
+        
+        let payload = [
+            "q": "ig_shortcode(\(code)){\(fullMediaProperties)}"
+        ]
+        
+        let response = self.connection.makeRequest(path: "/query/", payload: payload)
         return response
     }
     
@@ -89,10 +108,32 @@ class APICommunicator {
     func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String) -> APIResponse {
         
         let payload = [
-            "q": "ig_shortcode(\(mediaCode)){comments.before(\(previousIndex),\(numberOfComments)){count,nodes{id,created_at,text,user{id,profile_pic_url,username}},page_info}}"
+            "q": "ig_shortcode(\(mediaCode)){comments.before(\(previousIndex),\(numberOfComments)){count,nodes{\(fullCommentProperties)},page_info}}"
         ]
         
         let response = self.connection.makeRequest(path: "/query/", payload: payload)
+        return response
+    }
+    
+    func getUser(for id: String) -> APIResponse {
+        
+        let payload = [
+            "q": "ig_user(\(id)){\(fullUserProperties)}"
+        ]
+        
+        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+        return response
+    }
+    
+    func followUser(withId userId: String) -> APIResponse {
+        let path = "/web/friendships/\(userId)/follow/"
+        let response = self.connection.makeRequest(path: path, payload: [:])
+        return response
+    }
+    
+    func unfollowUser(withId userId: String) -> APIResponse {
+        let path = "/web/friendships/\(userId)/unfollow/"
+        let response = self.connection.makeRequest(path: path, payload: [:])
         return response
     }
 }

@@ -12,12 +12,12 @@ import SDWebImage
 
 class MediaFeedViewController: UIViewController {
     
-    private var mediaFeed: MediaFeed
+    var mediaFeed: MediaFeed
     var dataSource: MediaFeedGridViewDataSource!
     var prefetchingDelegate: MediaFeedPrefetchingDelegate!
 
-    fileprivate var mediaGridView: MediaGridView!
-    fileprivate var statusLabel: UILabel!
+    var mediaGridView: MediaGridView!
+    var statusLabel: UILabel!
     
     fileprivate var mediaItemTransitioningDelegate: MediaItemViewControllerTransitioningDelegate?
     fileprivate var openMediaItem: MediaItem?
@@ -46,13 +46,18 @@ class MediaFeedViewController: UIViewController {
     
     func createMediaGridView(contentSize: CGSize) -> MediaGridView {
         let result = MediaGridView()
-        result.dataSource = createMediaDataSource(for: result)
+        
+        createMediaDataSource(for: result)
+        result.mediaGridViewDataSource = dataSource
+        result.dataSource = dataSource
+        
         result.mediaGridViewDelegate = self
         result.backgroundColor = .clear
+        
         return result
     }
     
-    func createMediaDataSource(for gridView: MediaGridView) -> MediaFeedGridViewDataSource {
+    func createMediaDataSource(for gridView: MediaGridView) {
         
         dataSource = MediaFeedGridViewDataSource(mediaFeed: mediaFeed, mediaGridView: gridView)
         dataSource.observer = self
@@ -60,8 +65,6 @@ class MediaFeedViewController: UIViewController {
         prefetchingDelegate = MediaGridViewPrefetchingDelegate(mediaGridView: gridView,
                                                                      dataSource: dataSource)
         mediaFeed.prefetchingDelegate = prefetchingDelegate
-
-        return dataSource
     }
     
     func createstatusLabel() -> UILabel {
@@ -85,9 +88,10 @@ class MediaFeedViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         let oldFrame = mediaGridView.frame
-        mediaGridView.frame = view.bounds
         if oldFrame == .zero {
+            mediaGridView.frame = view.bounds
             initializeMediaGridView(with: mediaGridView.frame.size)
+            mediaGridView.resetScrollPosition(to: IndexPath(item: 0, section: 0))
         }
         
         statusLabel.sizeToFit()
@@ -98,6 +102,7 @@ class MediaFeedViewController: UIViewController {
         mediaGridView.frame = CGRect(origin: .zero, size: contentSize)
         mediaGridView.contentSize = contentSize
         mediaGridView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
+        mediaGridView.scrollIndicatorInsets = mediaGridView.contentInset
         mediaGridView.setScrollDirection()
         mediaGridView.updateImageSize()
         mediaGridView.collectionViewLayout.invalidateLayout()
@@ -109,8 +114,19 @@ class MediaFeedViewController: UIViewController {
         navigationController?.setViewControllers([LoginViewController()], animated: true)
     }
     
+    func profilePictureTapped(forUser user: User) {
+        dismiss(animated: true) {
+            let userMediaFeedViewController = UserMediaFeedViewController(user: user)
+            self.navigationController?.pushViewController(userMediaFeedViewController, animated: true)
+        }
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        
+        guard let mediaGridView = mediaGridView else {
+            return
+        }
         
         let currentOffset = mediaGridView.firstVisibleIndexPath()
         DispatchQueue.main.async {
@@ -162,17 +178,17 @@ extension MediaFeedViewController: MediaGridViewDelegate {
         viewController.transitioningDelegate = mediaItemTransitioningDelegate
         viewController.modalPresentationStyle = .custom
         
-        viewController.onProfilePictureTapped = { [weak self] (userId, username) in
-            self?.profilePictureTapped(forUserWithId: userId, username: username)
+        viewController.onProfilePictureTapped = { [weak self] (user) in
+            self?.profilePictureTapped(forUser: user)
         }
         
         present(viewController, animated: true)
     }
     
-    func profilePictureTapped(forUserWithId userId: String, username: String) {
-        dismiss(animated: true) {
-            let userMediaFeedViewController = UserMediaFeedViewController(userId: userId, username: username)
-            self.navigationController?.pushViewController(userMediaFeedViewController, animated: true)
-        }
+    func mediaGridView(_ sender: MediaGridView,
+                       layout collectionViewLayout: UICollectionViewLayout,
+                       sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return sender.flowLayout.itemSize
     }
 }

@@ -12,14 +12,11 @@ public class MediaItemCommentTableRow: Object {
     
     dynamic var id: String = ""
     dynamic var text: String = ""
-    dynamic var userId: String = ""
-    dynamic var userName: String = ""
-    dynamic var profilePicture: String = ""
+    dynamic var user: UserTableRow?
     
     public override static func primaryKey() -> String? {
         return "id"
     }
-
 }
 
 extension MediaItemCommentTableRow {
@@ -29,9 +26,7 @@ extension MediaItemCommentTableRow {
         
         self.id = mediaItem.id
         self.text = mediaItem.text
-        self.userId = mediaItem.userId
-        self.userName = mediaItem.userName
-        self.profilePicture = mediaItem.profilePicture.absoluteString
+        self.user = UserTableRow(mediaItem.user)
     }
 }
 
@@ -40,8 +35,6 @@ extension MediaItemComment {
     init(_ mediaItemTableRow: MediaItemCommentTableRow) {
         self.id = mediaItemTableRow.id
         self.text = mediaItemTableRow.text
-        self.userId = mediaItemTableRow.userId
-        self.userName = mediaItemTableRow.userName
-        self.profilePicture = URL(string: mediaItemTableRow.profilePicture)!
+        self.user = User(mediaItemTableRow.user!)
     }
 }

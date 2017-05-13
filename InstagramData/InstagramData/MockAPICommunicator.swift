@@ -23,6 +23,14 @@ class MockAPICommunicator: APICommunicator {
     var unlikePostCallCount: Int = 0
     var unlikePostParameter: String? = nil
     
+    var followUserCallCount: Int = 0
+    var followUserParameter: String? = nil
+    
+    var unfollowUserCallCount: Int = 0
+    var unfollowUserParameter: String? = nil
+    
+    var getUserCallCount: Int = 0
+    
     override var authenticated: Bool {
         return testAuthenticated
     }
@@ -54,6 +62,23 @@ class MockAPICommunicator: APICommunicator {
     }
     
     override func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String) -> APIResponse {
+        return testResponse
+    }
+    
+    override func getUser(for id: String) -> APIResponse {
+        getUserCallCount += 1
+        return testResponse
+    }
+    
+    override func followUser(withId userId: String) -> APIResponse {
+        followUserCallCount += 1
+        followUserParameter = userId
+        return testResponse
+    }
+    
+    override func unfollowUser(withId userId: String) -> APIResponse {
+        unfollowUserCallCount += 1
+        unfollowUserParameter = userId
         return testResponse
     }
 }

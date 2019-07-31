@@ -116,7 +116,7 @@ extension MediaFeedGridViewDataSource: MediaGridViewDataSource {
         let urls = visibleIndexPaths.map { indexPath -> URL in
             mediaItem(at: indexPath.item).display
         }
-        SDWebImagePrefetcher.shared().prefetchURLs(urls)
+        SDWebImagePrefetcher.shared.prefetchURLs(urls)
         
         // Make cell image high priority if the image doesn't already exist
         for indexPath in visibleIndexPaths {

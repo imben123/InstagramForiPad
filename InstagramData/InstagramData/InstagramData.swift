@@ -57,7 +57,7 @@ public class InstagramData {
     
     public func logout() {
         authManager.logout()
-        SDImageCache.shared().clearDisk()
+        SDImageCache.shared.clearDisk()
         try! Realm().write { try! Realm().deleteAll() }
     }
     

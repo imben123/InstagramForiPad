@@ -21,13 +21,13 @@ class MediaGridViewPrefetchingDelegate: MediaFeedPrefetchingDelegate {
     
     func mediaFeed(_ mediaFeed: MediaFeed, prefetchDataFor mediaItems: [MediaItem]) {
         let urls = mediaItems.map({ $0.thumbnail })
-        SDWebImagePrefetcher.shared().prefetchURLs(urls)
+        SDWebImagePrefetcher.shared.prefetchURLs(urls)
     }
     
     func mediaFeed(_ mediaFeed: MediaFeed, removeCachedDataFor mediaItems: [MediaItem]) {
         for media in mediaItems {
-            let cacheKey = SDWebImageManager.shared().cacheKey(for: media.thumbnail)
-            SDWebImageManager.shared().imageCache.removeImage(forKey: cacheKey, fromDisk: false)
+            let cacheKey = SDWebImageManager.shared.cacheKey(for: media.thumbnail)
+            SDWebImageManager.shared.imageCache.removeImage(forKey: cacheKey, cacheType: .memory)
         }
     }
     

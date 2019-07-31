@@ -10,9 +10,9 @@ import RealmSwift
 
 public class MediaItemCommentTableRow: Object {
     
-    dynamic var id: String = ""
-    dynamic var text: String = ""
-    dynamic var user: UserTableRow?
+    @objc dynamic var id: String = ""
+    @objc dynamic var text: String = ""
+    @objc dynamic var user: UserTableRow?
     
     public override static func primaryKey() -> String? {
         return "id"

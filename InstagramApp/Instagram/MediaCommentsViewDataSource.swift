@@ -113,8 +113,8 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     func setProfilePicture(for cell: MediaCommentsViewCell, url: URL) {
         
         cell.profilePictureURL = url
-        SDWebImageManager.shared().downloadImage(with: url, options: [], progress: nil)
-        { (image, error, cacheType, finished, url) in
+        SDWebImageManager.shared.loadImage(with: url, options: [], progress: nil)
+        { (image, data, error, cacheType, finished, url) in
             if let image = image, cell.profilePictureURL == url {
                 cell.profilePicture.image = image
             }
@@ -127,15 +127,15 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     
     func attributedString(username: String, commentText: String) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: "\(username) \(commentText)")
-        let usernameLength = username.characters.count
-        attributedString.addAttribute(NSFontAttributeName,
+        let usernameLength = username.count
+        attributedString.addAttribute(NSAttributedString.Key.font,
                                       value: UIFont.boldSystemFont(ofSize: 17),
                                       range: NSRange(location: 0, length: usernameLength))
         return attributedString
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

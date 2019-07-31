@@ -9,20 +9,20 @@
 import RealmSwift
 
 class UserTableRow: Object {
-    dynamic var id: String = ""
+    @objc dynamic var id: String = ""
     
-    dynamic var profilePictureURL: String = ""
-    dynamic var fullName: String = ""
-    dynamic var username: String = ""
-    dynamic var biography: String = ""
-    dynamic var externalURL: String?
+    @objc dynamic var profilePictureURL: String = ""
+    @objc dynamic var fullName: String = ""
+    @objc dynamic var username: String = ""
+    @objc dynamic var biography: String = ""
+    @objc dynamic var externalURL: String?
     
-    dynamic var mediaCount: Int = 0
-    dynamic var followedByCount: Int = 0
-    dynamic var followsCount: Int = 0
+    @objc dynamic var mediaCount: Int = 0
+    @objc dynamic var followedByCount: Int = 0
+    @objc dynamic var followsCount: Int = 0
 
-    dynamic var followedByViewer = false
-    dynamic var followsViewer = false
+    @objc dynamic var followedByViewer = false
+    @objc dynamic var followsViewer = false
 
     override static func primaryKey() -> String? {
         return "id"

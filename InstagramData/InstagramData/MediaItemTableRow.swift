@@ -10,32 +10,32 @@ import Foundation
 import RealmSwift
 
 class MediaDataStoreEndCursor: Object {
-    dynamic var value: String = ""
-    dynamic var mediaOrigin: String = ""
+    @objc dynamic var value: String = ""
+    @objc dynamic var mediaOrigin: String = ""
 }
 
 class MediaItemTableRow: Object {
     
-    dynamic var id: String = ""
+    @objc dynamic var id: String = ""
     
-    dynamic var date: Date = Date()
-    dynamic var dimensionsWidth: Int = 0
-    dynamic var dimensionsHeight: Int = 0
-    dynamic var owner: UserTableRow?
-    dynamic var code: String = ""
-    dynamic var isVideo: Bool = false
+    @objc dynamic var date: Date = Date()
+    @objc dynamic var dimensionsWidth: Int = 0
+    @objc dynamic var dimensionsHeight: Int = 0
+    @objc dynamic var owner: UserTableRow?
+    @objc dynamic var code: String = ""
+    @objc dynamic var isVideo: Bool = false
 
-    dynamic var caption: String?
+    @objc dynamic var caption: String?
 
-    dynamic var displayURL: String = ""
-    dynamic var thumbnailURL: String = ""
+    @objc dynamic var displayURL: String = ""
+    @objc dynamic var thumbnailURL: String = ""
     
-    dynamic var commentsDisabled: Bool = false
-    dynamic var commentsCount: Int = 0
-    dynamic var commentsStartCursor: String?
+    @objc dynamic var commentsDisabled: Bool = false
+    @objc dynamic var commentsCount: Int = 0
+    @objc dynamic var commentsStartCursor: String?
     let comments = List<MediaItemCommentTableRow>()
-    dynamic var likesCount: Int = 0
-    dynamic var viewerHasLiked: Bool = false
+    @objc dynamic var likesCount: Int = 0
+    @objc dynamic var viewerHasLiked: Bool = false
     
     override static func primaryKey() -> String? {
         return "id"

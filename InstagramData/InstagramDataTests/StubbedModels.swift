@@ -11,36 +11,36 @@ import Foundation
 
 extension User {
     init(id: String) {
-        self.id = id
-        self.profilePictureURL = URL(string: "https://google.com")!
-        self.fullName = "Full name"
-        self.username = "username"
-        self.biography = "This is a user biography"
-        self.externalURL = URL(string: "https://google.com")!
-        self.mediaCount = 123
-        self.followedByCount = 456
-        self.followsCount = 789
-        self.followedByViewer = true
-        self.followsViewer = true
+        self.init(id: id,
+                  profilePictureURL: URL(string: "https://google.com")!,
+                  fullName: "Full name",
+                  username: "username",
+                  biography: "This is a user biography",
+                  externalURL: URL(string: "https://google.com")!,
+                  mediaCount: 123,
+                  followedByCount: 456,
+                  followsCount: 789,
+                  followedByViewer: true,
+                  followsViewer: true)
     }
 }
 
 extension MediaItem {
     init(id: String, code: String = "code") {
-        self.id = id
-        self.date = Date(timeIntervalSince1970: 0)
-        self.dimensions = CGSize.zero
-        self.owner = User(id: "123")
-        self.code = "code"
-        self.isVideo = false
-        self.display = URL(string: "https://google.com")!
-        self.thumbnail = display
-        self.commentsDisabled = false
-        self.commentsCount = 0
-        self.commentsStartCursor = ""
-        self.likesCount = 0
-        self.viewerHasLiked = false
-        self.caption = nil
-        self.comments = []
+        self.init(id: id,
+                  date: Date(timeIntervalSince1970: 0),
+                  dimensions: .zero,
+                  owner: User(id: "123"),
+                  code: code,
+                  isVideo: false,
+                  caption: nil,
+                  display: URL(string: "https://google.com")!,
+                  thumbnail: URL(string: "https://google.com")!,
+                  commentsDisabled: false,
+                  commentsCount: 0,
+                  commentsStartCursor: "",
+                  comments: [],
+                  likesCount: 0,
+                  viewerHasLiked: false)
     }
 }

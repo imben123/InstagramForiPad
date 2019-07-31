@@ -41,7 +41,7 @@ class MediaItemViewController: UIViewController {
         super.loadView()
         
         let nib = Bundle.main.loadNibNamed("MediaItemView", owner: nil, options: [:])!
-        mediaItemView = nib.first as! MediaItemView
+        mediaItemView = nib.first as? MediaItemView
         mediaItemView.commentsView.delegate = self
         mediaItemView.mediaItem = mediaItem
         commentsDataSource.setComments(mediaItem)
@@ -90,10 +90,10 @@ extension MediaItemViewController: MediaCommentsViewDelegate {
 extension MediaItemViewController {
     
     fileprivate func downloadDisplayImage() {
-        SDWebImageManager.shared().downloadImage(with: mediaItem.display,
-                                                 options: SDWebImageOptions.highPriority,
-                                                 progress: nil)
-        { [weak self] (image, error, cacheType, finished, url) in
+        SDWebImageManager.shared.loadImage(with: mediaItem.display,
+                                           options: SDWebImageOptions.highPriority,
+                                           progress: nil)
+        { [weak self] (image, data, error, cacheType, finished, url) in
             
             if let image = image {
                 self?.gotFullResolutionImage = true
@@ -111,10 +111,10 @@ extension MediaItemViewController {
     }
     
     private func getImageFromCache(_ url: URL) -> UIImage? {
-        let cacheKey = SDWebImageManager.shared().cacheKey(for: url)
-        let cachedImage = SDImageCache.shared().imageFromMemoryCache(forKey: cacheKey)
+        let cacheKey = SDWebImageManager.shared.cacheKey(for: url)
+        let cachedImage = SDImageCache.shared.imageFromMemoryCache(forKey: cacheKey)
         if cachedImage == nil {
-            let cachedImage = SDImageCache.shared().imageFromDiskCache(forKey: cacheKey)
+            let cachedImage = SDImageCache.shared.imageFromDiskCache(forKey: cacheKey)
             return cachedImage
         }
         return cachedImage

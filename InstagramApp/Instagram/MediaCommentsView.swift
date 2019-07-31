@@ -47,7 +47,7 @@ class MediaCommentsView: UIVisualEffectView {
         let nib = UINib(nibName: "MediaCommentsViewCell", bundle: nil)
         tableView!.register(nib, forCellReuseIdentifier: MediaCommentsViewDataSource.cellReuseIdentifier)
         delegate?.commentsView(self, tableViewNeedsDataSource: tableView!)
-        tableView!.rowHeight = UITableViewAutomaticDimension
+        tableView!.rowHeight = UITableView.automaticDimension
         tableView!.estimatedRowHeight = 140
         tableView!.tableFooterView = UIView()
         tableView!.backgroundColor = .clear
@@ -85,7 +85,7 @@ class MediaCommentsViewCell: UITableViewCell {
 
 class MediaCommentsViewLoadMoreCommentsCell: UITableViewCell {
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         textLabel?.textAlignment = .center
         textLabel?.textColor = .blue

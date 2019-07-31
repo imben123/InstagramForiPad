@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class GappedListTableRow: Object {
-    dynamic var name: String = ""
+    @objc dynamic var name: String = ""
     let items = List<GappedListItemTableRow>()
 }
 
@@ -34,9 +34,9 @@ extension GappedListTableRow {
 }
 
 class GappedListItemTableRow: Object {
-    dynamic var id: String?
-    dynamic var isGap: Bool = false
-    dynamic var gapCursor: String?
+    @objc dynamic var id: String?
+    @objc dynamic var isGap: Bool = false
+    @objc dynamic var gapCursor: String?
 }
 
 extension GappedListItemTableRow {

@@ -78,17 +78,17 @@ extension UserDetailsCellContents {
     
     private func setImage(from url: URL, highPriority: Bool = false) {
 
-        let image = SDImageCache.shared().imageFromMemoryCache(forKey: url.absoluteString)
+        let image = SDImageCache.shared.imageFromMemoryCache(forKey: url.absoluteString)
         if let image = image {
             profilePictureView.image = image
             return
         }
         
         let options = highPriority ? SDWebImageOptions.highPriority : []
-        SDWebImageManager.shared().downloadImage(with: url,
-                                                 options: options,
-                                                 progress: nil)
-        { [weak self] (image, error, cacheType, finished, url) in
+        SDWebImageManager.shared.loadImage(with: url,
+                                           options: options,
+                                           progress: nil)
+        { [weak self] (image, data, error, cacheType, finished, url) in
             if image != nil {
                 self?.profilePictureView.image = image
             }

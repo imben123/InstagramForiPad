@@ -52,7 +52,7 @@ class MediaGridViewCellConfigurator {
     
     func setImage(for cell: MediaGridViewCell, highPriority: Bool = false) {
         let item = cell.currentItem!
-        let image = SDImageCache.shared().imageFromMemoryCache(forKey: item.url.absoluteString)
+        let image = SDImageCache.shared.imageFromMemoryCache(forKey: item.url.absoluteString)
         if let image = image {
             cell.imageView.image = image
             return
@@ -61,10 +61,10 @@ class MediaGridViewCellConfigurator {
         let cellDelegate = cellOperationsDelegate(for: cell)
         
         let options = highPriority ? SDWebImageOptions.highPriority : []
-        cellDelegate.imageDownloadOperation = SDWebImageManager.shared().downloadImage(with: item.url,
-                                                                                       options: options,
-                                                                                       progress: nil)
-        { [cellDelegate] (image, error, cacheType, finished, url) in
+        cellDelegate.imageDownloadOperation = SDWebImageManager.shared.loadImage(with: item.url,
+                                                                                 options: options,
+                                                                                 progress: nil)
+        { [cellDelegate] (image, data, error, cacheType, finished, url) in
             if image != nil {
                 self.reloadCellForItem(item)
             }
@@ -74,7 +74,7 @@ class MediaGridViewCellConfigurator {
     
     private func setProfilePictureImage(for cell: MediaGridViewCell) {
         let item = cell.currentItem!
-        let image = SDImageCache.shared().imageFromMemoryCache(forKey: item.profilePicture.absoluteString)
+        let image = SDImageCache.shared.imageFromMemoryCache(forKey: item.profilePicture.absoluteString)
         if let image = image {
             cell.profilePicture.image = image
             return
@@ -82,10 +82,10 @@ class MediaGridViewCellConfigurator {
         
         let cellDelegate = cellOperationsDelegate(for: cell)
         
-        cellDelegate.profilePictureDownloadOperation = SDWebImageManager.shared().downloadImage(with: item.profilePicture,
-                                                                                                options: [],
-                                                                                                progress: nil)
-        { [cellDelegate] (image, error, cacheType, finished, url) in
+        cellDelegate.profilePictureDownloadOperation = SDWebImageManager.shared.loadImage(with: item.profilePicture,
+                                                                                          options: [],
+                                                                                          progress: nil)
+        { [cellDelegate] (image, data, error, cacheType, finished, url) in
             if image != nil {
                 self.reloadCellForItem(item)
             }

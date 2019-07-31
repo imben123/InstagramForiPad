@@ -101,7 +101,7 @@ class MediaFeedViewController: UIViewController {
     private func initializeMediaGridView(with contentSize: CGSize) {
         mediaGridView.frame = CGRect(origin: .zero, size: contentSize)
         mediaGridView.contentSize = contentSize
-        mediaGridView.contentInset = UIEdgeInsetsMake(topLayoutGuide.length, 0, 0, 0)
+        mediaGridView.contentInset = UIEdgeInsets.init(top: topLayoutGuide.length, left: 0, bottom: 0, right: 0)
         mediaGridView.scrollIndicatorInsets = mediaGridView.contentInset
         mediaGridView.setScrollDirection()
         mediaGridView.updateImageSize()
@@ -185,9 +185,9 @@ extension MediaFeedViewController: MediaGridViewDelegate {
         present(viewController, animated: true)
     }
     
-    func mediaGridView(_ sender: MediaGridView,
-                       layout collectionViewLayout: UICollectionViewLayout,
-                       sizeForItemAt indexPath: IndexPath) -> CGSize {
+    @objc func mediaGridView(_ sender: MediaGridView,
+                             layout collectionViewLayout: UICollectionViewLayout,
+                             sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return sender.flowLayout.itemSize
     }

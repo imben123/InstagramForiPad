@@ -31,8 +31,7 @@ class MediaDataStore {
             
             for mediaItem in media {
                 let mediaItemTableRow = MediaItemTableRow(mediaItem)
-                realm.add(mediaItemTableRow, update: true)
-            
+                realm.add(mediaItemTableRow, update: .all)
             }
             
             try? realm.commitWrite()

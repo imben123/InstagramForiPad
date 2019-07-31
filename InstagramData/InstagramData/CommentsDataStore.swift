@@ -21,7 +21,7 @@ class CommentsDataStore {
             
             for comment in comments {
                 let commentRow = MediaItemCommentTableRow(comment)
-                realm.add(commentRow, update: true)
+                realm.add(commentRow, update: .all)
             }
             
             try? realm.commitWrite()

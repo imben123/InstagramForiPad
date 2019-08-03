@@ -103,7 +103,10 @@ extension MediaItemViewController {
     }
     
     func getThumbnailFromCache() -> UIImage? {
-        return self.getImageFromCache(mediaItem.thumbnail)
+        guard let result = getImageFromCache(mediaItem.thumbnail) else {
+            return nil
+        }
+        return result.cropToSquare()
     }
     
     func getDisplayImageFromCache() -> UIImage? {

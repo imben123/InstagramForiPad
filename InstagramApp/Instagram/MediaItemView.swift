@@ -95,9 +95,7 @@ class MediaItemView: UIView {
     }
     
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        
-        frame = CGRect(x: originX, y: originY, width: size.width, height: size.height)
-        
+                
         if let mediaItem = mediaItem {
             
             let imageSize = proportionalSize(mediaItem.dimensions,

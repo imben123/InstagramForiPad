@@ -11,6 +11,7 @@
 		B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AD9C31E119CBC00F46119 /* AppDelegate.swift */; };
 		B50AD9C61E119CBC00F46119 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50AD9C51E119CBC00F46119 /* Assets.xcassets */; };
 		B50AD9C91E119CBC00F46119 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50AD9C71E119CBC00F46119 /* LaunchScreen.storyboard */; };
+		B50D9F0122F6150F007DBA44 /* UIImage+Crop.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50D9F0022F6150F007DBA44 /* UIImage+Crop.swift */; };
 		B5157B2D1EBE3CF50084F255 /* profilePicturePlaceholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5157B2C1EBE3CF50084F255 /* profilePicturePlaceholder.jpg */; };
 		B5157B2F1EBE3F100084F255 /* UserDetailsCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5157B2E1EBE3F100084F255 /* UserDetailsCellConfigurator.swift */; };
 		B51D5C851E4286E700EE44BD /* MediaItemViewPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */; };
@@ -108,6 +109,7 @@
 		B50AD9C51E119CBC00F46119 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B50AD9C81E119CBC00F46119 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B50AD9CA1E119CBC00F46119 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B50D9F0022F6150F007DBA44 /* UIImage+Crop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Crop.swift"; path = "../../../../../../../System/Volumes/Data/Users/ben/Developer/Personal-iOS/Instagram/InstagramApp/Instagram/UIImage+Crop.swift"; sourceTree = "<group>"; };
 		B5157B2C1EBE3CF50084F255 /* profilePicturePlaceholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profilePicturePlaceholder.jpg; sourceTree = "<group>"; };
 		B5157B2E1EBE3F100084F255 /* UserDetailsCellConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailsCellConfigurator.swift; sourceTree = "<group>"; };
 		B51D5C841E4286E700EE44BD /* MediaItemViewPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaItemViewPresentationController.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B53D2F1E3E45D400620238 /* MediaItemViewController.swift */,
+				B50D9F0022F6150F007DBA44 /* UIImage+Crop.swift */,
 				B5B097B61E4F6C3E003250BE /* Custom transition */,
 				B5B097B71E4F6DF3003250BE /* View */,
 			);
@@ -485,6 +488,7 @@
 				B5EB5E391E632ACC001E44AA /* MainFeedViewController.swift in Sources */,
 				B574ADF41E68D85F009080F6 /* UserMediaFeedViewController.swift in Sources */,
 				B55B6B361EBF5C4A00DD7467 /* UserDetailsCell.swift in Sources */,
+				B50D9F0122F6150F007DBA44 /* UIImage+Crop.swift in Sources */,
 				B50AD9C41E119CBC00F46119 /* AppDelegate.swift in Sources */,
 				B5B097B41E4F6C39003250BE /* MediaItemViewControllerTransitioningDelegate.swift in Sources */,
 				B58AC0151E45FDC400A01783 /* MediaCommentsViewDataSource.swift in Sources */,

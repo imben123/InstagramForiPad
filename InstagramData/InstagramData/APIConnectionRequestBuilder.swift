@@ -28,15 +28,22 @@ class APIConnectionRequestBuilder {
         self.cookies = cookies
     }
     
-    func makeURLRequest(path: String, payload: [String: String]?) -> URLRequest {
-        var result = URLRequest(url: makeURL(from: path))
+    func makeURLRequest(path: String,
+                        payload: [String: String]? = nil,
+                        urlParameters: [String: String?] = [:]) -> URLRequest {
+        var result = URLRequest(url: makeURL(from: path, urlParameters: urlParameters))
         addHeaders(to: &result)
         addHTTPMethodAndBody(to: &result, payload:payload)
         return result
     }
     
-    private func makeURL(from path: String) -> URL {
-        return URL(string: path, relativeTo: baseURL)!
+    private func makeURL(from path: String, urlParameters: [String: String?]) -> URL {
+        let result = URL(string: path, relativeTo: baseURL)!
+        if !urlParameters.isEmpty {
+            return result.appendingURLParameters(urlParameters: urlParameters,
+                                                 resolvingAgainstBaseURL: true)
+        }
+        return result
     }
     
     private func addHeaders(to request: inout URLRequest) {

@@ -34,7 +34,10 @@ class HTTPConnection {
             
             let responseCode = (response as! HTTPURLResponse).statusCode
             let responseBodyDecoded = self.decodeResponseBody(responseBody)
-            result = APIResponse(responseCode: responseCode, responseBody: responseBodyDecoded, urlResponse: response)
+            result = APIResponse(responseCode: responseCode,
+                                 responseBodyData: responseBody,
+                                 responseBody: responseBodyDecoded,
+                                 urlResponse: response)
             semaphore.signal()
         }
         dataTask.resume()

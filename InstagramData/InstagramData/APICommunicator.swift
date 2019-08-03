@@ -25,7 +25,7 @@ class APICommunicator {
     let fullCommentProperties: String = APICommunicator.fullCommentProperties
     
     private let connection: APIConnection
-    
+
     convenience init() {
         self.init(APIConnection())
     }
@@ -39,30 +39,40 @@ class APICommunicator {
     }
     
     func login(username: String, password: String) -> APIResponse {
+
+        connection.resetCookies()
         
         let payload = [
             "username": username,
             "password": password
         ]
         
-        let response = self.connection.makeRequest(path: "/accounts/login/ajax/", payload: payload)
+        let response = connection.makeRequest(path: "/accounts/login/ajax/",
+                                              payload: payload,
+                                              requiresAuthentication: false)
         return response
     }
     
     func getFeed(numberOfPosts: Int, from previousIndex: String? = nil) -> APIResponse {
-        
-        let positionIndicator: String
-        if let previousIndex = previousIndex {
-            positionIndicator = "after(\(previousIndex),\(numberOfPosts))"
-        } else {
-            positionIndicator = "first(\(numberOfPosts))"
-        }
-        
-        let payload = [
-            "q": "ig_me(){feed{media.\(positionIndicator){nodes{\(fullMediaProperties)},page_info}},id,profile_pic_url,username}"
+
+        var variables: [String: Any] = [
+          "cached_feed_item_ids": [],
+          "fetch_media_item_count": numberOfPosts,
+          "fetch_comment_count": 4,
+          "fetch_like": 3,
+          "has_stories": false,
+          "has_threaded_comments": false
         ]
-        
-        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+
+        if let previousIndex = previousIndex {
+            variables["fetch_media_item_cursor"] = previousIndex
+        }
+
+        let variablesJSON = try! JSONSerialization.data(withJSONObject: variables, options: [])
+        let variablesString = String(data: variablesJSON, encoding: .utf8)!
+        let urlParameters = ["variables": variablesString]
+
+        let response = self.connection.makeRequest(path: "/graphql/query", urlParameters: urlParameters)
         return response
     }
     

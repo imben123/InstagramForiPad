@@ -35,6 +35,7 @@
 		B53800F91E45F42900C132F2 /* GappedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53800F81E45F42900C132F2 /* GappedList.swift */; };
 		B53800FD1E45F51600C132F2 /* GappedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53800FB1E45F51300C132F2 /* GappedListTests.swift */; };
 		B53800FF1E45F59F00C132F2 /* StubbedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53800FE1E45F59F00C132F2 /* StubbedModels.swift */; };
+		B53CDBE722F5DD6B00522400 /* APIBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CDBE622F5DD6B00522400 /* APIBootstrap.swift */; };
 		B54564241EBE43590020B009 /* UsersDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54564231EBE43590020B009 /* UsersDataStoreTests.swift */; };
 		B54EBEA81E167D4E001BB53C /* SwiftyJSONDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */; };
 		B54EBEAB1E168110001BB53C /* SwiftyJSONDimensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */; };
@@ -156,6 +157,7 @@
 		B53800F81E45F42900C132F2 /* GappedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GappedList.swift; sourceTree = "<group>"; };
 		B53800FB1E45F51300C132F2 /* GappedListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GappedListTests.swift; sourceTree = "<group>"; };
 		B53800FE1E45F59F00C132F2 /* StubbedModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StubbedModels.swift; sourceTree = "<group>"; };
+		B53CDBE622F5DD6B00522400 /* APIBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIBootstrap.swift; path = "../../../../../../../System/Volumes/Data/Users/ben/Developer/Personal-iOS/Instagram/InstagramData/InstagramData/APIBootstrap.swift"; sourceTree = "<group>"; };
 		B54564231EBE43590020B009 /* UsersDataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersDataStoreTests.swift; sourceTree = "<group>"; };
 		B54EBEA71E167D4D001BB53C /* SwiftyJSONDateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDateTests.swift; sourceTree = "<group>"; };
 		B54EBEAA1E168110001BB53C /* SwiftyJSONDimensionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDimensionsTests.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			children = (
 				B51D7B331E15E60E00DF5599 /* APIConnection.swift */,
 				B54EBEB71E1697CD001BB53C /* APIConnectionTests.swift */,
+				B53CDBE622F5DD6B00522400 /* APIBootstrap.swift */,
 			);
 			name = APIConnection;
 			sourceTree = "<group>";
@@ -788,6 +791,7 @@
 				B5A923A51E17352A00C36D9C /* MediaList.swift in Sources */,
 				B51D7B341E15E60E00DF5599 /* APIConnection.swift in Sources */,
 				B5BEC9131E184DF7000C3870 /* ScrollingMediaList.swift in Sources */,
+				B53CDBE722F5DD6B00522400 /* APIBootstrap.swift in Sources */,
 				B5A923A71E17354000C36D9C /* MediaDataStore.swift in Sources */,
 				B5BEC90A1E18169B000C3870 /* GappedListDataStore.swift in Sources */,
 				B51D7B2D1E15E5B000DF5599 /* APIResponse.swift in Sources */,

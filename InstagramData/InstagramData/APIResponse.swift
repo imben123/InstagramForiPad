@@ -12,13 +12,17 @@ import SwiftToolbox
 struct APIResponse: Equatable {
     
     let responseCode: Int
+    let responseBodyData: Data?
     let responseBody: [String: Any]?
     let urlResponse: URLResponse?
     var succeeded: Bool {
         return responseCode >= 200 && responseCode < 400
     }
     
-    static let noInternetResponse = APIResponse(responseCode: 0, responseBody: nil, urlResponse: nil)
+    static let noInternetResponse = APIResponse(responseCode: 0,
+                                                responseBodyData: nil,
+                                                responseBody: nil,
+                                                urlResponse: nil)
     
     public static func ==(lhs: APIResponse, rhs: APIResponse) -> Bool {
         

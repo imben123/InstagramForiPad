@@ -76,7 +76,8 @@ class FeedWebStore: MediaListWebStore {
         
         var result: [MediaItem] = []
         let json = JSON(response.responseBody!)
-        let mediaItemDictionaries = json["feed"]["media"]["nodes"].arrayValue
+        let mediaItemNodes = json["data"]["user"]["edge_web_feed_timeline"]["edges"].arrayValue
+        let mediaItemDictionaries = mediaItemNodes.map { $0["node"] }
         for mediaDictionary in mediaItemDictionaries {
             let mediaItem = MediaItem(jsonDictionary: mediaDictionary.dictionaryObject!)
             result.append(mediaItem)

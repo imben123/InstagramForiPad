@@ -61,7 +61,7 @@ class MockAPICommunicator: APICommunicator {
         return testResponse
     }
     
-    override func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String) -> APIResponse {
+    override func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String?) -> APIResponse {
         return testResponse
     }
     

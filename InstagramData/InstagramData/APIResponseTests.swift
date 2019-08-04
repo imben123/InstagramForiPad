@@ -9,10 +9,23 @@
 import XCTest
 @testable import InstagramData
 
+extension APIResponse {
+    init(responseCode: Int, 
+         responseBody: [String: Any]?,
+         urlResponse: URLResponse?) {
+        let responseBodyData = try! JSONSerialization.data(withJSONObject: responseBody as Any, options: [])
+        self.init(responseCode: responseCode, 
+                  responseBodyData: responseBodyData,
+                  responseBody: responseBody,
+                  urlResponse: urlResponse)
+    }
+}
+
 class APIResponseTests: XCTestCase {
     
     let exampleResponseCode = 123
     let exampleResponseBody = [ "foo": "bar" ]
+    let exampleResponseBodyData = try! JSONSerialization.data(withJSONObject: [ "foo": "bar" ], options: [])
     let exampleURLReponse = URLResponse(url: URL(string: "http://www.google.com")!,
                                         mimeType: nil,
                                         expectedContentLength: 123,
@@ -20,10 +33,12 @@ class APIResponseTests: XCTestCase {
     
     func testCanCreateResponse() {
         let response = APIResponse(responseCode: exampleResponseCode,
+                                   responseBodyData: exampleResponseBodyData,
                                    responseBody: exampleResponseBody,
                                    urlResponse: exampleURLReponse)
         XCTAssertEqual(response.responseCode, exampleResponseCode)
         XCTAssertEqual(response.responseBody as! [String:String], exampleResponseBody)
+        XCTAssertEqual(response.responseBodyData, exampleResponseBodyData)
         XCTAssertEqual(response.urlResponse, exampleURLReponse)
     }
     
@@ -31,6 +46,7 @@ class APIResponseTests: XCTestCase {
         let response = APIResponse.noInternetResponse
         XCTAssertEqual(response.responseCode, 0)
         XCTAssertNil(response.responseBody)
+        XCTAssertNil(response.responseBodyData)
         XCTAssertNil(response.urlResponse)
     }
     
@@ -45,6 +61,7 @@ class APIResponseTests: XCTestCase {
     
     func response(withResponseCode code: Int) -> APIResponse {
         return APIResponse(responseCode: code,
+                           responseBodyData: exampleResponseBodyData,
                            responseBody: exampleResponseBody,
                            urlResponse: exampleURLReponse)
     }

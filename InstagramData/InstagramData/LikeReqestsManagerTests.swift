@@ -34,7 +34,7 @@ class LikeReqestsManagerTests: XCTestCase {
                                  taskDispatcher: taskDispatcher,
                                  reliableNetworkTaskManager: reliableNetworkTaskManager)
         
-        mockCommunicator.testResponse = APIResponse(responseCode: 200,
+        mockCommunicator.testResponse = APIResponse(responseCode: 200, 
                                                     responseBody: [:],
                                                     urlResponse: nil)
     }
@@ -78,8 +78,8 @@ class LikeReqestsManagerTests: XCTestCase {
                 }
                 let result = super.likePost(with: id)
                 testResponse = APIResponse(responseCode: 200,
-                                          responseBody: [:],
-                                          urlResponse: nil)
+                                           responseBody: [:],
+                                           urlResponse: nil)
                 return result
             }
             

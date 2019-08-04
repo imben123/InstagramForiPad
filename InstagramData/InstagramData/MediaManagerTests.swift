@@ -45,9 +45,9 @@ class MediaManagerTests: XCTestCase {
     
     func testUpdatePostParsesMediaItem() {
         // Given
-        mockCommunicator.testResponse = APIResponse.init(responseCode: 200,
-                                                         responseBody: MediaManagerTestsExamples.rawFeedJson,
-                                                         urlResponse: nil)
+        mockCommunicator.testResponse = APIResponse(responseCode: 200, 
+                                                    responseBody: MediaManagerTestsExamples.rawFeedJson,
+                                                    urlResponse: nil)
         
         let expectation = self.expectation(description: "Completion closure called")
         

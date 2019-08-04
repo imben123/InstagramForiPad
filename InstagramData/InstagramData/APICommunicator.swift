@@ -85,41 +85,45 @@ class APICommunicator {
     
     func getUserFeed(userId: String, numberOfPosts: Int, from previousIndex: String? = nil) -> APIResponse {
         
-        let positionIndicator: String
-        if let previousIndex = previousIndex {
-            positionIndicator = "after(\(previousIndex),\(numberOfPosts))"
-        } else {
-            positionIndicator = "first(\(numberOfPosts))"
-        }
-        
-        let payload = [
-            "q": "ig_user(\(userId)){media.\(positionIndicator){count,nodes{\(fullMediaProperties)},page_info}}"
-        ]
-        
-        let response = self.connection.makeRequest(path: "/query/", payload: payload)
-        return response
+//        let positionIndicator: String
+//        if let previousIndex = previousIndex {
+//            positionIndicator = "after(\(previousIndex),\(numberOfPosts))"
+//        } else {
+//            positionIndicator = "first(\(numberOfPosts))"
+//        }
+//        
+//        let payload = [
+//            "q": "ig_user(\(userId)){media.\(positionIndicator){count,nodes{\(fullMediaProperties)},page_info}}"
+//        ]
+//        
+//        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+//        return response
+        return .noInternetResponse
     }
     
     func getPost(with code: String) -> APIResponse {
         
-        let payload = [
-            "q": "ig_shortcode(\(code)){\(fullMediaProperties)}"
-        ]
-        
-        let response = self.connection.makeRequest(path: "/query/", payload: payload)
-        return response
+//        let payload = [
+//            "q": "ig_shortcode(\(code)){\(fullMediaProperties)}"
+//        ]
+//        
+//        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+//        return response
+        return .noInternetResponse
     }
     
     func likePost(with id: String) -> APIResponse {
-        let path = "/web/likes/\(id)/like/"
-        let response = self.connection.makeRequest(path: path, payload: [:])
-        return response
+//        let path = "/web/likes/\(id)/like/"
+//        let response = self.connection.makeRequest(path: path, payload: [:])
+//        return response
+        return .noInternetResponse
     }
     
     func unlikePost(with id: String) -> APIResponse {
-        let path = "/web/likes/\(id)/unlike/"
-        let response = self.connection.makeRequest(path: path, payload: [:])
-        return response
+//        let path = "/web/likes/\(id)/unlike/"
+//        let response = self.connection.makeRequest(path: path, payload: [:])
+//        return response
+        return .noInternetResponse
     }
     
     func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String?) -> APIResponse {
@@ -147,24 +151,28 @@ class APICommunicator {
     
     func getUser(for id: String) -> APIResponse {
         
-        let payload = [
-            "q": "ig_user(\(id)){\(fullUserProperties)}"
-        ]
-        
-        let response = self.connection.makeRequest(path: "/query/", payload: payload)
-        return response
+//        let payload = [
+//            "q": "ig_user(\(id)){\(fullUserProperties)}"
+//        ]
+//        
+//        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+//        return response
+        return .noInternetResponse
     }
     
     func followUser(withId userId: String) -> APIResponse {
-        let path = "/web/friendships/\(userId)/follow/"
-        let response = self.connection.makeRequest(path: path, payload: [:])
-        return response
+//        let path = "/web/friendships/\(userId)/follow/"
+//        let response = self.connection.makeRequest(path: path, payload: [:])
+//        return response
+        return .noInternetResponse
     }
     
     func unfollowUser(withId userId: String) -> APIResponse {
-        let path = "/web/friendships/\(userId)/unfollow/"
-        let response = self.connection.makeRequest(path: path, payload: [:])
-        return response
+//        let path = "/web/friendships/\(userId)/unfollow/"
+//        let response = self.connection.makeRequest(path: path, payload: [:])
+//        return response
+        return .noInternetResponse
+    }
 
     private func fetchQueryHashesIfNeeded() -> APIResponse? {
         guard feedQueryHash == nil else { return nil }

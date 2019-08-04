@@ -63,7 +63,7 @@ extension MediaItemTableRow {
         
         self.commentsDisabled = mediaItem.commentsDisabled
         self.commentsCount = mediaItem.commentsCount
-        self.commentsStartCursor = mediaItem.commentsStartCursor
+        self.commentsStartCursor = mediaItem.commentsEndCursor
         
         for comment in mediaItem.comments {
             self.comments.append(MediaItemCommentTableRow(comment))
@@ -92,7 +92,7 @@ extension MediaItem {
         
         commentsDisabled = mediaItemTableRow.commentsDisabled
         commentsCount = mediaItemTableRow.commentsCount
-        commentsStartCursor = mediaItemTableRow.commentsStartCursor
+        commentsEndCursor = mediaItemTableRow.commentsStartCursor
         comments = mediaItemTableRow.comments.map({ (row) -> MediaItemComment in
             return MediaItemComment(row)
         })

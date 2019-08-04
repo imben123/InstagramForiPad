@@ -52,14 +52,14 @@ public class CommentsManager {
     
     private func initializeNewCommentsList() {
         if mediaItem.comments.count > 0 {
-            commentsList.addNewComments(mediaItem.comments, with: mediaItem.commentsStartCursor)
+            commentsList.addNewComments(mediaItem.comments, with: mediaItem.commentsEndCursor)
         }
     }
     
     private func checkCommentsListIsUpToDate() {
         let comments = mediaItem.comments
         if comments.first?.id != commentsList.itemIDsBeforeFirstGap.first {
-            commentsList.addNewComments(comments, with: mediaItem.commentsStartCursor)
+            commentsList.addNewComments(comments, with: mediaItem.commentsEndCursor)
         }
     }
     
@@ -99,8 +99,8 @@ public class CommentsManager {
         
         commentsWebStore.getComments(for: mediaItem.code,
                                      from: currentEndCursor,
-                                     completion: { (newComments, newEndCursor) in
-            self.commentsList.appendMoreComments(newComments, from: currentEndCursor, to: newEndCursor)
+                                     completion: { (newComments, endCursor) in
+            self.commentsList.addNewComments(newComments, with: endCursor)
             completion?()
         }, failure: failure)
     }

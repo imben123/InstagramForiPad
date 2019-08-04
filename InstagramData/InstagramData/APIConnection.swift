@@ -15,8 +15,6 @@ class APIConnection {
         return cookieStore.cookies ?? []
     }
     private let baseURL: URL = URL(string:"https://www.instagram.com")!
-    
-    private var queryHash: String?
 
     private let connection: HTTPConnection
     
@@ -27,14 +25,6 @@ class APIConnection {
             }
         }
         return false
-    }
-
-    private var defaultURLParameters: [String: String?] {
-        if let queryHash = queryHash {
-            return ["query_hash": queryHash]
-        } else {
-            return [:]
-        }
     }
     
     convenience init() {
@@ -68,12 +58,7 @@ class APIConnection {
             return bootstrapResponse
         }
 
-        if requiresAuthentication, let authFailureResponse = authenticateAPIQueriesIfNeeded() {
-            return authFailureResponse
-        }
-
         let requestBuilder = APIConnectionRequestBuilder(baseURL: baseURL, cookies: cookies)
-        let urlParameters = defaultURLParameters.merging(urlParameters, uniquingKeysWith: { $1 })
         let request = requestBuilder.makeURLRequest(path: path,
                                                     payload: payload,
                                                     urlParameters: urlParameters)
@@ -115,24 +100,6 @@ class APIConnection {
             }
         }
         return true
-    }
-
-    private func authenticateAPIQueriesIfNeeded() -> APIResponse? {
-        guard queryHash == nil else { return nil }
-        let queryHashFinder = QueryHashFinder(connection: self)
-        let result = queryHashFinder.fetchQueryHash()
-        switch result {
-        case .success(let queryHashResult):
-            queryHash = queryHashResult.queryHash
-            return nil
-
-        case .failure(.parseFailure(let errorMessage)):
-            print(errorMessage)
-            return .noInternetResponse
-
-        case .failure(.requestFailed(let failureResponse)):
-            return failureResponse
-        }
     }
 }
 

@@ -25,7 +25,7 @@ public struct MediaItem: Equatable {
     
     public let commentsDisabled: Bool
     public let commentsCount: Int
-    public let commentsStartCursor: String?
+    public let commentsEndCursor: String?
     public let comments: [MediaItemComment]
     public let likesCount: Int
     
@@ -40,22 +40,23 @@ public struct MediaItem: Equatable {
         date = json["date"].dateValue
         dimensions = json["dimensions"].sizeValue
         owner = User(json: json["owner"])
-        code = json["code"].stringValue
+        code = json["shortcode"].stringValue
         isVideo = json["is_video"].boolValue
         
-        caption = json["caption"].string
+        caption = json["edge_media_to_caption"]["edges"][0]["node"]["text"].string
         
         display = json["display_url"].URLWithoutEscaping!
         thumbnail = (json["thumbnail_url"].URLWithoutEscaping != nil) ? json["thumbnail_url"].URLWithoutEscaping! : display
         
         commentsDisabled = json["comments_disabled"].boolValue
-        commentsCount = json["comments"]["count"].intValue
-        commentsStartCursor = json["comments"]["page_info"]["start_cursor"].string
-        comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
-            return MediaItemComment(jsonDictionary: json)
+        commentsCount = json["edge_media_to_comment"]["count"].intValue
+        commentsEndCursor = json["edge_media_to_comment"]["page_info"]["has_next_page"].boolValue ? "{}" : nil
+        let commentNodes = json["edge_media_to_comment"]["edges"].arrayValue.reversed()
+        comments = commentNodes.map({ json in
+            return MediaItemComment(jsonDictionary: json["node"])
         })
-        likesCount = json["likes"]["count"].intValue
-        viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
+        likesCount = json["edge_media_preview_like"]["count"].intValue
+        viewerHasLiked = json["viewer_has_liked"].boolValue
     }
     
     init?(jsonDictionary: [String: Any]?, original: MediaItem) {
@@ -81,7 +82,7 @@ public struct MediaItem: Equatable {
         
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
-        commentsStartCursor = json["comments"]["page_info"]["start_cursor"].string
+        commentsEndCursor = json["comments"]["page_info"]["start_cursor"].string
         comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
             return MediaItemComment(jsonDictionary: json)
         })
@@ -108,7 +109,7 @@ public struct MediaItem: Equatable {
         
         self.commentsDisabled = json["comments_disabled"].boolValue
         self.commentsCount = json["comments"]["count"].intValue
-        self.commentsStartCursor = json["comments"]["start_cursor"].string
+        self.commentsEndCursor = json["comments"]["start_cursor"].string
         self.comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
             return MediaItemComment(jsonDictionary: json)
         })
@@ -129,7 +130,7 @@ public struct MediaItem: Equatable {
             lhs.display == rhs.display &&
             lhs.commentsDisabled == rhs.commentsDisabled &&
             lhs.commentsCount == rhs.commentsCount &&
-            lhs.commentsStartCursor == rhs.commentsStartCursor &&
+            lhs.commentsEndCursor == rhs.commentsEndCursor &&
             lhs.likesCount == rhs.likesCount &&
             lhs.viewerHasLiked == rhs.viewerHasLiked
         )

@@ -26,7 +26,7 @@ public struct MediaItemComment: Equatable {
                 
         self.id = json["id"].stringValue
         self.text = json["text"].stringValue
-        self.user = User(json: json["user"])
+        self.user = User(json: json["owner"])
 
     }
     

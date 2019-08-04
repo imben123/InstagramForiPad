@@ -1,5 +1,5 @@
 //
-//  APIBootstrap.swift
+//  QueryHashFinder.swift
 //  InstagramData
 //
 //  Created by Ben Davis on 03/08/2019.
@@ -18,23 +18,24 @@ struct QueryHashFinder {
     }
 
     struct Success {
-        let queryHash: String
+        let feedQueryHash: String
+        let commentsQueryHash: String
     }
 
     func fetchQueryHash() -> Result<Success, Failure> {
         let result = connection.makeRequest(path: "/", payload: nil, requiresAuthentication: false)
         guard result.succeeded else { return .failure(Failure.requestFailed(failureResponse: result)) }
 
-        let queryHash: String
+        let success: Success
         do {
-            queryHash = try fetchQueryHash(fromPageContent: result.responseBodyData)
+            success = try fetchQueryHash(fromPageContent: result.responseBodyData)
         } catch {
             return .failure(error as! Failure)
         }
-        return .success(.init(queryHash: queryHash))
+        return .success(success)
     }
 
-    private func fetchQueryHash(fromPageContent pageContent: Data?) throws -> String {
+    private func fetchQueryHash(fromPageContent pageContent: Data?) throws -> Success {
         guard let pageContent = pageContent else {
             throw Failure.parseFailure(reason: "Instagram home page loaded no content")
         }
@@ -55,7 +56,7 @@ struct QueryHashFinder {
         return try fetchQueryHash(fromConsumerJSBody: result.responseBodyData)
     }
 
-    private func fetchQueryHash(fromConsumerJSBody consumerJSBody: Data?) throws -> String {
+    private func fetchQueryHash(fromConsumerJSBody consumerJSBody: Data?) throws -> Success {
         guard let consumerJSBody = consumerJSBody else {
             throw Failure.parseFailure(reason: "\(consumerJSName) loaded no content")
         }
@@ -64,11 +65,16 @@ struct QueryHashFinder {
             throw Failure.parseFailure(reason: "\(consumerJSName) content was not a UTF8 string")
         }
 
-        let pattern = "E=\"([0-9a-f]{32})\""
-        guard let queryHash = jsContentString.matches(of: pattern, groupIndex: 1).first else {
-            throw Failure.parseFailure(reason: "Could not find query hash in \(consumerJSName)")
+        let feedPattern = "E=\"([0-9a-f]{32})\""
+        guard let feedQueryHash = jsContentString.matches(of: feedPattern, groupIndex: 1).first else {
+            throw Failure.parseFailure(reason: "Could not find feed query hash in \(consumerJSName)")
         }
 
-        return queryHash
+        let commentsPattern = #"parentByPostId[^"]*queryId:"([0-9a-zA-Z]{32})""#
+        guard let commentsQueryHash = jsContentString.matches(of: commentsPattern, groupIndex: 1).first else {
+            throw Failure.parseFailure(reason: "Could not find comments query hash in \(consumerJSName)")
+        }
+
+        return Success(feedQueryHash: feedQueryHash, commentsQueryHash: commentsQueryHash)
     }
 }

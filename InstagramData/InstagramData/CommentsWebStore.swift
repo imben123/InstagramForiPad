@@ -20,7 +20,7 @@ class CommentsWebStore {
     
     func getComments(for mediaCode: String,
                      from previousIndex: String,
-                     completion: ((_ newMedia: [MediaItemComment], _ startCursor: String?)->())?,
+                     completion: ((_ newMedia: [MediaItemComment], _ endCursor: String?)->())?,
                      failure: (()->())?) {
         
         DispatchQueue.global().async {
@@ -31,11 +31,11 @@ class CommentsWebStore {
             
             if response.succeeded {
                 
-                let newStartCursor = self.parseStartCursor(from: response)
+                let newEndCursor = self.parseEndCursor(from: response)
                 let newComments = self.parseComments(from: response)
 
                 DispatchQueue.main.async {
-                    completion?(newComments, newStartCursor)
+                    completion?(newComments, newEndCursor)
                 }
 
             } else {
@@ -52,7 +52,8 @@ class CommentsWebStore {
         
         var result: [MediaItemComment] = []
 
-        let commentsDictionaries = json["comments"]["nodes"].arrayValue.reversed()
+        let commentsNodes = json["data"]["shortcode_media"]["edge_media_to_parent_comment"]["edges"].arrayValue
+        let commentsDictionaries = commentsNodes.map { $0["node"] }
         for commentDictionary in commentsDictionaries {
             let comment = MediaItemComment(jsonDictionary: commentDictionary)
             result.append(comment)
@@ -61,13 +62,13 @@ class CommentsWebStore {
         return result
     }
     
-    private func parseStartCursor(from response: APIResponse) -> String? {
+    private func parseEndCursor(from response: APIResponse) -> String? {
         let json = JSON(response.responseBody!)
+        let pageInfo = json["data"]["shortcode_media"]["edge_media_to_parent_comment"]["page_info"]
         
-        guard json["comments"]["page_info"]["has_previous_page"].boolValue else {
+        guard pageInfo["has_next_page"].boolValue else {
             return nil
         }
-        return json["comments"]["page_info"]["start_cursor"].stringValue
+        return pageInfo["end_cursor"].stringValue
     }
-    
 }

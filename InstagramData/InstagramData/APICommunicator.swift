@@ -24,6 +24,9 @@ class APICommunicator {
     let fullMediaProperties: String = APICommunicator.fullMediaProperties
     let fullCommentProperties: String = APICommunicator.fullCommentProperties
     
+    private var feedQueryHash: String?
+    private var commentsQueryHash: String?
+    
     private let connection: APIConnection
 
     convenience init() {
@@ -55,6 +58,10 @@ class APICommunicator {
     
     func getFeed(numberOfPosts: Int, from previousIndex: String? = nil) -> APIResponse {
 
+        if let queryHashesFailureResponse = fetchQueryHashesIfNeeded() {
+            return queryHashesFailureResponse
+        }
+
         var variables: [String: Any] = [
           "cached_feed_item_ids": [],
           "fetch_media_item_count": numberOfPosts,
@@ -70,7 +77,7 @@ class APICommunicator {
 
         let variablesJSON = try! JSONSerialization.data(withJSONObject: variables, options: [])
         let variablesString = String(data: variablesJSON, encoding: .utf8)!
-        let urlParameters = ["variables": variablesString]
+        let urlParameters = ["variables": variablesString, "query_hash": feedQueryHash]
 
         let response = self.connection.makeRequest(path: "/graphql/query", urlParameters: urlParameters)
         return response
@@ -115,13 +122,26 @@ class APICommunicator {
         return response
     }
     
-    func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String) -> APIResponse {
-        
-        let payload = [
-            "q": "ig_shortcode(\(mediaCode)){comments.before(\(previousIndex),\(numberOfComments)){count,nodes{\(fullCommentProperties)},page_info}}"
+    func getComments(for mediaCode: String, numberOfComments: Int, from previousIndex: String?) -> APIResponse {
+
+        if let queryHashesFailureResponse = fetchQueryHashesIfNeeded() {
+            return queryHashesFailureResponse
+        }
+
+        var variables: [String: Any] = [
+          "first": numberOfComments,
+          "shortcode": mediaCode
         ]
+
+        if let previousIndex = previousIndex {
+            variables["after"] = previousIndex
+        }
+
+        let variablesJSON = try! JSONSerialization.data(withJSONObject: variables, options: [])
+        let variablesString = String(data: variablesJSON, encoding: .utf8)!
+        let urlParameters = ["variables": variablesString, "query_hash": commentsQueryHash]
         
-        let response = self.connection.makeRequest(path: "/query/", payload: payload)
+        let response = self.connection.makeRequest(path: "/graphql/query/", urlParameters: urlParameters)
         return response
     }
     
@@ -145,5 +165,23 @@ class APICommunicator {
         let path = "/web/friendships/\(userId)/unfollow/"
         let response = self.connection.makeRequest(path: path, payload: [:])
         return response
+
+    private func fetchQueryHashesIfNeeded() -> APIResponse? {
+        guard feedQueryHash == nil else { return nil }
+        let queryHashFinder = QueryHashFinder(connection: connection)
+        let result = queryHashFinder.fetchQueryHash()
+        switch result {
+        case .success(let queryHashResult):
+            feedQueryHash = queryHashResult.feedQueryHash
+            commentsQueryHash = queryHashResult.commentsQueryHash
+            return nil
+
+        case .failure(.parseFailure(let errorMessage)):
+            print(errorMessage)
+            return .noInternetResponse
+
+        case .failure(.requestFailed(let failureResponse)):
+            return failureResponse
+        }
     }
 }

@@ -35,7 +35,7 @@ extension MediaItem {
         self.thumbnail = thumbnail
         self.commentsDisabled = commentsDisabled
         self.commentsCount = commentsCount
-        self.commentsStartCursor = commentsStartCursor
+        self.commentsEndCursor = commentsStartCursor
         self.comments = comments
         self.likesCount = likesCount
         self.viewerHasLiked = viewerHasLiked

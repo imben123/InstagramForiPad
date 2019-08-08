@@ -64,9 +64,8 @@ struct QueryHashFinder {
         guard let jsContentString = String(data: consumerJSBody, encoding: .utf8) else {
             throw Failure.parseFailure(reason: "\(consumerJSName) content was not a UTF8 string")
         }
-
-        let feedPattern = "E=\"([0-9a-f]{32})\""
-        guard let feedQueryHash = jsContentString.matches(of: feedPattern, groupIndex: 1).first else {
+        
+        guard let feedQueryHash = findQueryHash(in: jsContentString) else {
             throw Failure.parseFailure(reason: "Could not find feed query hash in \(consumerJSName)")
         }
 
@@ -76,5 +75,18 @@ struct QueryHashFinder {
         }
 
         return Success(feedQueryHash: feedQueryHash, commentsQueryHash: commentsQueryHash)
+    }
+    
+    private func findQueryHash(in jsContentString: String) -> String? {
+        let feedPatterns = [
+            "FEED_QUERY_ID=\"([0-9a-f]{32})\"",
+            "E=\"([0-9a-f]{32})\""
+        ]
+        for feedPattern in feedPatterns {
+            if let result = jsContentString.matches(of: feedPattern, groupIndex: 1).first {
+                return result
+            }        
+        }
+        return nil
     }
 }

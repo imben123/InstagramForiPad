@@ -12,13 +12,13 @@ import SwiftToolbox
 
 public class UserProfileMediaFeed: MediaFeed {
 
-    init(userId: String, communicator: APICommunicator, mediaDataStore: MediaDataStore) {
+    init(user: User, communicator: APICommunicator, mediaDataStore: MediaDataStore) {
         
-        let mediaList = ScrollingMediaList(name: "user_feed(\(userId))",
+        let mediaList = ScrollingMediaList(name: "user_feed(\(user.id))",
                                            mediaDataStore: mediaDataStore,
                                            listDataStore: GappedListDataStore())
         
-        let feedWebStore = UserProfileMediaFeedWebStore(userId: userId, communicator: communicator)
+        let feedWebStore = UserProfileMediaFeedWebStore(user: user, communicator: communicator)
         
         super.init(mediaList: mediaList, feedWebStore: feedWebStore)
     }
@@ -28,17 +28,19 @@ class UserProfileMediaFeedWebStore {
     
     fileprivate let numberOfPostsToFetch = 50
 
-    fileprivate let userId: String
+    fileprivate let user: User
     fileprivate let communicator: APICommunicator
     fileprivate let taskDispatcher: TaskDispatcher
     
-    convenience init(userId: String, communicator: APICommunicator) {
+    convenience init(user: User, communicator: APICommunicator) {
         let taskDispatcher = TaskDispatcher(queue: DispatchQueue(label: "UserProfileMediaFeedWebStore.queue"))
-        self.init(userId: userId, communicator: communicator, taskDispatcher: taskDispatcher)
+        self.init(user: user,
+                  communicator: communicator,
+                  taskDispatcher: taskDispatcher)
     }
     
-    init(userId: String, communicator: APICommunicator, taskDispatcher: TaskDispatcher) {
-        self.userId = userId
+    init(user: User, communicator: APICommunicator, taskDispatcher: TaskDispatcher) {
+        self.user = user
         self.communicator = communicator
         self.taskDispatcher = taskDispatcher
     }
@@ -50,7 +52,10 @@ extension UserProfileMediaFeedWebStore: MediaListWebStore {
     func fetchNewestMedia(_ completion: ((_ newMedia: [MediaItem], _ endCursor: String?)->())?,
                           failure: (()->())?) {
         taskDispatcher.async {
-            let response = self.communicator.getUserFeed(userId: self.userId, numberOfPosts: self.numberOfPostsToFetch, from: nil)
+            let response = self.communicator.getUserFeed(username: self.user.username,
+                                                         userId: self.user.id, 
+                                                         numberOfPosts: self.numberOfPostsToFetch, 
+                                                         from: nil)
             if response.succeeded {
                 
                 let newMedia = self.parseMedia(from: response)
@@ -71,7 +76,10 @@ extension UserProfileMediaFeedWebStore: MediaListWebStore {
                     completion: ((_ newMedia: [MediaItem], _ endCursor: String?)->())?,
                     failure: (()->())?) {
         taskDispatcher.async {
-            let response = self.communicator.getUserFeed(userId: self.userId, numberOfPosts: self.numberOfPostsToFetch, from: endCursor)
+            let response = self.communicator.getUserFeed(username: self.user.username,
+                                                         userId: self.user.id,  
+                                                         numberOfPosts: self.numberOfPostsToFetch,
+                                                         from: endCursor)
             if response.succeeded {
                 
                 let newEndCursor = self.parseEndCursor(from: response)
@@ -92,27 +100,23 @@ extension UserProfileMediaFeedWebStore: MediaListWebStore {
         
         var result: [MediaItem] = []
         let json = JSON(response.responseBody!)
-        let mediaItemDictionaries = json["media"]["nodes"].arrayValue
+        let mediaItemDictionariesNodes = json["data"]["user"]["edge_owner_to_timeline_media"]["edges"].arrayValue        
+        let mediaItemDictionaries = mediaItemDictionariesNodes.map { $0["node"] }
         for mediaDictionary in mediaItemDictionaries {
-            let mediaItem = MediaItem(jsonDictionary: mediaDictionary.dictionaryObject!)
+            let mediaItem = MediaItem(jsonDictionary: mediaDictionary.dictionaryObject!, owner: user)
             result.append(mediaItem)
         }
         
         return result
     }
     
-    private func parseStartCursor(from response: APIResponse) -> String? {
-        let json = JSON(response.responseBody!)
-        
-        return json["media"]["page_info"]["start_cursor"].stringValue
-    }
-    
     private func parseEndCursor(from response: APIResponse) -> String? {
         let json = JSON(response.responseBody!)
+        let pageInfo = json["data"]["user"]["edge_owner_to_timeline_media"]["page_info"]
         
-        guard json["media"]["page_info"]["has_next_page"].boolValue else {
+        guard pageInfo["has_next_page"].boolValue else {
             return nil
         }
-        return json["media"]["page_info"]["end_cursor"].stringValue
+        return pageInfo["end_cursor"].stringValue
     }
 }

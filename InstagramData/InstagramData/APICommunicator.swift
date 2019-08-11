@@ -26,6 +26,7 @@ class APICommunicator {
     
     private var feedQueryHash: String?
     private var commentsQueryHash: String?
+    private var userQueryHashes: [String: String] = [:]
     
     private let connection: APIConnection
 
@@ -83,22 +84,38 @@ class APICommunicator {
         return response
     }
     
-    func getUserFeed(userId: String, numberOfPosts: Int, from previousIndex: String? = nil) -> APIResponse {
+    func getUserFeed(username: String, 
+                     userId: String, 
+                     numberOfPosts: Int,
+                     from endCursor: String? = nil) -> APIResponse {
         
-//        let positionIndicator: String
-//        if let previousIndex = previousIndex {
-//            positionIndicator = "after(\(previousIndex),\(numberOfPosts))"
-//        } else {
-//            positionIndicator = "first(\(numberOfPosts))"
-//        }
-//        
-//        let payload = [
-//            "q": "ig_user(\(userId)){media.\(positionIndicator){count,nodes{\(fullMediaProperties)},page_info}}"
-//        ]
-//        
-//        let response = self.connection.makeRequest(path: "/query/", payload: payload)
-//        return response
-        return .noInternetResponse
+        let fetchQueryHashResult = getUserQueryHash(for: username)
+        let queryHash: String
+        switch fetchQueryHashResult {
+        case .failure(.parseFailure(let errorMessage)):
+            print(errorMessage)
+            return .noInternetResponse
+        case .failure(.requestFailed(let failureResponse)):
+            return failureResponse
+        case .success(let queryHashResult):
+            queryHash = queryHashResult
+        }
+        
+        var variables: [String: Any] = [
+            "id": userId,
+            "first": numberOfPosts
+        ]
+        
+        if let endCursor = endCursor {
+            variables["after"] = endCursor
+        }
+        
+        let variablesJSON = try! JSONSerialization.data(withJSONObject: variables, options: [])
+        let variablesString = String(data: variablesJSON, encoding: .utf8)!
+        let urlParameters = ["variables": variablesString, "query_hash": queryHash]
+        
+        let response = self.connection.makeRequest(path: "/graphql/query", urlParameters: urlParameters)
+        return response
     }
     
     func getPost(with code: String) -> APIResponse {
@@ -191,5 +208,15 @@ class APICommunicator {
         case .failure(.requestFailed(let failureResponse)):
             return failureResponse
         }
+    }
+    
+    private func getUserQueryHash(for username: String) -> Result<String, UserQueryHashFinder.Failure> {
+        if let queryHash = userQueryHashes[username] { return .success(queryHash) }
+        let queryHashFinder = UserQueryHashFinder(connection: connection)
+        let result = queryHashFinder.fetchUserQueryHash(for: username)
+        if case .success(let queryHash) = result {
+            userQueryHashes[username] = queryHash
+        }
+        return result
     }
 }

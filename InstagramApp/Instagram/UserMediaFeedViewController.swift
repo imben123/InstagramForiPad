@@ -21,7 +21,7 @@ class UserMediaFeedViewController: MediaFeedViewController {
         self.user = user
         self.userDetailsCellDataSource =
             UserDetailsCellDataSource(user: user, followRequestsManager: InstagramData.shared.followRequestsManager)
-        super.init(mediaFeed: InstagramData.shared.createUserProfileMediaFeed(for: user.id))
+        super.init(mediaFeed: InstagramData.shared.createUserProfileMediaFeed(for: user))
         
         updateUserDetails()
     }

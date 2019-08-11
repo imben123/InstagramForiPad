@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftToolbox
+import SwiftyJSON
 
 public class MediaManager {
     
@@ -33,15 +34,14 @@ public class MediaManager {
             let response = self.communicator.getPost(with: originalMediaItem.code)
             if response.succeeded {
                 
-                let mediaDictionary = response.responseBody
-                
-                guard let mediaItem = MediaItem(jsonDictionary: mediaDictionary, original: originalMediaItem) else {
-                    
+                guard let mediaDictionary = response.responseBody, JSON(mediaDictionary).count > 1 else {
                     DispatchQueue.main.async {
                         completion?(originalMediaItem)
                     }
-                    return
+                    return                    
                 }
+                
+                let mediaItem = MediaItem(jsonDictionary: mediaDictionary, original: originalMediaItem)
                 
                 self.mediaDataStore.archiveMedia([mediaItem])
                 

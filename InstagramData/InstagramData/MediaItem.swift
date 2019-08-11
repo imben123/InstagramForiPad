@@ -29,57 +29,7 @@ public struct MediaItem: Equatable {
     
     public var viewerHasLiked: Bool
     
-    init(jsonDictionary: [String: Any]) {
-        
-        let json = JSON(jsonDictionary)
-        
-        id = json["id"].stringValue
-        
-        date = json["date"].dateValue
-        dimensions = json["dimensions"].sizeValue
-        owner = User(json: json["owner"])
-        code = json["shortcode"].stringValue
-        isVideo = json["is_video"].boolValue
-        
-        caption = json["edge_media_to_caption"]["edges"][0]["node"]["text"].string
-        
-        display = json["display_url"].URLWithoutEscaping!
-        thumbnail = (json["thumbnail_url"].URLWithoutEscaping != nil) ? json["thumbnail_url"].URLWithoutEscaping! : display
-        
-        commentsDisabled = json["comments_disabled"].boolValue
-        commentsCount = json["edge_media_to_comment"]["count"].intValue
-        likesCount = json["edge_media_preview_like"]["count"].intValue
-        viewerHasLiked = json["viewer_has_liked"].boolValue
-    }
-    
-    init?(jsonDictionary: [String: Any]?, original: MediaItem) {
-        
-        guard let jsonDictionary = jsonDictionary, jsonDictionary.count > 1 else {
-            return nil
-        }
-        
-        let json = JSON(jsonDictionary)
-        
-        id = json["id"].stringValue
-        
-        date = json["date"].dateValue
-        dimensions = json["dimensions"].sizeValue
-        owner = User(json: json["owner"])
-        code = json["code"].stringValue
-        isVideo = json["is_video"].boolValue
-        
-        caption = json["caption"].string
-        
-        display = json["display_src"].URLWithoutEscaping ?? json["display_url"].URLWithoutEscaping!
-        thumbnail = json["thumbnail_src"].URLWithoutEscaping ?? original.thumbnail
-        
-        commentsDisabled = json["comments_disabled"].boolValue
-        commentsCount = json["comments"]["count"].intValue
-        likesCount = json["likes"]["count"].intValue
-        viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
-    }
-    
-    init(jsonDictionary: [String: Any], owner: User) {
+    init(jsonDictionary: [String: Any], original: MediaItem? = nil, owner: User? = nil) {
         
         let json = JSON(jsonDictionary)
         
@@ -87,37 +37,24 @@ public struct MediaItem: Equatable {
         
         self.date = json["date"].dateValue
         self.dimensions = json["dimensions"].sizeValue
-        self.owner = owner
-        self.code = json["code"].stringValue
+        self.owner = owner ?? User(json: json["owner"])
+        self.code = json["shortcode"].stringValue
         self.isVideo = json["is_video"].boolValue
         
-        self.caption = json["caption"].string
+        self.caption = json["edge_media_to_caption"]["edges"][0]["node"]["text"].string
 
-        self.display = json["display_src"].URLWithoutEscaping!
-        self.thumbnail = (json["thumbnail_src"].URLWithoutEscaping != nil) ? json["thumbnail_src"].URLWithoutEscaping! : display
+        self.display = json["display_url"].URLWithoutEscaping!
+        if
+            let thumbnails = json["thumbnail_resources"].array,
+            let bestThumbnail = thumbnails.last?["src"].URLWithoutEscaping {
+            self.thumbnail = bestThumbnail
+        } else {
+            self.thumbnail = display
+        }
         
         self.commentsDisabled = json["comments_disabled"].boolValue
-        self.commentsCount = json["comments"]["count"].intValue
-        self.likesCount = json["likes"]["count"].intValue
-        self.viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
+        self.commentsCount = json["edge_media_to_comment"]["count"].intValue
+        self.likesCount = json["edge_media_preview_like"]["count"].intValue
+        self.viewerHasLiked = json["viewer_has_liked"].boolValue
     }
-    
-    public static func ==(lhs: MediaItem, rhs: MediaItem) -> Bool {
-        return (
-            lhs.id == rhs.id &&
-            lhs.date == rhs.date &&
-            lhs.dimensions == rhs.dimensions &&
-            lhs.owner == rhs.owner &&
-            lhs.code == rhs.code &&
-            lhs.isVideo == rhs.isVideo &&
-            lhs.caption == rhs.caption &&
-            lhs.thumbnail == rhs.thumbnail &&
-            lhs.display == rhs.display &&
-            lhs.commentsDisabled == rhs.commentsDisabled &&
-            lhs.commentsCount == rhs.commentsCount &&
-            lhs.likesCount == rhs.likesCount &&
-            lhs.viewerHasLiked == rhs.viewerHasLiked
-        )
-    }
-
 }

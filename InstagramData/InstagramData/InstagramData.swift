@@ -51,8 +51,10 @@ public class InstagramData {
         return CommentsManager(mediaItem: mediaItem, communicator: communicator)
     }
     
-    public func createUserProfileMediaFeed(for userId: String) -> UserProfileMediaFeed {
-        return UserProfileMediaFeed(userId: userId, communicator: communicator, mediaDataStore: mediaDataStore)
+    public func createUserProfileMediaFeed(for user: User) -> UserProfileMediaFeed {
+        return UserProfileMediaFeed(user: user, 
+                                    communicator: communicator,
+                                    mediaDataStore: mediaDataStore)
     }
     
     public func logout() {

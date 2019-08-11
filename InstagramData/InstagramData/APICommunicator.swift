@@ -9,21 +9,7 @@
 import Foundation
 
 class APICommunicator {
-    
-    static let fullUserProperties = "id,profile_pic_url,full_name,username,biography,external_url," +
-                                    "followed_by{count},follows{count},followed_by_viewer,follows_viewer,media{count}"
-    
-    static let fullCommentProperties: String = "id,text,user{\(fullUserProperties)}"
-
-    static let fullMediaProperties = "id,date,dimensions{height,width},owner{\(fullUserProperties)}," +
-                                     "code,is_video,caption,display_src,thumbnail_src,comments_disabled," +
-                                     "comments.last(4){count,nodes{\(fullCommentProperties)},page_info}," +
-                                     "likes{count,viewer_has_liked}"
-    
-    let fullUserProperties: String = APICommunicator.fullUserProperties
-    let fullMediaProperties: String = APICommunicator.fullMediaProperties
-    let fullCommentProperties: String = APICommunicator.fullCommentProperties
-    
+        
     private var feedQueryHash: String?
     private var commentsQueryHash: String?
     private var userQueryHashes: [String: String] = [:]
@@ -166,15 +152,10 @@ class APICommunicator {
         return response
     }
     
-    func getUser(for id: String) -> APIResponse {
-        
-//        let payload = [
-//            "q": "ig_user(\(id)){\(fullUserProperties)}"
-//        ]
-//        
-//        let response = self.connection.makeRequest(path: "/query/", payload: payload)
-//        return response
-        return .noInternetResponse
+    func getUser(for username: String) -> APIResponse {
+        let urlParameters = ["__a": "1"]
+        let response = self.connection.makeRequest(path: "/\(username)", urlParameters: urlParameters)
+        return response
     }
     
     func followUser(withId userId: String) -> APIResponse {

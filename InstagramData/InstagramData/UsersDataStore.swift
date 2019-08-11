@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftToolbox
+import SwiftyJSON
 
 public class UsersDataStore {
 
@@ -31,20 +32,14 @@ public class UsersDataStore {
         users[user.id] = user
     }
     
-    public func fetchUser(for id: String, forceUpdate: Bool = false, completion: @escaping (User?)->Void) {
-        if let user = users[id], !forceUpdate {
-            completion(user)
-        } else {
-            downloadUser(with: id, completion: completion)
-        }
-    }
-    
-    private func downloadUser(with id: String, completion: @escaping (User?)->Void) {
+    public func fetchUser(_ user: User, 
+                          completion: @escaping (User?)->Void) {
         taskDispatcher.async {
-            let response = self.communicator.getUser(for: id)
+            let response = self.communicator.getUser(for: user.username)
             
             if response.succeeded {
-                let user = User(jsonDictionary: response.responseBody!)
+                let userJSON = JSON(response.responseBody!)["graphql"]["user"]
+                let user = User(json: userJSON)
                 self.addUser(user)
                 self.taskDispatcher.asyncOnMainQueue {
                     completion(user)

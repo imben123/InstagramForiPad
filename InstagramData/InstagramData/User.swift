@@ -50,27 +50,11 @@ public struct User: Equatable {
         biography = json["biography"].stringValue
         externalURL = json["external_url"].URLWithoutEscaping
         
-        mediaCount = json["media"]["count"].intValue
-        followedByCount = json["followed_by"]["count"].intValue
-        followsCount = json["follows"]["count"].intValue
+        mediaCount = json["edge_owner_to_timeline_media"]["count"].intValue
+        followedByCount = json["edge_followed_by"]["count"].intValue
+        followsCount = json["edge_follow"]["count"].intValue
         
         followedByViewer = json["followed_by_viewer"].boolValue
         followsViewer = json["follows_viewer"].boolValue
-    }
-    
-    public static func ==(lhs: User, rhs: User) -> Bool {
-        return (
-            lhs.id == rhs.id &&
-            lhs.profilePictureURL == rhs.profilePictureURL &&
-            lhs.fullName == rhs.fullName &&
-            lhs.username == rhs.username &&
-            lhs.biography == rhs.biography &&
-            lhs.externalURL == rhs.externalURL &&
-            lhs.mediaCount == rhs.mediaCount &&
-            lhs.followedByCount == rhs.followedByCount &&
-            lhs.followsCount == rhs.followsCount &&
-            lhs.followedByViewer == rhs.followedByViewer &&
-            lhs.followsViewer == rhs.followsViewer
-        )
     }
 }

@@ -38,7 +38,7 @@ class UserMediaFeedViewController: MediaFeedViewController {
     // MARK: - Update user
     
     private func updateUserDetails() {
-        InstagramData.shared.usersDataStore.fetchUser(for: user.id, forceUpdate: true) { [weak self] (updatedUser) in
+        InstagramData.shared.usersDataStore.fetchUser(user) { [weak self] (updatedUser) in
             if let updatedUser = updatedUser {
                 self?.userDetailsCellDataSource.user = updatedUser
                 self?.mediaGridView.reloadSections([0])

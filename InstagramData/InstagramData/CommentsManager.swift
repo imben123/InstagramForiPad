@@ -21,13 +21,19 @@ public class CommentsManager {
         if let caption = mediaItem.caption {
             return MediaItemComment(captionItemId,
                                     text: caption,
-                                    user: mediaItem.owner)
+                                    user: mediaItem.owner,
+                                    replies: [])
         }
         return nil
     }
     
     public var numberOfAvailableComments: Int {
         return commentsList.itemIDsBeforeFirstGap.count
+    }
+    
+    public var canLoadMoreComments: Bool {
+        let hasNoComments = numberOfAvailableComments == 0
+        return numberOfAvailableComments < mediaItem.commentsCount && (hasNoComments || endCursor != nil)
     }
     
     private var endCursor: String? {
@@ -42,25 +48,6 @@ public class CommentsManager {
         self.commentsList = CommentsList(name: "GappedCommentsList.\(mediaItem.id)",
                                          commentDataStore: CommentsDataStore(),
                                          listDataStore: GappedListDataStore())
-        
-        if commentsList.itemCount == 0 {
-            initializeNewCommentsList()
-        } else {
-            checkCommentsListIsUpToDate()
-        }
-    }
-    
-    private func initializeNewCommentsList() {
-        if mediaItem.comments.count > 0 {
-            commentsList.addNewComments(mediaItem.comments, with: mediaItem.commentsEndCursor)
-        }
-    }
-    
-    private func checkCommentsListIsUpToDate() {
-        let comments = mediaItem.comments
-        if comments.first?.id != commentsList.itemIDsBeforeFirstGap.first {
-            commentsList.addNewComments(comments, with: mediaItem.commentsEndCursor)
-        }
     }
     
     public func comment(at index: Int) -> MediaItemComment? {
@@ -92,7 +79,21 @@ public class CommentsManager {
         return result
     }
     
+    public func fetchComments(_ completion: (()->())?, failure: (()->())? = nil) {
+        commentsWebStore.getComments(for: mediaItem.code,
+                                     from: "{}",
+                                     completion: { (newComments, endCursor) in
+            self.commentsList.addNewComments(newComments, with: endCursor)
+            completion?()
+        }, failure: failure)
+    }
+    
     public func fetchMoreComments(_ completion: (()->())?, failure: (()->())? = nil) {
+        
+        guard numberOfAvailableComments > 0 else {
+            return fetchComments(completion, failure: failure)
+        }
+        
         guard let currentEndCursor = self.endCursor else {
             return
         }
@@ -100,7 +101,7 @@ public class CommentsManager {
         commentsWebStore.getComments(for: mediaItem.code,
                                      from: currentEndCursor,
                                      completion: { (newComments, endCursor) in
-            self.commentsList.addNewComments(newComments, with: endCursor)
+            self.commentsList.appendMoreComments(newComments, from: currentEndCursor, to: endCursor)
             completion?()
         }, failure: failure)
     }

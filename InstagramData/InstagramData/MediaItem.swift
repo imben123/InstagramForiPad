@@ -25,8 +25,6 @@ public struct MediaItem: Equatable {
     
     public let commentsDisabled: Bool
     public let commentsCount: Int
-    public let commentsEndCursor: String?
-    public let comments: [MediaItemComment]
     public let likesCount: Int
     
     public var viewerHasLiked: Bool
@@ -50,11 +48,6 @@ public struct MediaItem: Equatable {
         
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["edge_media_to_comment"]["count"].intValue
-        commentsEndCursor = json["edge_media_to_comment"]["page_info"]["has_next_page"].boolValue ? "{}" : nil
-        let commentNodes = json["edge_media_to_comment"]["edges"].arrayValue.reversed()
-        comments = commentNodes.map({ json in
-            return MediaItemComment(jsonDictionary: json["node"])
-        })
         likesCount = json["edge_media_preview_like"]["count"].intValue
         viewerHasLiked = json["viewer_has_liked"].boolValue
     }
@@ -82,10 +75,6 @@ public struct MediaItem: Equatable {
         
         commentsDisabled = json["comments_disabled"].boolValue
         commentsCount = json["comments"]["count"].intValue
-        commentsEndCursor = json["comments"]["page_info"]["start_cursor"].string
-        comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
-            return MediaItemComment(jsonDictionary: json)
-        })
         likesCount = json["likes"]["count"].intValue
         viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
@@ -109,10 +98,6 @@ public struct MediaItem: Equatable {
         
         self.commentsDisabled = json["comments_disabled"].boolValue
         self.commentsCount = json["comments"]["count"].intValue
-        self.commentsEndCursor = json["comments"]["start_cursor"].string
-        self.comments = json["comments"]["nodes"].arrayValue.reversed().map({ json in
-            return MediaItemComment(jsonDictionary: json)
-        })
         self.likesCount = json["likes"]["count"].intValue
         self.viewerHasLiked = json["likes"]["viewer_has_liked"].boolValue
     }
@@ -130,7 +115,6 @@ public struct MediaItem: Equatable {
             lhs.display == rhs.display &&
             lhs.commentsDisabled == rhs.commentsDisabled &&
             lhs.commentsCount == rhs.commentsCount &&
-            lhs.commentsEndCursor == rhs.commentsEndCursor &&
             lhs.likesCount == rhs.likesCount &&
             lhs.viewerHasLiked == rhs.viewerHasLiked
         )

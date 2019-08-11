@@ -106,4 +106,25 @@ class MediaCommentsViewLoadMoreCommentsCell: UITableViewCell {
     
 }
 
-
+class MediaCommentsViewLoadingMoreCommentsCell: UITableViewCell {
+    
+    let activityIndicator = UIActivityIndicatorView(style: .gray)
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(activityIndicator)
+        backgroundColor = .clear
+        selectionStyle = .none
+        activityIndicator.startAnimating()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        activityIndicator.sizeToFit()
+        activityIndicator.center = contentView.center
+    }
+}

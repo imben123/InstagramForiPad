@@ -54,8 +54,9 @@ class CommentsWebStore {
 
         let commentsNodes = json["data"]["shortcode_media"]["edge_media_to_parent_comment"]["edges"].arrayValue
         let commentsDictionaries = commentsNodes.map { $0["node"] }
-        for commentDictionary in commentsDictionaries {
+        for commentDictionary in commentsDictionaries.reversed() {
             let comment = MediaItemComment(jsonDictionary: commentDictionary)
+            result.append(contentsOf: comment.replies)
             result.append(comment)
         }
         

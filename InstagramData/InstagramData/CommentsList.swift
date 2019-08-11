@@ -27,6 +27,7 @@ class CommentsList: GappedList {
         }
         
         let newCommentsIds: [String] = newComments.map({ $0.id })
+            .filter({ !listItems.contains(.item(id: $0)) })
         super.appendMoreItems(newCommentsIds, from: startCursor, to: newEndCursor)
     }
     

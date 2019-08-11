@@ -13,6 +13,7 @@ public class MediaItemCommentTableRow: Object {
     @objc dynamic var id: String = ""
     @objc dynamic var text: String = ""
     @objc dynamic var user: UserTableRow?
+    let replies = List<MediaItemCommentTableRow>()
     
     public override static func primaryKey() -> String? {
         return "id"
@@ -27,6 +28,9 @@ extension MediaItemCommentTableRow {
         self.id = mediaItem.id
         self.text = mediaItem.text
         self.user = UserTableRow(mediaItem.user)
+        for reply in mediaItem.replies {
+            replies.append(MediaItemCommentTableRow(reply))
+        }
     }
 }
 
@@ -36,5 +40,6 @@ extension MediaItemComment {
         self.id = mediaItemTableRow.id
         self.text = mediaItemTableRow.text
         self.user = User(mediaItemTableRow.user!)
+        self.replies = mediaItemTableRow.replies.map({ .init($0) })
     }
 }

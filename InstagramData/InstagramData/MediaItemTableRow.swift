@@ -63,11 +63,7 @@ extension MediaItemTableRow {
         
         self.commentsDisabled = mediaItem.commentsDisabled
         self.commentsCount = mediaItem.commentsCount
-        self.commentsStartCursor = mediaItem.commentsEndCursor
-        
-        for comment in mediaItem.comments {
-            self.comments.append(MediaItemCommentTableRow(comment))
-        }
+
         self.likesCount = mediaItem.likesCount
         self.viewerHasLiked = mediaItem.viewerHasLiked
     }
@@ -92,10 +88,7 @@ extension MediaItem {
         
         commentsDisabled = mediaItemTableRow.commentsDisabled
         commentsCount = mediaItemTableRow.commentsCount
-        commentsEndCursor = mediaItemTableRow.commentsStartCursor
-        comments = mediaItemTableRow.comments.map({ (row) -> MediaItemComment in
-            return MediaItemComment(row)
-        })
+
         likesCount = mediaItemTableRow.likesCount
         viewerHasLiked = mediaItemTableRow.viewerHasLiked
     }

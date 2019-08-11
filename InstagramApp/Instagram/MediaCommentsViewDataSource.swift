@@ -23,8 +23,9 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
         return commentsManager.numberOfAvailableComments
     }
     
+    private var loadingMoreComments = false
     private var shouldShowLoadMoreComments: Bool {
-        return numberOfAvailableComments < mediaItem.commentsCount
+        return commentsManager.canLoadMoreComments
     }
     
     func setComments(_ mediaItem: MediaItem) {
@@ -53,7 +54,11 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
         
         if indexPathIsLoadMoreCommentsRow(indexPath) {
             
-            return MediaCommentsViewLoadMoreCommentsCell(style: .default, reuseIdentifier: "Load more cell")
+            if loadingMoreComments {
+                return MediaCommentsViewLoadingMoreCommentsCell(style: .default, reuseIdentifier: "Loading cell")
+            } else {
+                return MediaCommentsViewLoadMoreCommentsCell(style: .default, reuseIdentifier: "Load more cell")
+            }
             
         } else {
     
@@ -141,9 +146,12 @@ class MediaCommentsViewDataSource: NSObject, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.selectRow(at: nil, animated: false, scrollPosition: .none)
         if indexPathIsLoadMoreCommentsRow(indexPath) {
-            commentsManager.fetchMoreComments({ 
+            loadingMoreComments = true
+            commentsManager.fetchMoreComments({ [weak self] in
+                self?.loadingMoreComments = false
                 tableView.reloadData()
             })
+            tableView.reloadData()
         }
     }
     

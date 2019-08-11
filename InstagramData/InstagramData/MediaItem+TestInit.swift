@@ -20,8 +20,6 @@ extension MediaItem {
          thumbnail: URL,
          commentsDisabled: Bool,
          commentsCount: Int,
-         commentsStartCursor: String?,
-         comments: [MediaItemComment],
          likesCount: Int,
          viewerHasLiked: Bool) {
         self.id = id
@@ -35,8 +33,6 @@ extension MediaItem {
         self.thumbnail = thumbnail
         self.commentsDisabled = commentsDisabled
         self.commentsCount = commentsCount
-        self.commentsEndCursor = commentsStartCursor
-        self.comments = comments
         self.likesCount = likesCount
         self.viewerHasLiked = viewerHasLiked
     }
